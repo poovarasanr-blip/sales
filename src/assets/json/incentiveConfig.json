@@ -1,0 +1,720 @@
+{
+  "Incentive": {
+    "Table": {
+      "Title": "May 2026",
+      "Columns": [
+        {
+          "Key": "EmployeeName",
+          "Label": "Employee Name",
+          "IsSearchable": true
+        },
+        {
+          "Key": "ManagerName",
+          "Label": "Manager",
+          "IsSearchable": true
+        },
+        {
+          "Key": "SalesProductName",
+          "Label": "Categories",
+          "IsFilterable": true
+        },
+        {
+          "Key": "ActualSales",
+          "Label": "Actual",
+          "IsSearchable": false
+        },
+        {
+          "Key": "RegularizedSales",
+          "Label": "Regularized",
+          "IsSearchable": false
+        },
+        {
+          "Key": "SalesTarget",
+          "Label": "Target",
+          "IsSearchable": false
+        },
+        {
+          "Key": "IncentiveAmount",
+          "Label": "Incentive",
+          "IsSearchable": false
+        },
+        {
+          "Key": "ActualIncentiveAmount",
+          "Label": "Actual(₹)",
+          "IsSearchable": false
+        },
+        {
+          "Key": "AdjustmentAmount",
+          "Label": "Adjustment(₹)",
+          "IsSearchable": false
+        },
+        {
+          "Key": "FinalIncentiveAmount",
+          "Label": "Final(₹)",
+          "IsSearchable": false
+        },
+        {
+          "Key": "Actions",
+          "Label": "Action",
+          "IsSearchable": false
+        }
+      ],
+      "PerformanceLegend": [
+        {
+          "Label": "80-85%",
+          "Color": "#F8B4E2"
+        },
+        {
+          "Label": "86-90%",
+          "Color": "#FFC89A"
+        },
+        {
+          "Label": "100%+",
+          "Color": "#A8EBCF"
+        }
+      ],
+      "Rows": [
+        {
+          "Id": 1,
+          "Employee": {
+            "EmployeeId": "PS0019",
+            "EmployeeName": "Aarav Sharma",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 3100,
+            "AdjustmentAmount": -200,
+            "FinalIncentiveAmount": 2900
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 2,
+          "Employee": {
+            "EmployeeId": "PS0099",
+            "EmployeeName": "Vivaan Patel",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 3100,
+            "AdjustmentAmount": -200,
+            "FinalIncentiveAmount": 2900
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 3,
+          "Employee": {
+            "EmployeeId": "PS0100",
+            "EmployeeName": "Arjun Kumar",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 3100,
+            "AdjustmentAmount": -200,
+            "FinalIncentiveAmount": 2900
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 4,
+          "Employee": {
+            "EmployeeId": "PS0101",
+            "EmployeeName": "Aditya Singh",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 15,
+              "RegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 12,
+              "RegularizedSales": 12,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 20,
+              "RegularizedSales": 20,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 15,
+              "RegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 0,
+            "AdjustmentAmount": 0,
+            "FinalIncentiveAmount": 0
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 5,
+          "Employee": {
+            "EmployeeId": "PS0102",
+            "EmployeeName": "Rohan Gupta",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 12,
+              "RegularizedSales": 12,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 10,
+              "RegularizedSales": 10,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 18,
+              "RegularizedSales": 18,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 22,
+              "RegularizedSales": 22,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 0,
+            "AdjustmentAmount": 0,
+            "FinalIncentiveAmount": 0
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 6,
+          "Employee": {
+            "EmployeeId": "PS0103",
+            "EmployeeName": "Karthik Iyer",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 3100,
+            "AdjustmentAmount": -200,
+            "FinalIncentiveAmount": 2900
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 7,
+          "Employee": {
+            "EmployeeId": "PS0104",
+            "EmployeeName": "Neel Verma",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 3100,
+            "AdjustmentAmount": -200,
+            "FinalIncentiveAmount": 2900
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 8,
+          "Employee": {
+            "EmployeeId": "PS0105",
+            "EmployeeName": "Rahul Reddy",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 12,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 20,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 0,
+            "AdjustmentAmount": 0,
+            "FinalIncentiveAmount": 0
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 9,
+          "Employee": {
+            "EmployeeId": "PS0106",
+            "EmployeeName": "Vikram Nair",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 3100,
+            "AdjustmentAmount": -200,
+            "FinalIncentiveAmount": 2900
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        },
+        {
+          "Id": 10,
+          "Employee": {
+            "EmployeeId": "PS0108",
+            "EmployeeName": "Siddharth Rao",
+            "Dealer": "Vasanth & Co - Chennai"
+          },
+          "Manager": {
+            "ManagerId": "PS0987",
+            "ManagerName": "Pawan Kumar",
+            "SubmissionDate": "02 May 2026"
+          },
+          "SalesProducts": [
+            {
+              "SalesProductName": "Mixer Grinders",
+              "ActualSales": 38,
+              "RegularizedSales": 12,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Microwave Ovens",
+              "ActualSales": 28,
+              "RegularizedSales": 10,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Rice Cookers",
+              "ActualSales": 32,
+              "RegularizedSales": 20,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Induction Cooktops",
+              "ActualSales": 46,
+              "RegularizedSales": 22,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "SalesProductName": "Refrigerators",
+              "ActualSales": 5,
+              "RegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ],
+          "Summary": {
+            "ActualIncentiveAmount": 0,
+            "AdjustmentAmount": 0,
+            "FinalIncentiveAmount": 0
+          },
+          "Actions": {
+            "IsHistoryAvailable": true,
+            "IsEditAllowed": true
+          }
+        }
+      ]
+    }
+  }
+}

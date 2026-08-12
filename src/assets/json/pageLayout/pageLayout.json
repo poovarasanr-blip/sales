@@ -1,0 +1,366 @@
+{
+  "Header": {
+    "IsSearchRequired": true,
+    "IsIconRequired": true,
+    "Icon": "./src/assets/icons/header/clientIcon.svg"
+  },
+  "SideBar": {
+    "sideBarData": [
+      {
+        "icon": "./src/assets/icons/SideBar/DashBoardIcon.svg",
+        "activeIcon": "./src/assets/icons/SideBar/DashBoardActiveIcon.svg",
+        "name": "Dashboard",
+        "route": "/"
+      },
+      {
+        "icon": "./src/assets/icons/SideBar/ProductIcon.svg",
+        "activeIcon": "./src/assets/icons/SideBar/ProductActiveIcon.svg",
+        "name": "Products",
+        "route": "/product"
+      },
+      {
+        "icon": "./src/assets/icons/SideBar/EmployeSalesIcon.svg",
+        "activeIcon": "./src/assets/icons/SideBar/EmployeeSalceActiveIcon.svg",
+        "name": "Employee Sales Target",
+        "route": "/employeeSales"
+      },
+      {
+        "icon": "./src/assets/icons/SideBar/ActualSalseIcon.svg",
+        "activeIcon": "./src/assets/icons/SideBar/ActualSalesActiveIcon.svg",
+        "name": "Actual Sales",
+        "route": "/actualSales"
+      },
+      {
+        "icon": "./src/assets/icons/SideBar/SalesIcon.svg",
+        "activeIcon": "./src/assets/icons/SideBar/SalesActiveIcon.svg",
+        "name": "Sales",
+        "route": "/actualSales"
+      },
+      {
+        "icon": "./src/assets/icons/SideBar/IncentiveIcon.svg",
+        "activeIcon": "./src/assets/icons/SideBar/IncentiveActiveIcon.svg",
+        "name": "Incentive",
+        "route": "/incentive"
+      }
+    ]
+  },
+  "Dashboard": {
+    "Code": "PL001",
+    "Name": "Dashboard",
+    "PageTitle": "Dashboard",
+    "Description": "Layout configuration for Dashboard List",
+    "IsDateRequired": true,
+    "IsSalesOverviewRequired": true,
+    "IsSalesSubmissionsRequired": true,
+    "IsSalesDealerRequired": true,
+    "IsTeamSalesRequired": true,
+    "IsTopAchievedTeamRequired": true
+  },
+  "Products": {
+    "Code": "PL002",
+    "Name": "Products",
+    "PageTitle": "Products",
+    "Description": "Layout configuration for Products List",
+    "IsBulkUploadRequired": true,
+    "IsSearchRequired": true,
+    "IsDownloadRequired": true,
+    "EditIcon": "RxPencil1",
+    "TrashIcon": "FiTrash2",
+    "HistoryIcon": "GoHistory",
+    "FileUploadIcon": "LuFileUp",
+    "SampleDownloadIcon": "TbDownload",
+    "CustomButtons": {
+      "UploadButton": {
+        "Id": "BULKUPLOAD",
+        "Icon": "FiUpload",
+        "Name": "Bulk Upload"
+      },
+      "DownloadButton": {
+        "Id": "DOWNLOAD",
+        "Name": "Download Excel",
+        "Icon": "TbDownload"
+      },
+      "SearchInput": {
+        "Id": "SEARCH",
+        "Placeholder": "Search...",
+        "Icon": "RiSearchLine"
+      },
+      "UpdateButton": {
+        "Id": "UPDATE",
+        "Name": "Update",
+        "Icon": "LuCircleCheckBig"
+      },
+      "RemoveButton": {
+        "Id": "REMOVE",
+        "Name": "Remove",
+        "Icon": "FaRegTimesCircle"
+      },
+      "AddProductsButton": {
+        "Id": "ADDPRODUCTS",
+        "Name": "Add Products",
+        "Icon": "LuCircleCheckBig"
+      },
+      "CancelButton": {
+        "Id": "CANCEL",
+        "Name": "Cancel",
+        "Icon": "FaRegTimesCircle"
+      }
+    }
+  },
+  "EmployeeSalesTarget": {
+    "Code": "PL003",
+    "Name": "Employee Sales Target",
+    "PageTitle": "Employee Sales Target",
+    "Description": "Layout configuration for Employee Sales Target List",
+    "IsFilterRequired": true,
+    "IsBulkUploadRequired": true,
+    "IsSearchRequired": true,
+    "IsDownloadButtonRequired": true,
+    "CustomButtons": {
+      "UploadButton": {
+        "Id": "BULKUPLOAD",
+        "Icon": "FiUpload",
+        "Name": "Bulk Upload"
+      },
+      "DownloadButton": {
+        "Id": "DOWNLOAD",
+        "Name": "Download Excel",
+        "Icon": "TbDownload"
+      }
+    },
+    "Filters": {
+      "Month": "2026-05",
+      "ManagerFilter": "all",
+      "ManagerOptions": [
+        {
+          "Label": "All",
+          "Value": "all"
+        },
+        {
+          "Label": "Pawan Kumar",
+          "Value": "PS0987"
+        },
+        {
+          "Label": "Anandh Narayanan",
+          "Value": "PS9546"
+        }
+      ],
+      "Fields": [
+        {
+          "Label": "Month",
+          "Type": "DATEPICKER"
+        },
+        {
+          "Label": "Managers",
+          "Type": "DROPDOWN"
+        }
+      ]
+    }
+  },
+  "ActualSales": {
+    "Code": "PL004",
+    "Name": "Actual Sales",
+    "PageTitle": "Actual Sales",
+    "Description": "Layout configuration for Actual Sales List",
+    "IsFilterRequired": true,
+    "IsBulkUploadRequired": true,
+    "IsSearchRequired": true,
+    "IsDownloadButtonRequired": true,
+    "CustomButtons": {
+      "UploadButton": {
+        "Id": "BULKUPLOAD",
+        "Icon": "FiUpload",
+        "Name": "Bulk Upload"
+      },
+      "GetResultsButton": {
+        "Id": "GETRESULT",
+        "Icon": "IoSearch",
+        "Name": "Get Results"
+      },
+      "ClearButton": {
+        "Id": "CLEAR",
+        "Name": "Clear",
+        "Icon": "LiaTimesSolid"
+      },
+      "DownloadButton": {
+        "Id": "DOWNLOAD",
+        "Name": "Download Excel",
+        "Icon": "TbDownload"
+      },
+      "SearchInput": {
+        "Id": "SEARCH",
+        "Placeholder": "Search...",
+        "Icon": "RiSearchLine"
+      }
+    },
+    "Filters": {
+      "Month": "2026-05",
+      "ManagerFilter": "all",
+      "ManagerOptions": [
+        {
+          "Label": "All",
+          "Value": "all"
+        },
+        {
+          "Label": "Pawan Kumar",
+          "Value": "PS0987"
+        },
+        {
+          "Label": "Anandh Narayanan",
+          "Value": "PS9546"
+        }
+      ],
+      "Fields": [
+        {
+          "Label": "Month",
+          "Type": "DATEPICKER"
+        },
+        {
+          "Label": "Managers",
+          "Type": "DROPDOWN"
+        }
+      ]
+    }
+  },
+  "Sales": {
+    "Code": "PL005",
+    "Name": "Sales",
+    "PageTitle": "Sales",
+    "Description": "Layout configuration for Sales List",
+    "IsFilterRequired": true,
+    "IsRemoveButtonRequired": true,
+    "IsApproveButtonRequired": true,
+    "Tabs": [
+      {
+        "Id": "PENDING",
+        "Label": "Pending",
+        "Icon": "TbClockHour3"
+      },
+      {
+        "Id": "APPROVED",
+        "Label": "Approved",
+        "Icon": "LuCircleCheckBig"
+      },
+      {
+        "Id": "REJECTED",
+        "Label": "Rejected",
+        "Icon": "FaRegTimesCircle"
+      }
+    ],
+    "Filters": {
+      "Month": "2026-05",
+      "ManagerFilter": "all",
+      "ManagerOptions": [
+        {
+          "Label": "All",
+          "Value": "all"
+        },
+        {
+          "Label": "Pawan Kumar",
+          "Value": "PS0987"
+        },
+        {
+          "Label": "Anandh Narayanan",
+          "Value": "PS9546"
+        }
+      ],
+      "Fields": [
+        {
+          "Label": "Month",
+          "Type": "DATEPICKER"
+        },
+        {
+          "Label": "Managers",
+          "Type": "DROPDOWN"
+        }
+      ]
+    },
+    "CustomButtons": {
+      "GetResultsButton": {
+        "Id": "GETRESULT",
+        "Name": "Get Results",
+        "Icon": "CgSearch"
+      },
+      "RemoveButton": {
+        "Id": "REMOVE",
+        "Name": "Remove",
+        "Icon": "FaRegTimesCircle"
+      },
+      "ApproveButton": {
+        "Id": "APPROVE",
+        "Name": "Approve",
+        "Icon": "LuCircleCheckBig"
+      }
+    }
+  },
+  "Incentive": {
+    "Code": "PL006",
+    "Name": "Incentive",
+    "PageTitle": "Incentive",
+    "Description": "Layout configuration for Incentive List",
+    "IsFilterRequired": true,
+    "IsSearchRequired": true,
+    "CustomButtons": {
+      "SubmitForPaymentButton": {
+        "Id": "SUBMITFORPAYMENT",
+        "Icon": "LuCircleCheckBig",
+        "Name": "Submit for Payment"
+      },
+      "GetResultsButton": {
+        "Id": "GETRESULT",
+        "Icon": "IoSearch",
+        "Name": "Get Results"
+      },
+      "ClearButton": {
+        "Id": "CLEAR",
+        "Name": "Clear",
+        "Icon": "LiaTimesSolid"
+      },
+      "DownloadButton": {
+        "Id": "DOWNLOAD",
+        "Name": "Download Excel",
+        "Icon": "TbDownload"
+      }
+    },
+    "Filters": {
+      "Month": "2026-05",
+      "ManagerFilter": "all",
+      "ManagerOptions": [
+        {
+          "Label": "All",
+          "Value": "all"
+        },
+        {
+          "Label": "Pawan Kumar",
+          "Value": "PS0987"
+        },
+        {
+          "Label": "Anandh Narayanan",
+          "Value": "PS9546"
+        }
+      ],
+      "Fields": [
+        {
+          "Label": "Month",
+          "Type": "DATEPICKER"
+        },
+        {
+          "Label": "Managers",
+          "Type": "DROPDOWN"
+        }
+      ]
+    }
+  },
+  "NoDataFound": {
+    "Title": "Looks like empty",
+    "SubTitle": "Let’s add product using the bulk upload option",
+    "CardTitle": "Bulk Upload",
+    "CardSubTitle": "Download the sample file, fill in the required data, and upload it",
+    "DownloadButtonText": "Sample Document",
+    "DownloadIcon": "LuDownload",
+    "UploadIcon": "LuFileUp",
+    "UploadLabel1": "Drag & Drop or",
+    "UploadLabel2": "Browse",
+    "UploadLabel3": "your files here"
+  }
+}

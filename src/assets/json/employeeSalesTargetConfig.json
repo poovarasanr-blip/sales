@@ -1,0 +1,104 @@
+{
+  "Rows": [
+    {
+      "Id": 1,
+      "EmployeeId": "PS0019",
+      "EmployeeName": "Aarav Sharma",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Mixer Grinders",
+      "SalesTarget": 45
+    },
+    {
+      "Id": 2,
+      "EmployeeId": "PS0019",
+      "EmployeeName": "Aarav Sharma",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Microwave Ovens",
+      "SalesTarget": 25
+    },
+    {
+      "Id": 3,
+      "EmployeeId": "PS0019",
+      "EmployeeName": "Aarav Sharma",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Rice Cookers",
+      "SalesTarget": 60
+    },
+    {
+      "Id": 4,
+      "EmployeeId": "PS0099",
+      "EmployeeName": "Vivaan Patel",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Induction Cooktops",
+      "SalesTarget": 50
+    },
+    {
+      "Id": 5,
+      "EmployeeId": "PS0099",
+      "EmployeeName": "Vivaan Patel",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Refrigerators",
+      "SalesTarget": 20
+    },
+    {
+      "Id": 6,
+      "EmployeeId": "PS0099",
+      "EmployeeName": "Vivaan Patel",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Rice Cookers",
+      "SalesTarget": 60
+    },
+    {
+      "Id": 7,
+      "EmployeeId": "PS0100",
+      "EmployeeName": "Arjun Kumar",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Mixer Grinders",
+      "SalesTarget": 45
+    },
+    {
+      "Id": 8,
+      "EmployeeId": "PS0100",
+      "EmployeeName": "Arjun Kumar",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Microwave Ovens",
+      "SalesTarget": 25
+    },
+    {
+      "Id": 9,
+      "EmployeeId": "PS0100",
+      "EmployeeName": "Arjun Kumar",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Rice Cookers",
+      "SalesTarget": 60
+    },
+    {
+      "Id": 10,
+      "EmployeeId": "PS0101",
+      "EmployeeName": "Aditya Singh",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS9546",
+      "ManagerName": "Anandh Narayanan",
+      "SalesProductName": "Induction Cooktops",
+      "SalesTarget": 50
+    }
+  ]
+}

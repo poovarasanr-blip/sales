@@ -1,0 +1,151 @@
+{
+  "ListingData": [
+    {
+      "Id": 1,
+      "EmployeeId": "PS0019",
+      "EmployeeName": "Aarav Sharma",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Mixer Grinders",
+      "SalesTarget": 20
+    },
+    {
+      "Id": 2,
+      "EmployeeId": "PS0019",
+      "EmployeeName": "Aarav Sharma",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Microwave Ovens",
+      "SalesTarget": 50
+    },
+    {
+      "Id": 3,
+      "EmployeeId": "PS0019",
+      "EmployeeName": "Aarav Sharma",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Rice Cookers",
+      "SalesTarget": 13
+    },
+    {
+      "Id": 4,
+      "EmployeeId": "PS0099",
+      "EmployeeName": "Vivaan Patel",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Induction Cooktops",
+      "SalesTarget": 23
+    },
+    {
+      "Id": 5,
+      "EmployeeId": "PS0099",
+      "EmployeeName": "Vivaan Patel",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Refrigerators",
+      "SalesTarget": 32
+    },
+    {
+      "Id": 6,
+      "EmployeeId": "PS0099",
+      "EmployeeName": "Vivaan Patel",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Rice Cookers",
+      "SalesTarget": 56
+    },
+    {
+      "Id": 7,
+      "EmployeeId": "PS0100",
+      "EmployeeName": "Arjun Kumar",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Mixer Grinders",
+      "SalesTarget": 98
+    },
+    {
+      "Id": 8,
+      "EmployeeId": "PS0100",
+      "EmployeeName": "Arjun Kumar",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Microwave Ovens",
+      "SalesTarget": 40
+    },
+    {
+      "Id": 9,
+      "EmployeeId": "PS0100",
+      "EmployeeName": "Arjun Kumar",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS0987",
+      "ManagerName": "Pawan Kumar",
+      "SalesProductName": "Rice Cookers",
+      "SalesTarget": 1
+    },
+    {
+      "Id": 10,
+      "EmployeeId": "PS0101",
+      "EmployeeName": "Aditya Singh",
+      "Dealer": "Vasanth & Co - Chennai",
+      "ManagerId": "PS9546",
+      "ManagerName": "Anandh Narayanan",
+      "SalesProductName": "Induction Cooktops",
+      "SalesTarget": 21
+    }
+  ],
+  "DetailsData": [
+    {
+      "Id": 1,
+      "SalesProductName": "Mixer Grinders",
+      "TotalSales": "35",
+      "Products": [
+        {
+          "SalesProductId": 1,
+          "SalesProductCode": "MG001",
+          "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+          "ActualSales": "12"
+        },
+        {
+          "SalesProductId": 2,
+          "SalesProductCode": "MG002",
+          "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+          "ActualSales": "23"
+        }
+      ]
+    },
+    {
+      "Id": 2,
+      "SalesProductName": "Microwave Ovens",
+      "TotalSales": "24",
+      "Products": [
+        {
+          "SalesProductId": 3,
+          "SalesProductCode": "MW001",
+          "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+          "ActualSales": "24"
+        }
+      ]
+    },
+    {
+      "Id": 3,
+      "SalesProductName": "Rice Cookers",
+      "TotalSales": "20",
+      "Products": [
+        {
+          "SalesProductId": 4,
+          "SalesProductCode": "RC001",
+          "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+          "ActualSales": "20"
+        }
+      ]
+    }
+  ]
+}

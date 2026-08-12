@@ -1,0 +1,1402 @@
+{
+  "PendingColumnHeaders": [
+    {
+      "Id": "selection",
+      "Label": "",
+      "Type": "checkbox",
+      "IsSelectable": true
+    },
+    {
+      "Id": "Employee",
+      "Label": "Employee Name",
+      "Type": "employee",
+      "IsSearchable": true,
+      "RowSpan": true,
+      "Icon": "IoSearch",
+      "IsFilterable": true
+    },
+    {
+      "Id": "Manager",
+      "Label": "Manager",
+      "Type": "manager",
+      "IsFilterable": true,
+      "RowSpan": true,
+      "Icon": "FaSlidersH"
+    },
+    {
+      "Id": "SalesProducts",
+      "Label": "Categories",
+      "Type": "category",
+      "RowSpan": true
+    },
+    {
+      "Id": "ActualSales",
+      "Label": "Actual",
+      "Type": "number"
+    },
+    {
+      "Id": "RegularizedSales",
+      "Label": "Regularized",
+      "Type": "number",
+      "IsHighlighted": true
+    },
+    {
+      "Id": "SalesTarget",
+      "Label": "Target",
+      "Type": "number"
+    },
+    {
+      "Id": "IncentiveAmount",
+      "Label": "Incentive",
+      "Type": "currency"
+    },
+    {
+      "Id": "ActualIncentiveAmount",
+      "Label": "Actual(₹)",
+      "Type": "currency",
+      "RowSpan": true
+    },
+    {
+      "Id": "AdjustmentAmount",
+      "Label": "Adjustment(₹)",
+      "Type": "currency",
+      "IsEditable": true,
+      "RowSpan": true
+    },
+    {
+      "Id": "FinalIncentiveAmount",
+      "Label": "Final(₹)",
+      "Type": "currency",
+      "RowSpan": true
+    },
+    {
+      "Id": "Actions",
+      "Label": "Action",
+      "Type": "actions",
+      "RowSpan": true
+    }
+  ],
+  "PendingData": [
+    {
+      "Id": 1,
+      "Employee": {
+        "EmployeeId": "PS0019",
+        "EmployeeName": "Aarav Sharma",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 101,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 102,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 103,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 104,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 105,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "pending"
+    },
+    {
+      "Id": 2,
+      "Employee": {
+        "EmployeeId": "PS0099",
+        "EmployeeName": "Vivaan Patel",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 201,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 202,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 203,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 204,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 205,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "pending"
+    },
+    {
+      "Id": 3,
+      "Employee": {
+        "EmployeeId": "PS0100",
+        "EmployeeName": "Arjun Kumar",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 301,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 302,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 303,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 304,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 305,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "pending"
+    },
+    {
+      "Id": 4,
+      "Employee": {
+        "EmployeeId": "PS0101",
+        "EmployeeName": "Aditya Singh",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 401,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 15,
+          "RegularizedSales": 15,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        },
+        {
+          "SalesProductId": 402,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 12,
+          "RegularizedSales": 12,
+          "SalesTarget": 30,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "40%"
+        },
+        {
+          "SalesProductId": 403,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 20,
+          "RegularizedSales": 20,
+          "SalesTarget": 40,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "50%"
+        },
+        {
+          "SalesProductId": 404,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 15,
+          "RegularizedSales": 15,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        },
+        {
+          "SalesProductId": 405,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 0,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 0,
+      "Status": "pending"
+    },
+    {
+      "Id": 5,
+      "Employee": {
+        "EmployeeId": "PS0102",
+        "EmployeeName": "Rohan Gupta",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 501,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 12,
+          "RegularizedSales": 12,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "26.67%"
+        },
+        {
+          "SalesProductId": 502,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 10,
+          "RegularizedSales": 10,
+          "SalesTarget": 30,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        },
+        {
+          "SalesProductId": 503,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 18,
+          "RegularizedSales": 18,
+          "SalesTarget": 40,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "45%"
+        },
+        {
+          "SalesProductId": 504,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 22,
+          "RegularizedSales": 22,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "48.89%"
+        },
+        {
+          "SalesProductId": 505,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 0,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 0,
+      "Status": "pending"
+    },
+    {
+      "Id": 6,
+      "Employee": {
+        "EmployeeId": "PS0103",
+        "EmployeeName": "Karthik Iyer",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 601,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 602,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 603,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 604,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 605,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": -200,
+      "FinalIncentiveAmount": 2900,
+      "Status": "pending"
+    },
+    {
+      "Id": 7,
+      "Employee": {
+        "EmployeeId": "PS0104",
+        "EmployeeName": "Neel Verma",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 701,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 702,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 703,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 704,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 705,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "pending"
+    },
+    {
+      "Id": 8,
+      "Employee": {
+        "EmployeeId": "PS0105",
+        "EmployeeName": "Rahul Reddy",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 801,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 15,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        },
+        {
+          "SalesProductId": 802,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 12,
+          "SalesTarget": 30,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "40%"
+        },
+        {
+          "SalesProductId": 803,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 20,
+          "SalesTarget": 40,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "50%"
+        },
+        {
+          "SalesProductId": 804,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 15,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        },
+        {
+          "SalesProductId": 805,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 0,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 0,
+      "Status": "pending"
+    },
+    {
+      "Id": 9,
+      "Employee": {
+        "EmployeeId": "PS0106",
+        "EmployeeName": "Vikram Nair",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 901,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 902,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 903,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 904,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 905,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "pending"
+    },
+    {
+      "Id": 10,
+      "Employee": {
+        "EmployeeId": "PS0108",
+        "EmployeeName": "Siddharth Rao",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 1001,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 12,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "26.67%"
+        },
+        {
+          "SalesProductId": 1002,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 10,
+          "SalesTarget": 30,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        },
+        {
+          "SalesProductId": 1003,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 20,
+          "SalesTarget": 40,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "50%"
+        },
+        {
+          "SalesProductId": 1004,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 22,
+          "SalesTarget": 45,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "48.89%"
+        },
+        {
+          "SalesProductId": 1005,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 0,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 0,
+      "Status": "pending"
+    }
+  ],
+  "ApprovedColumnHeaders": [
+    {
+      "Id": "Employee",
+      "Label": "Employee Name",
+      "Type": "employee",
+      "IsSearchable": true,
+      "RowSpan": true,
+      "Icon": "IoSearch",
+      "IsFilterable": true
+    },
+    {
+      "Id": "Manager",
+      "Label": "Manager",
+      "Type": "manager",
+      "IsFilterable": true,
+      "RowSpan": true,
+      "Icon": "FaSlidersH"
+    },
+    {
+      "Id": "SalesProducts",
+      "Label": "Categories",
+      "Type": "category",
+      "RowSpan": true
+    },
+    {
+      "Id": "ActualSales",
+      "Label": "Actual",
+      "Type": "number"
+    },
+    {
+      "Id": "RegularizedSales",
+      "Label": "Regularized",
+      "Type": "number",
+      "IsHighlighted": true
+    },
+    {
+      "Id": "SalesTarget",
+      "Label": "Target",
+      "Type": "number"
+    },
+    {
+      "Id": "IncentiveAmount",
+      "Label": "Incentive",
+      "Type": "currency"
+    },
+    {
+      "Id": "ActualIncentiveAmount",
+      "Label": "Actual(₹)",
+      "Type": "currency",
+      "RowSpan": true
+    },
+    {
+      "Id": "AdjustmentAmount",
+      "Label": "Adjustment(₹)",
+      "Type": "currency",
+      "IsEditable": true,
+      "RowSpan": true
+    },
+    {
+      "Id": "FinalIncentiveAmount",
+      "Label": "Final(₹)",
+      "Type": "currency",
+      "RowSpan": true
+    },
+    {
+      "Id": "Status",
+      "Label": "Status",
+      "Type": "Status",
+      "RowSpan": true
+    }
+  ],
+  "ApprovedData": [
+    {
+      "Id": 1,
+      "Employee": {
+        "EmployeeId": "PS0019",
+        "EmployeeName": "Aarav Sharma",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 101,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 102,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 103,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 104,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 105,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "approved"
+    }
+  ],
+  "RejectedColumnHeaders": [
+    {
+      "Id": "selection",
+      "Label": "",
+      "Type": "checkbox",
+      "IsSelectable": true
+    },
+    {
+      "Id": "Employee",
+      "Label": "Employee Name",
+      "Type": "employee",
+      "IsSearchable": true,
+      "RowSpan": true,
+      "Icon": "IoSearch",
+      "IsFilterable": true
+    },
+    {
+      "Id": "Manager",
+      "Label": "Manager",
+      "Type": "manager",
+      "IsFilterable": true,
+      "RowSpan": true,
+      "Icon": "FaSlidersH"
+    },
+    {
+      "Id": "SalesProducts",
+      "Label": "Categories",
+      "Type": "category",
+      "RowSpan": true
+    },
+    {
+      "Id": "ActualSales",
+      "Label": "Actual",
+      "Type": "number"
+    },
+    {
+      "Id": "RegularizedSales",
+      "Label": "Regularized",
+      "Type": "number",
+      "IsHighlighted": true
+    },
+    {
+      "Id": "SalesTarget",
+      "Label": "Target",
+      "Type": "number"
+    },
+    {
+      "Id": "IncentiveAmount",
+      "Label": "Incentive",
+      "Type": "currency"
+    },
+    {
+      "Id": "ActualIncentiveAmount",
+      "Label": "Actual(₹)",
+      "Type": "currency",
+      "RowSpan": true
+    },
+    {
+      "Id": "AdjustmentAmount",
+      "Label": "Adjustment(₹)",
+      "Type": "currency",
+      "IsEditable": true,
+      "RowSpan": true
+    },
+    {
+      "Id": "FinalIncentiveAmount",
+      "Label": "Final(₹)",
+      "Type": "currency",
+      "RowSpan": true
+    },
+    {
+      "Id": "Status",
+      "Label": "Status",
+      "Type": "Status",
+      "RowSpan": true
+    }
+  ],
+  "RejectedData": [
+    {
+      "Id": 1,
+      "RejectedDate": "03 May 2026",
+      "Employee": {
+        "EmployeeId": "PS0019",
+        "EmployeeName": "Aarav Sharma",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 101,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 102,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 103,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 104,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 105,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "rejected"
+    },
+    {
+      "Id": 2,
+      "RejectedDate": "04 May 2026",
+      "Employee": {
+        "EmployeeId": "PS0099",
+        "EmployeeName": "Vivaan Patel",
+        "Dealer": "Vasanth & Co - Chennai"
+      },
+      "Manager": {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar",
+        "SubmittedDate": "2026-05-02"
+      },
+      "SalesProducts": [
+        {
+          "SalesProductId": 201,
+          "SalesProductName": "Mixer Grinders",
+          "ActualSales": 38,
+          "RegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "84.44%"
+        },
+        {
+          "SalesProductId": 202,
+          "SalesProductName": "Microwave Ovens",
+          "ActualSales": 28,
+          "RegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "AchievementPercentage": "93.33%"
+        },
+        {
+          "SalesProductId": 203,
+          "SalesProductName": "Rice Cookers",
+          "ActualSales": 32,
+          "RegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "AchievementPercentage": "80%"
+        },
+        {
+          "SalesProductId": 204,
+          "SalesProductName": "Induction Cooktops",
+          "ActualSales": 46,
+          "RegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "AchievementPercentage": "102.22%"
+        },
+        {
+          "SalesProductId": 205,
+          "SalesProductName": "Refrigerators",
+          "ActualSales": 5,
+          "RegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": 0,
+          "AchievementPercentage": "33.33%"
+        }
+      ],
+      "ActualIncentiveAmount": 3100,
+      "AdjustmentAmount": 0,
+      "FinalIncentiveAmount": 3100,
+      "Status": "rejected"
+    }
+  ],
+  "SalesDetails": {
+    "RegularizedSales": {
+      "Title": "Regularized Sales - May 2026",
+      "AchievedLegend": [
+        {
+          "Label": "80-85%",
+          "Color": "#F8B4E2"
+        },
+        {
+          "Label": "86-90%",
+          "Color": "#FFC89A"
+        },
+        {
+          "Label": "100%+",
+          "Color": "#A8EBCF"
+        }
+      ],
+      "Columns": [
+        {
+          "Key": "SalesProductName",
+          "Label": "Category"
+        },
+        {
+          "Key": "Products",
+          "Label": "Products"
+        },
+        {
+          "Key": "ActualSales",
+          "Label": "Actual"
+        },
+        {
+          "Key": "RegularizedSales",
+          "Label": "Regularized"
+        },
+        {
+          "Key": "Remarks",
+          "Label": "Remarks"
+        },
+        {
+          "Key": "OverallRegularizedSales",
+          "Label": "Overall Regularized"
+        },
+        {
+          "Key": "SalesTarget",
+          "Label": "Target"
+        },
+        {
+          "Key": "IncentiveAmount",
+          "Label": "Incentive"
+        }
+      ],
+      "Rows": [
+        {
+          "Id": 1,
+          "SalesProductName": "Mixer Grinders",
+          "Products": [
+            "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+            "Panasonic Monster Mixer Grinder 750 Watts"
+          ],
+          "ActualSales": [12, 23],
+          "RegularizedSales": [15, null],
+          "Remarks": {
+            "HasAttachment": true,
+            "HasDocument": true
+          },
+          "OverallRegularizedSales": 38,
+          "SalesTarget": 45,
+          "IncentiveAmount": 600,
+          "PerformanceRange": "86-90%"
+        },
+        {
+          "Id": 2,
+          "SalesProductName": "Microwave Ovens",
+          "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
+          "ActualSales": [25],
+          "RegularizedSales": [28],
+          "Remarks": {
+            "HasAttachment": true,
+            "HasDocument": true
+          },
+          "OverallRegularizedSales": 28,
+          "SalesTarget": 30,
+          "IncentiveAmount": 600,
+          "PerformanceRange": "86-90%"
+        },
+        {
+          "Id": 3,
+          "SalesProductName": "Rice Cookers",
+          "Products": [
+            "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker"
+          ],
+          "ActualSales": [20],
+          "RegularizedSales": [32],
+          "Remarks": {
+            "HasAttachment": true,
+            "HasDocument": true
+          },
+          "OverallRegularizedSales": 32,
+          "SalesTarget": 40,
+          "IncentiveAmount": 900,
+          "PerformanceRange": "80-85%"
+        },
+        {
+          "Id": 4,
+          "SalesProductName": "Induction Cooktops",
+          "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
+          "ActualSales": [32],
+          "RegularizedSales": [46],
+          "Remarks": {
+            "HasAttachment": true,
+            "HasDocument": true
+          },
+          "OverallRegularizedSales": 46,
+          "SalesTarget": 45,
+          "IncentiveAmount": 1000,
+          "PerformanceRange": "100%+"
+        },
+        {
+          "Id": 5,
+          "SalesProductName": "Refrigerators",
+          "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
+          "ActualSales": [5],
+          "RegularizedSales": [null],
+          "Remarks": {
+            "HasAttachment": true,
+            "HasDocument": true
+          },
+          "OverallRegularizedSales": 5,
+          "SalesTarget": 15,
+          "IncentiveAmount": null,
+          "PerformanceRange": "<80%"
+        }
+      ]
+    },
+
+    "MonthlySales": {
+      "Title": "May 2026 Sales",
+      "Columns": [
+        {
+          "Key": "SalesDate",
+          "Label": "Date",
+          "IsFilterable": true,
+          "Type": "date",
+          "Icon": "LuCalendar"
+        },
+        {
+          "Key": "SalesProductName",
+          "Label": "Category",
+          "Icon": "IoSearch",
+          "IsFilterable": true
+        },
+        {
+          "Key": "SalesProductName",
+          "Label": "Product",
+          "Icon": "IoSearch",
+          "IsFilterable": true
+        },
+        {
+          "Key": "SalesQuantity",
+          "Label": "Quantity",
+          "IsFilterable": false,
+          "IsSortable": true
+        },
+        {
+          "Key": "Attachment",
+          "Label": "Attachment",
+          "IsFilterable": false
+        },
+        {
+          "Key": "SubmittedDate",
+          "Label": "Submitted On",
+          "IsFilterable": true,
+          "Icon": "FaSlidersH"
+        }
+      ],
+      "Rows": [
+        {
+          "Id": 1,
+          "SalesDate": "2026-05-01",
+          "SalesCategoryName": "Mixer Grinders",
+          "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": true,
+            "Label": "View",
+            "FileName": "mixer-grinder-01.pdf"
+          },
+          "SubmittedDate": "2026-05-02"
+        },
+        {
+          "Id": 2,
+          "SalesDate": "2026-05-01",
+          "SalesCategoryName": "Mixer Grinders",
+          "SalesProductName": "Panasonic MX-AC300-H 550W Mixer Grinder",
+          "SalesQuantity": 2,
+          "Attachment": {
+            "IsAvailable": false,
+            "Label": "--",
+            "FileName": null
+          },
+          "SubmittedDate": "2026-05-02"
+        },
+        {
+          "Id": 3,
+          "SalesDate": "2026-05-01",
+          "SalesCategoryName": "Rice Cookers",
+          "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": true,
+            "Label": "View",
+            "FileName": "rice-cooker-01.pdf"
+          },
+          "SubmittedDate": "2026-05-02"
+        },
+        {
+          "Id": 4,
+          "SalesDate": "2026-05-02",
+          "SalesCategoryName": "Microwave Ovens",
+          "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": false,
+            "Label": "--",
+            "FileName": null
+          },
+          "SubmittedDate": "2026-05-05"
+        },
+        {
+          "Id": 5,
+          "SalesDate": "2026-05-02",
+          "SalesCategoryName": "Induction Cooktops",
+          "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+          "SalesQuantity": 2,
+          "Attachment": {
+            "IsAvailable": false,
+            "Label": "--",
+            "FileName": null
+          },
+          "SubmittedDate": "2026-05-05"
+        },
+        {
+          "Id": 6,
+          "SalesDate": "2026-05-02",
+          "SalesCategoryName": "Rice Cookers",
+          "SalesProductName": "Panasonic Steel XS Electric Rice Cooker",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": true,
+            "Label": "View",
+            "FileName": "rice-cooker-02.pdf"
+          },
+          "SubmittedDate": "2026-05-05"
+        },
+        {
+          "Id": 7,
+          "SalesDate": "2026-05-03",
+          "SalesCategoryName": "Refrigerators",
+          "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": false,
+            "Label": "--",
+            "FileName": null
+          },
+          "SubmittedDate": "2026-05-06"
+        },
+        {
+          "Id": 8,
+          "SalesDate": "2026-05-03",
+          "SalesCategoryName": "Microwave Ovens",
+          "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+          "SalesQuantity": 2,
+          "Attachment": {
+            "IsAvailable": true,
+            "Label": "View",
+            "FileName": "microwave-01.pdf"
+          },
+          "SubmittedDate": "2026-05-06"
+        },
+        {
+          "Id": 9,
+          "SalesDate": "2026-05-04",
+          "SalesCategoryName": "Rice Cookers",
+          "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": true,
+            "Label": "View",
+            "FileName": "rice-cooker-03.pdf"
+          },
+          "SubmittedDate": "2026-05-09"
+        },
+        {
+          "Id": 10,
+          "SalesDate": "2026-05-05",
+          "SalesCategoryName": "Refrigerators",
+          "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": false,
+            "Label": "--",
+            "FileName": null
+          },
+          "SubmittedDate": "2026-05-11"
+        },
+        {
+          "Id": 11,
+          "SalesDate": "2026-05-06",
+          "SalesCategoryName": "Mixer Grinders",
+          "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+          "SalesQuantity": 1,
+          "Attachment": {
+            "IsAvailable": true,
+            "Label": "View",
+            "FileName": "mixer-grinder-02.pdf"
+          },
+          "SubmittedDate": "2026-05-12"
+        },
+        {
+          "Id": 12,
+          "SalesDate": "2026-05-06",
+          "SalesCategoryName": "Mixer Grinders",
+          "SalesProductName": "Panasonic MX-AC300-H 550W Mixer Grinder",
+          "SalesQuantity": 2,
+          "Attachment": {
+            "IsAvailable": false,
+            "Label": "--",
+            "FileName": null
+          },
+          "SubmittedDate": "2026-05-12"
+        }
+      ]
+    }
+  }
+}

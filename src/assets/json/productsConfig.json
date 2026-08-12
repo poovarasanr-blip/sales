@@ -1,0 +1,358 @@
+{
+  "ScreenOptions": {
+    "Title": "Products"
+  },
+  "ProductTableHeaders": [
+    {
+      "Name": "Category",
+      "Icon": "FaSlidersH",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Sub Category",
+      "Icon": "FiSearch",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Product",
+      "Icon": "FiSearch",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Effective Date",
+      "Icon": "MdOutlineCalendarToday",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Target Quantity",
+      "Icon": "BiSortAlt2",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Eligible Incentive (₹)",
+      "Icon": "BiSortAlt2",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Action"
+    }
+  ],
+  "ProductData": [
+    {
+      "CategoryId": 1,
+      "CategoryName": "Mixer Grinder",
+      "Code": "CAT_MIXER",
+      "TargetQuantity": 200,
+      "ActualQuantity": 600,
+      "EligibleIncentive": 500,
+      "Description": "All kitchen mixer grinders and juicer models",
+      "CompanyId": 1,
+      "ClientId": 10,
+      "Status": 1,
+      "CreatedBy": 1,
+      "CreatedOn": "2026-01-01T00:00:00Z",
+      "SubCategories": [
+        {
+          "SubCategoryId": 11,
+          "SubCategoryName": "Standard Mixer Grinder",
+          "Code": "SUBCAT_STD_MIXER",
+          "Description": "Standard 3 jar mixer grinders",
+          "IncentiveProductCategoryId": 101,
+          "CompanyId": 1,
+          "ClientId": 10,
+          "Status": 1,
+          "CreatedBy": 1,
+          "CreatedOn": "2026-01-01T00:00:00Z",
+          "Products": [
+            {
+              "ProductId": 301,
+              "ProductCode": "PROD_MX-AC400",
+              "ProductName": "Panasonic MX-AC400-H 550W Mixer Grinder",
+              "Description": "Panasonic 550W Mixer Grinder with 3 Stainless Steel Jars",
+              "IncentiveProductCategoryId": 101,
+              "IncentiveProductSubCategoryId": 11,
+              "Price": 6200,
+              "EffectiveDate": "2026-01-01",
+              "EligibleIncentive": 500,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            },
+            {
+              "ProductId": 302,
+              "ProductCode": "PROD_MX-AC430",
+              "ProductName": "Panasonic MX-AC430-H 550W Mixer Grinder",
+              "Description": "Panasonic 550W Mixer Grinder with 3 Stainless Steel Jars",
+              "IncentiveProductCategoryId": 101,
+              "IncentiveProductSubCategoryId": 11,
+              "Price": 6200,
+              "EffectiveDate": "2026-01-01",
+              "EligibleIncentive": 500,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            }
+          ]
+        },
+        {
+          "SubCategoryId": 12,
+          "SubCategoryName": "Juicer Mixer Grinder",
+          "Code": "SUBCAT_JUICER_MIXER",
+          "Description": "Juicer mixer grinder models",
+          "IncentiveProductCategoryId": 101,
+          "CompanyId": 1,
+          "ClientId": 10,
+          "Status": 1,
+          "CreatedBy": 1,
+          "CreatedOn": "2026-01-01T00:00:00Z",
+          "Products": [
+            {
+              "ProductId": 304,
+              "ProductCode": "PROD_MX-AC300",
+              "ProductName": "Panasonic MX-AC300-H",
+              "Description": "Panasonic Juicer Mixer Grinder",
+              "IncentiveProductCategoryId": 101,
+              "IncentiveProductSubCategoryId": 12,
+              "Price": 5800,
+              "EffectiveDate": "2026-01-01",
+              "EligibleIncentive": 450,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            },
+            {
+              "ProductId": 305,
+              "ProductCode": "PROD_MX-AV425",
+              "ProductName": "Panasonic MX-AV425",
+              "Description": "Panasonic Advanced Juicer Mixer Grinder",
+              "IncentiveProductCategoryId": 101,
+              "IncentiveProductSubCategoryId": 12,
+              "Price": 6400,
+              "EffectiveDate": "2026-04-01",
+              "EligibleIncentive": 550,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            }
+          ]
+        },
+        {
+          "SubCategoryId": 13,
+          "SubCategoryName": "Heavy Duty Mixer Grinder",
+          "Code": "SUBCAT_HEAVY_MIXER",
+          "Description": "Heavy duty mixer grinder models",
+          "IncentiveProductCategoryId": 101,
+          "CompanyId": 1,
+          "ClientId": 10,
+          "Status": 1,
+          "CreatedBy": 1,
+          "CreatedOn": "2026-01-01T00:00:00Z",
+          "Products": [
+            {
+              "ProductId": 306,
+              "ProductCode": "PROD_MX-JW265",
+              "ProductName": "Panasonic MX-JW265",
+              "Description": "Panasonic Heavy Duty Mixer Grinder",
+              "IncentiveProductCategoryId": 101,
+              "IncentiveProductSubCategoryId": 13,
+              "Price": 7200,
+              "EffectiveDate": "2026-01-01",
+              "EligibleIncentive": 600,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            },
+            {
+              "ProductId": 307,
+              "ProductCode": "PROD-WM155",
+              "ProductName": "Panasonic Super Mix WM-155",
+              "Description": "Panasonic Super Mix Heavy Duty Grinder",
+              "IncentiveProductCategoryId": 101,
+              "IncentiveProductSubCategoryId": 13,
+              "Price": 7500,
+              "EffectiveDate": "2026-01-04",
+              "EligibleIncentive": 650,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "CategoryId": 2,
+      "CategoryName": "Microwave Oven",
+      "Code": "CAT_MICROWAVE",
+      "TargetQuantity": 250,
+      "ActualQuantity": 900,
+      "EligibleIncentive": 700,
+      "Description": "All microwave oven models",
+      "CompanyId": 1,
+      "ClientId": 10,
+      "Status": 1,
+      "CreatedBy": 1,
+      "CreatedOn": "2026-01-01T00:00:00Z",
+      "SubCategories": [
+        {
+          "SubCategoryId": 21,
+          "SubCategoryName": "Solo Microwave Oven",
+          "Code": "SUBCAT_SOLO_MICROWAVE",
+          "Description": "Solo microwave oven models",
+          "IncentiveProductCategoryId": 102,
+          "CompanyId": 1,
+          "ClientId": 10,
+          "Status": 1,
+          "CreatedBy": 1,
+          "CreatedOn": "2026-01-01T00:00:00Z",
+          "Products": [
+            {
+              "ProductId": 201,
+              "ProductCode": "PROD-NNST46JBG",
+              "ProductName": "Panasonic NN-ST46JBG",
+              "Description": "Panasonic Solo Microwave Oven",
+              "IncentiveProductCategoryId": 102,
+              "IncentiveProductSubCategoryId": 21,
+              "Price": 9200,
+              "EffectiveDate": "2026-01-01",
+              "EligibleIncentive": 700,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            },
+            {
+              "ProductId": 202,
+              "ProductCode": "PROD-NNST34NBFDG",
+              "ProductName": "Panasonic NN-ST34NBFDG",
+              "Description": "Panasonic Solo Microwave Oven",
+              "IncentiveProductCategoryId": 102,
+              "IncentiveProductSubCategoryId": 21,
+              "Price": 8500,
+              "EffectiveDate": "2026-03-01",
+              "EligibleIncentive": 650,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            }
+          ]
+        },
+        {
+          "SubCategoryId": 22,
+          "SubCategoryName": "Grill Microwave Oven",
+          "Code": "SUBCAT_GRILL_MICROWAVE",
+          "Description": "Grill microwave oven models",
+          "IncentiveProductCategoryId": 102,
+          "CompanyId": 1,
+          "ClientId": 10,
+          "Status": 1,
+          "CreatedBy": 1,
+          "CreatedOn": "2026-01-01T00:00:00Z",
+          "Products": [
+            {
+              "ProductId": 203,
+              "ProductCode": "PROD-NNGT32JWFDG",
+              "ProductName": "Panasonic NN-GT32JWFDG",
+              "Description": "Panasonic Grill Microwave Oven",
+              "IncentiveProductCategoryId": 102,
+              "IncentiveProductSubCategoryId": 22,
+              "Price": 10500,
+              "EffectiveDate": "2026-03-01",
+              "EligibleIncentive": 800,
+              "CompanyId": 1,
+              "ClientId": 10,
+              "Status": 1,
+              "CreatedBy": 1,
+              "CreatedOn": "2026-01-01T00:00:00Z"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ValidRecordHeaders": [
+    {
+      "Name": "Category",
+      "Icon": "FaSlidersH",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Sub Category",
+      "Icon": "FiSearch",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Product",
+      "Icon": "FiSearch",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Effective Date",
+      "Icon": "MdOutlineCalendarToday",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Target Quantity",
+      "Icon": "BiSortAlt2",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Eligible Incentive (₹)",
+      "Icon": "BiSortAlt2",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Action"
+    }
+  ],
+  "InvalidRecordHeaders": [
+    {
+      "Name": "Category",
+      "Icon": "FaSlidersH",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Sub Category",
+      "Icon": "FiSearch",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Product",
+      "Icon": "FiSearch",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Effective Date",
+      "Icon": "MdOutlineCalendarToday",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Target Quantity",
+      "Icon": "BiSortAlt2",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Eligible Incentive (₹)",
+      "Icon": "BiSortAlt2",
+      "IsFilterable": true
+    },
+    {
+      "Name": "Action"
+    }
+  ]
+}
