@@ -112,9 +112,8 @@ export default function ProductList() {
   }, [handleFilesReceived]);
 
   const hasProducts = products.length > 0;
-
   return (
-    <div className="px-h pt-v overflow-scroll scrollbar-hide bg-bgcolor flex flex-col h-[100%] relative">
+    <div className="px-h pt-12 overflow-scroll scrollbar-hide bg-bgcolor flex flex-col min-h-[100%] relative">
       <div className="flex items-center justify-between">
         <p className="text-heading-6 text-darkgray">
           {PageLayOut?.Products?.PageTitle}
@@ -144,7 +143,7 @@ export default function ProductList() {
       </div>
 
       {hasProducts ? (
-        <div className="flex-1 min-h-0 border-1 border-strokegray rounded-6 bg-white mt-14 mb-14 px-16">
+        <div className="flex-1 min-h-0 border-1 border-strokegray rounded-6 bg-white mt-14 mb-14 px-16 pb-14">
           <div className="flex items-center justify-between mt-14">
             <div className="w-[360px]">
               <CustomInput
@@ -173,6 +172,7 @@ export default function ProductList() {
               onClick={handleDownloadExcel}
             />
           </div>
+
           <GroupedIncentiveTable
             columns={PRODUCT_LIST_COLUMNS}
             data={productGroups}

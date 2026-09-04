@@ -8,6 +8,8 @@ interface CustomAvatarProps {
   width?: string;
   height?: string;
   borderRadious?: string;
+  borderWidth?: string;
+  borderColor?: string;
 }
 
 const CustomAvatar: React.FC<CustomAvatarProps> = ({
@@ -17,12 +19,16 @@ const CustomAvatar: React.FC<CustomAvatarProps> = ({
   width = "w-38",
   height = "h-38",
   borderRadious = "rounded-full",
+  borderWidth = "border-0",
+  borderColor = "border-white",
 }) => {
   const avatarClass = [
     backgroundColor,
     width,
     height,
     borderRadious,
+    borderColor,
+    borderWidth,
     "flex",
     "items-center",
     "justify-center",

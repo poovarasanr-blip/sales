@@ -1,4 +1,3 @@
-import React from "react";
 import IconRenderer from "../IconRender/IconRenderer";
 import NoDataFoundIcon from "../../../../assets/icons/NodataFound/NodataFoundIcon.svg";
 import type { NodataFoundProps } from "../../../../modules/sales-incentive/types/salesIncentive.types";

@@ -1,4 +1,3 @@
-import React from "react";
 import type { SalesTopAchievedProps } from "../../types/salesIncentive.types";
 import CustomPieChart from "../../../../shared/components/ui/ComparisonChart/CustomPieChart";
 import { formatCurrency } from "../../../../shared/utils/currencyUtils";

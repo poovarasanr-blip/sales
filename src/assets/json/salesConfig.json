@@ -139,7 +139,354 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [12, 23],
+              "RegularizedSales": [15, null],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
+              "ActualSales": [25],
+              "RegularizedSales": [28],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker"
+              ],
+              "ActualSales": [20],
+              "RegularizedSales": [32],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
+              "ActualSales": [32],
+              "RegularizedSales": [46],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
+              "ActualSales": [5],
+              "RegularizedSales": [null],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-01",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-01",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic MX-AC300-H 550W Mixer Grinder",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-01",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "rice-cooker-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-05"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-05"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Steel XS Electric Rice Cooker",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "rice-cooker-02.pdf"
+              },
+              "SubmittedDate": "2026-05-05"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-03",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-06"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-03",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "microwave-01.pdf"
+              },
+              "SubmittedDate": "2026-05-06"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-04",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "rice-cooker-03.pdf"
+              },
+              "SubmittedDate": "2026-05-09"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-05",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-11"
+            },
+            {
+              "Id": 11,
+              "SalesDate": "2026-05-05",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-11"
+            },
+            {
+              "Id": 12,
+              "SalesDate": "2026-05-06",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 1,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "mixer-grinder-02.pdf"
+              },
+              "SubmittedDate": "2026-05-12"
+            },
+            {
+              "Id": 13,
+              "SalesDate": "2026-05-06",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic MX-AC300-H 550W Mixer Grinder",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-12"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 2,
@@ -203,7 +550,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 3,
@@ -267,7 +932,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0100-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0100-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0100-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0100-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0100-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 4,
@@ -331,7 +1314,325 @@
       "ActualIncentiveAmount": 0,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 0,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [9, 6],
+              "RegularizedSales": [9, 6],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [7, 5],
+              "RegularizedSales": [7, 5],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 12,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [12, 8],
+              "RegularizedSales": [12, 8],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 20,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [9, 6],
+              "RegularizedSales": [9, 6],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 8,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0101-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 7,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 6,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0101-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 6,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 10,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0101-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 10,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 8,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0101-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 7,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0101-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 5,
@@ -395,7 +1696,325 @@
       "ActualIncentiveAmount": 0,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 0,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [7, 5],
+              "RegularizedSales": [7, 5],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 12,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [6, 4],
+              "RegularizedSales": [6, 4],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 10,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [11, 7],
+              "RegularizedSales": [11, 7],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 18,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [13, 9],
+              "RegularizedSales": [13, 9],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 22,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 6,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0102-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 6,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 5,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0102-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 5,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 9,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0102-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 9,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 11,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0102-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 11,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0102-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 6,
@@ -459,7 +2078,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": -200,
       "FinalIncentiveAmount": 2900,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0103-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0103-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0103-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0103-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0103-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 7,
@@ -523,7 +2460,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0104-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0104-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0104-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0104-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0104-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 8,
@@ -587,7 +2842,325 @@
       "ActualIncentiveAmount": 0,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 0,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [9, 6],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [7, 5],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 12,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [12, 8],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 20,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [9, 6],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 15,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0105-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0105-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0105-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0105-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0105-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 9,
@@ -651,7 +3224,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0106-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0106-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0106-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0106-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0106-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 10,
@@ -715,7 +3606,325 @@
       "ActualIncentiveAmount": 0,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 0,
-      "Status": "pending"
+      "Status": "pending",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [7, 5],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 12,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [6, 4],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 10,
+              "SalesTarget": 30,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [12, 8],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 20,
+              "SalesTarget": 40,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [13, 9],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 22,
+              "SalesTarget": 45,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0108-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0108-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0108-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0108-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0108-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     }
   ],
   "ApprovedColumnHeaders": [
@@ -852,7 +4061,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "approved"
+      "Status": "approved",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     }
   ],
   "RejectedColumnHeaders": [
@@ -996,7 +4523,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "rejected"
+      "Status": "rejected",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
+          ],
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
+        },
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0019-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
+        }
+      }
     },
     {
       "Id": 2,
@@ -1061,342 +4906,325 @@
       "ActualIncentiveAmount": 3100,
       "AdjustmentAmount": 0,
       "FinalIncentiveAmount": 3100,
-      "Status": "rejected"
-    }
-  ],
-  "SalesDetails": {
-    "RegularizedSales": {
-      "Title": "Regularized Sales - May 2026",
-      "AchievedLegend": [
-        {
-          "Label": "80-85%",
-          "Color": "#F8B4E2"
-        },
-        {
-          "Label": "86-90%",
-          "Color": "#FFC89A"
-        },
-        {
-          "Label": "100%+",
-          "Color": "#A8EBCF"
-        }
-      ],
-      "Columns": [
-        {
-          "Key": "SalesProductName",
-          "Label": "Category"
-        },
-        {
-          "Key": "Products",
-          "Label": "Products"
-        },
-        {
-          "Key": "ActualSales",
-          "Label": "Actual"
-        },
-        {
-          "Key": "RegularizedSales",
-          "Label": "Regularized"
-        },
-        {
-          "Key": "Remarks",
-          "Label": "Remarks"
-        },
-        {
-          "Key": "OverallRegularizedSales",
-          "Label": "Overall Regularized"
-        },
-        {
-          "Key": "SalesTarget",
-          "Label": "Target"
-        },
-        {
-          "Key": "IncentiveAmount",
-          "Label": "Incentive"
-        }
-      ],
-      "Rows": [
-        {
-          "Id": 1,
-          "SalesProductName": "Mixer Grinders",
-          "Products": [
-            "Panasonic Mixer Grinder 3 Stainless Steel Jars",
-            "Panasonic Monster Mixer Grinder 750 Watts"
+      "Status": "rejected",
+      "Details": {
+        "RegularizedSales": {
+          "Title": "Regularized Sales - May 2026",
+          "AchievedLegend": [
+            {
+              "Label": "80-85%",
+              "Color": "#F8B4E2"
+            },
+            {
+              "Label": "86-90%",
+              "Color": "#FFC89A"
+            },
+            {
+              "Label": "100%+",
+              "Color": "#A8EBCF"
+            }
           ],
-          "ActualSales": [12, 23],
-          "RegularizedSales": [15, null],
-          "Remarks": {
-            "HasAttachment": true,
-            "HasDocument": true
-          },
-          "OverallRegularizedSales": 38,
-          "SalesTarget": 45,
-          "IncentiveAmount": 600,
-          "PerformanceRange": "86-90%"
-        },
-        {
-          "Id": 2,
-          "SalesProductName": "Microwave Ovens",
-          "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
-          "ActualSales": [25],
-          "RegularizedSales": [28],
-          "Remarks": {
-            "HasAttachment": true,
-            "HasDocument": true
-          },
-          "OverallRegularizedSales": 28,
-          "SalesTarget": 30,
-          "IncentiveAmount": 600,
-          "PerformanceRange": "86-90%"
-        },
-        {
-          "Id": 3,
-          "SalesProductName": "Rice Cookers",
-          "Products": [
-            "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker"
+          "Columns": [
+            {
+              "Key": "SalesProductName",
+              "Label": "Category"
+            },
+            {
+              "Key": "Products",
+              "Label": "Products"
+            },
+            {
+              "Key": "ActualSales",
+              "Label": "Actual"
+            },
+            {
+              "Key": "RegularizedSales",
+              "Label": "Regularized"
+            },
+            {
+              "Key": "Remarks",
+              "Label": "Remarks"
+            },
+            {
+              "Key": "OverallRegularizedSales",
+              "Label": "Overall Regularized"
+            },
+            {
+              "Key": "SalesTarget",
+              "Label": "Target"
+            },
+            {
+              "Key": "IncentiveAmount",
+              "Label": "Incentive"
+            }
           ],
-          "ActualSales": [20],
-          "RegularizedSales": [32],
-          "Remarks": {
-            "HasAttachment": true,
-            "HasDocument": true
-          },
-          "OverallRegularizedSales": 32,
-          "SalesTarget": 40,
-          "IncentiveAmount": 900,
-          "PerformanceRange": "80-85%"
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesProductName": "Mixer Grinders",
+              "Products": [
+                "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "Panasonic Monster Mixer Grinder 750 Watts"
+              ],
+              "ActualSales": [23, 15],
+              "RegularizedSales": [23, 15],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 38,
+              "SalesTarget": 45,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 2,
+              "SalesProductName": "Microwave Ovens",
+              "Products": [
+                "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+                "Panasonic 23L Convection Microwave Oven"
+              ],
+              "ActualSales": [17, 11],
+              "RegularizedSales": [17, 11],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 28,
+              "SalesTarget": 30,
+              "IncentiveAmount": 600,
+              "PerformanceRange": "86-90%"
+            },
+            {
+              "Id": 3,
+              "SalesProductName": "Rice Cookers",
+              "Products": [
+                "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+                "Panasonic SR-WA 18-J 660-Watt Rice Cooker"
+              ],
+              "ActualSales": [19, 13],
+              "RegularizedSales": [19, 13],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 32,
+              "SalesTarget": 40,
+              "IncentiveAmount": 900,
+              "PerformanceRange": "80-85%"
+            },
+            {
+              "Id": 4,
+              "SalesProductName": "Induction Cooktops",
+              "Products": [
+                "Panasonic KZ-11BP Induction Cooking Heater",
+                "Panasonic Slimline Induction Cooktop"
+              ],
+              "ActualSales": [28, 18],
+              "RegularizedSales": [28, 18],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 46,
+              "SalesTarget": 45,
+              "IncentiveAmount": 1000,
+              "PerformanceRange": "100%+"
+            },
+            {
+              "Id": 5,
+              "SalesProductName": "Refrigerators",
+              "Products": [
+                "400L Prime Convertible Smart Inverter Refrigerator",
+                "400L 2 Star Prime Convertible Smart Inverter Refrigerator"
+              ],
+              "ActualSales": [3, 2],
+              "RegularizedSales": [3, 2],
+              "Remarks": {
+                "HasAttachment": true,
+                "HasDocument": true
+              },
+              "OverallRegularizedSales": 5,
+              "SalesTarget": 15,
+              "IncentiveAmount": null,
+              "PerformanceRange": "<80%"
+            }
+          ]
         },
-        {
-          "Id": 4,
-          "SalesProductName": "Induction Cooktops",
-          "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
-          "ActualSales": [32],
-          "RegularizedSales": [46],
-          "Remarks": {
-            "HasAttachment": true,
-            "HasDocument": true
-          },
-          "OverallRegularizedSales": 46,
-          "SalesTarget": 45,
-          "IncentiveAmount": 1000,
-          "PerformanceRange": "100%+"
-        },
-        {
-          "Id": 5,
-          "SalesProductName": "Refrigerators",
-          "Products": ["Panasonic 20L Solo Microwave Oven NN-ST26JMFDG"],
-          "ActualSales": [5],
-          "RegularizedSales": [null],
-          "Remarks": {
-            "HasAttachment": true,
-            "HasDocument": true
-          },
-          "OverallRegularizedSales": 5,
-          "SalesTarget": 15,
-          "IncentiveAmount": null,
-          "PerformanceRange": "<80%"
+        "MonthlySales": {
+          "Title": "May 2026 Sales",
+          "Columns": [
+            {
+              "Key": "SalesDate",
+              "Label": "Date",
+              "IsFilterable": true,
+              "Type": "date",
+              "Icon": "LuCalendar"
+            },
+            {
+              "Key": "SalesCategoryName",
+              "Label": "Category",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesProductName",
+              "Label": "Product",
+              "Icon": "IoSearch",
+              "IsFilterable": true
+            },
+            {
+              "Key": "SalesQuantity",
+              "Label": "Quantity",
+              "IsFilterable": false,
+              "IsSortable": true
+            },
+            {
+              "Key": "Attachment",
+              "Label": "Attachment",
+              "IsFilterable": false
+            },
+            {
+              "Key": "SubmittedDate",
+              "Label": "Submitted On",
+              "IsFilterable": true,
+              "Icon": "FaSlidersH"
+            }
+          ],
+          "Rows": [
+            {
+              "Id": 1,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-mixer-grinder-01.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 2,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Mixer Grinders",
+              "SalesProductName": "Panasonic Monster Mixer Grinder 750 Watts",
+              "SalesQuantity": 19,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 3,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-microwave-03.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 4,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Microwave Ovens",
+              "SalesProductName": "Panasonic 23L Convection Microwave Oven",
+              "SalesQuantity": 14,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 5,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-rice-cooker-05.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 6,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Rice Cookers",
+              "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
+              "SalesQuantity": 16,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 7,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-induction-cooktop-07.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 8,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Induction Cooktops",
+              "SalesProductName": "Panasonic Slimline Induction Cooktop",
+              "SalesQuantity": 23,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 9,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 3,
+              "Attachment": {
+                "IsAvailable": true,
+                "Label": "View",
+                "FileName": "ps0099-refrigerator-09.pdf"
+              },
+              "SubmittedDate": "2026-05-02"
+            },
+            {
+              "Id": 10,
+              "SalesDate": "2026-05-02",
+              "SalesCategoryName": "Refrigerators",
+              "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
+              "SalesQuantity": 2,
+              "Attachment": {
+                "IsAvailable": false,
+                "Label": "--",
+                "FileName": null
+              },
+              "SubmittedDate": "2026-05-02"
+            }
+          ]
         }
-      ]
-    },
-
-    "MonthlySales": {
-      "Title": "May 2026 Sales",
-      "Columns": [
-        {
-          "Key": "SalesDate",
-          "Label": "Date",
-          "IsFilterable": true,
-          "Type": "date",
-          "Icon": "LuCalendar"
-        },
-        {
-          "Key": "SalesProductName",
-          "Label": "Category",
-          "Icon": "IoSearch",
-          "IsFilterable": true
-        },
-        {
-          "Key": "SalesProductName",
-          "Label": "Product",
-          "Icon": "IoSearch",
-          "IsFilterable": true
-        },
-        {
-          "Key": "SalesQuantity",
-          "Label": "Quantity",
-          "IsFilterable": false,
-          "IsSortable": true
-        },
-        {
-          "Key": "Attachment",
-          "Label": "Attachment",
-          "IsFilterable": false
-        },
-        {
-          "Key": "SubmittedDate",
-          "Label": "Submitted On",
-          "IsFilterable": true,
-          "Icon": "FaSlidersH"
-        }
-      ],
-      "Rows": [
-        {
-          "Id": 1,
-          "SalesDate": "2026-05-01",
-          "SalesCategoryName": "Mixer Grinders",
-          "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": true,
-            "Label": "View",
-            "FileName": "mixer-grinder-01.pdf"
-          },
-          "SubmittedDate": "2026-05-02"
-        },
-        {
-          "Id": 2,
-          "SalesDate": "2026-05-01",
-          "SalesCategoryName": "Mixer Grinders",
-          "SalesProductName": "Panasonic MX-AC300-H 550W Mixer Grinder",
-          "SalesQuantity": 2,
-          "Attachment": {
-            "IsAvailable": false,
-            "Label": "--",
-            "FileName": null
-          },
-          "SubmittedDate": "2026-05-02"
-        },
-        {
-          "Id": 3,
-          "SalesDate": "2026-05-01",
-          "SalesCategoryName": "Rice Cookers",
-          "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": true,
-            "Label": "View",
-            "FileName": "rice-cooker-01.pdf"
-          },
-          "SubmittedDate": "2026-05-02"
-        },
-        {
-          "Id": 4,
-          "SalesDate": "2026-05-02",
-          "SalesCategoryName": "Microwave Ovens",
-          "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": false,
-            "Label": "--",
-            "FileName": null
-          },
-          "SubmittedDate": "2026-05-05"
-        },
-        {
-          "Id": 5,
-          "SalesDate": "2026-05-02",
-          "SalesCategoryName": "Induction Cooktops",
-          "SalesProductName": "Panasonic KZ-11BP Induction Cooking Heater",
-          "SalesQuantity": 2,
-          "Attachment": {
-            "IsAvailable": false,
-            "Label": "--",
-            "FileName": null
-          },
-          "SubmittedDate": "2026-05-05"
-        },
-        {
-          "Id": 6,
-          "SalesDate": "2026-05-02",
-          "SalesCategoryName": "Rice Cookers",
-          "SalesProductName": "Panasonic Steel XS Electric Rice Cooker",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": true,
-            "Label": "View",
-            "FileName": "rice-cooker-02.pdf"
-          },
-          "SubmittedDate": "2026-05-05"
-        },
-        {
-          "Id": 7,
-          "SalesDate": "2026-05-03",
-          "SalesCategoryName": "Refrigerators",
-          "SalesProductName": "400L Prime Convertible Smart Inverter Refrigerator",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": false,
-            "Label": "--",
-            "FileName": null
-          },
-          "SubmittedDate": "2026-05-06"
-        },
-        {
-          "Id": 8,
-          "SalesDate": "2026-05-03",
-          "SalesCategoryName": "Microwave Ovens",
-          "SalesProductName": "Panasonic 20L Solo Microwave Oven NN-ST26JMFDG",
-          "SalesQuantity": 2,
-          "Attachment": {
-            "IsAvailable": true,
-            "Label": "View",
-            "FileName": "microwave-01.pdf"
-          },
-          "SubmittedDate": "2026-05-06"
-        },
-        {
-          "Id": 9,
-          "SalesDate": "2026-05-04",
-          "SalesCategoryName": "Rice Cookers",
-          "SalesProductName": "Panasonic SR-WA 18-J 660-Watt Rice Cooker",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": true,
-            "Label": "View",
-            "FileName": "rice-cooker-03.pdf"
-          },
-          "SubmittedDate": "2026-05-09"
-        },
-        {
-          "Id": 10,
-          "SalesDate": "2026-05-05",
-          "SalesCategoryName": "Refrigerators",
-          "SalesProductName": "400L 2 Star Prime Convertible Smart Inverter Refrigerator",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": false,
-            "Label": "--",
-            "FileName": null
-          },
-          "SubmittedDate": "2026-05-11"
-        },
-        {
-          "Id": 11,
-          "SalesDate": "2026-05-06",
-          "SalesCategoryName": "Mixer Grinders",
-          "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
-          "SalesQuantity": 1,
-          "Attachment": {
-            "IsAvailable": true,
-            "Label": "View",
-            "FileName": "mixer-grinder-02.pdf"
-          },
-          "SubmittedDate": "2026-05-12"
-        },
-        {
-          "Id": 12,
-          "SalesDate": "2026-05-06",
-          "SalesCategoryName": "Mixer Grinders",
-          "SalesProductName": "Panasonic MX-AC300-H 550W Mixer Grinder",
-          "SalesQuantity": 2,
-          "Attachment": {
-            "IsAvailable": false,
-            "Label": "--",
-            "FileName": null
-          },
-          "SubmittedDate": "2026-05-12"
-        }
-      ]
+      }
     }
-  }
+  ]
 }

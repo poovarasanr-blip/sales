@@ -34,7 +34,7 @@
         "icon": "./src/assets/icons/SideBar/SalesIcon.svg",
         "activeIcon": "./src/assets/icons/SideBar/SalesActiveIcon.svg",
         "name": "Sales",
-        "route": "/actualSales"
+        "route": "/Sales"
       },
       {
         "icon": "./src/assets/icons/SideBar/IncentiveIcon.svg",
@@ -129,6 +129,7 @@
       }
     },
     "Filters": {
+      "Title": "Filter",
       "Month": "2026-05",
       "ManagerFilter": "all",
       "ManagerOptions": [
@@ -155,6 +156,20 @@
           "Type": "DROPDOWN"
         }
       ]
+    },
+    "NoDataFound": {
+      "Title": "Looks like empty",
+      "SubTitle": "Let’s add actual sales using the bulk upload option"
+    },
+    "BuldUploadcard": {
+      "CardTitle": "Bulk Upload",
+      "CardSubTitle": "Download the sample file, fill in the required data, and upload it",
+      "DownloadButtonText": "Sample Document",
+      "DownloadIcon": "LuDownload",
+      "UploadIcon": "LuFileUp",
+      "UploadLabel1": "Drag & Drop or",
+      "UploadLabel2": "Browse",
+      "UploadLabel3": "your files here"
     }
   },
   "ActualSales": {
@@ -194,6 +209,7 @@
       }
     },
     "Filters": {
+      "Title": "Filter",
       "Month": "2026-05",
       "ManagerFilter": "all",
       "ManagerOptions": [
@@ -220,6 +236,20 @@
           "Type": "DROPDOWN"
         }
       ]
+    },
+    "NoDataFound": {
+      "Title": "Looks like empty",
+      "SubTitle": "Let’s add actual sales using the bulk upload option"
+    },
+    "BuldUploadcard": {
+      "CardTitle": "Bulk Upload",
+      "CardSubTitle": "Let’s add actual sales using the bulk upload option",
+      "DownloadButtonText": "Sample Document",
+      "DownloadIcon": "LuDownload",
+      "UploadIcon": "LuFileUp",
+      "UploadLabel1": "Drag & Drop or",
+      "UploadLabel2": "Browse",
+      "UploadLabel3": "your files here"
     }
   },
   "Sales": {
@@ -279,7 +309,7 @@
       "GetResultsButton": {
         "Id": "GETRESULT",
         "Name": "Get Results",
-        "Icon": "CgSearch"
+        "Icon": "FiSearch"
       },
       "RemoveButton": {
         "Id": "REMOVE",
@@ -290,7 +320,21 @@
         "Id": "APPROVE",
         "Name": "Approve",
         "Icon": "LuCircleCheckBig"
+      },
+      "ClearButton": {
+        "Id": "CLEAR",
+        "Name": "Clear",
+        "Icon": "LiaTimesSolid"
+      },
+      "SearchInput": {
+        "Id": "SEARCH",
+        "Placeholder": "Search...",
+        "Icon": "RiSearchLine"
       }
+    },
+    "NoDataFound": {
+      "Title": "Looks like empty",
+      "SubTitle": "No sales records found for this filter"
     }
   },
   "Incentive": {
@@ -323,6 +367,7 @@
       }
     },
     "Filters": {
+      "Title": "Filter",
       "Month": "2026-05",
       "ManagerFilter": "all",
       "ManagerOptions": [
@@ -349,6 +394,10 @@
           "Type": "DROPDOWN"
         }
       ]
+    },
+    "NoDataFound": {
+      "Title": "Looks like empty",
+      "SubTitle": ""
     }
   },
   "NoDataFound": {

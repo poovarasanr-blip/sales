@@ -1,0 +1,129 @@
+{
+  "managers": {
+    "status": "confirmed-from-ui",
+    "notes": "Reused identically by the Manager dropdown on Employee Sales Target, Actual Sales, Incentive, and Sales Approval filter cards. UI always prepends its own synthetic 'All' option on top of this list.",
+    "request": {
+      "search": ""
+    },
+    "response": {
+      "data": [
+        { "managerCode": "PS0987", "managerName": "Pawan Kumar" },
+        { "managerCode": "PS9546", "managerName": "Anandh Narayanan" }
+      ]
+    }
+  },
+  "productCategories": {
+    "status": "confirmed-from-ui",
+    "notes": "Source: productsConfig.json. This is the one place in the app that already models a real relational hierarchy (Category > SubCategory > Product) with numeric IDs. Recommended as the single source of truth for 'category' everywhere else in the app instead of the free-text category strings currently typed into Employee Sales Target / Actual Sales / Incentive / Sales.",
+    "request": {
+      "search": ""
+    },
+    "response": {
+      "data": [
+        {
+          "categoryId": 1,
+          "categoryName": "Mixer Grinder",
+          "code": "CAT_MIXER",
+          "targetQuantity": 200,
+          "actualQuantity": 600,
+          "eligibleIncentive": 500,
+          "description": "All kitchen mixer grinders and juicer models",
+          "companyId": 1,
+          "clientId": 10,
+          "status": 1,
+          "subCategories": [
+            {
+              "subCategoryId": 11,
+              "subCategoryName": "Standard Mixer Grinder",
+              "code": "SUBCAT_STD_MIXER",
+              "description": "Standard 3 jar mixer grinders",
+              "products": [
+                {
+                  "productId": 301,
+                  "productCode": "PROD_MX-AC400",
+                  "productName": "Panasonic MX-AC400-H 550W Mixer Grinder",
+                  "description": "Panasonic 550W Mixer Grinder with 3 Stainless Steel Jars",
+                  "price": 6200,
+                  "effectiveDate": "2026-01-01",
+                  "eligibleIncentive": 500,
+                  "companyId": 1,
+                  "clientId": 10,
+                  "status": 1
+                },
+                {
+                  "productId": 302,
+                  "productCode": "PROD_MX-AC430",
+                  "productName": "Panasonic MX-AC430-H 550W Mixer Grinder",
+                  "description": "Panasonic 550W Mixer Grinder with 3 Stainless Steel Jars",
+                  "price": 6200,
+                  "effectiveDate": "2026-01-01",
+                  "eligibleIncentive": 500,
+                  "companyId": 1,
+                  "clientId": 10,
+                  "status": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "categoryId": 2,
+          "categoryName": "Microwave Oven",
+          "code": "CAT_MICROWAVE",
+          "targetQuantity": 250,
+          "actualQuantity": 900,
+          "eligibleIncentive": 700,
+          "description": "All microwave oven models",
+          "companyId": 1,
+          "clientId": 10,
+          "status": 1,
+          "subCategories": [
+            {
+              "subCategoryId": 21,
+              "subCategoryName": "Solo Microwave Oven",
+              "code": "SUBCAT_SOLO_MICROWAVE",
+              "description": "Solo microwave oven models",
+              "products": [
+                {
+                  "productId": 201,
+                  "productCode": "PROD-NNST46JBG",
+                  "productName": "Panasonic NN-ST46JBG",
+                  "description": "Panasonic Solo Microwave Oven",
+                  "price": 9200,
+                  "effectiveDate": "2026-01-01",
+                  "eligibleIncentive": 700,
+                  "companyId": 1,
+                  "clientId": 10,
+                  "status": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dealers": {
+    "status": "confirmed-from-ui",
+    "notes": "Dropdown exists on the Dashboard 'Sales - Dealer' widget. Its onChange handler is currently an unimplemented stub in the frontend code, so selection behavior itself is not confirmed — only that the dropdown and its option list exist.",
+    "request": {},
+    "response": {
+      "data": [
+        { "dealerId": "D001", "dealerName": "Vasanth & Co - Chennai" },
+        { "dealerId": "D002", "dealerName": "Vasanth & Co - Benglore" }
+      ]
+    }
+  },
+  "currentUser": {
+    "status": "needs-backend-confirmation",
+    "notes": "No login screen exists anywhere in this app (a prior session-handling implementation was built and then fully reverted). The header nonetheless renders a 'Manager' role badge and an avatar defaulting to initials 'SJ', implying a session exists. Confirm with the client whether auth is in scope for this phase before building this.",
+    "request": {},
+    "response": {
+      "userId": "U001",
+      "name": "S. Jayakumar",
+      "initials": "SJ",
+      "role": "Manager",
+      "avatarUrl": null
+    }
+  }
+}

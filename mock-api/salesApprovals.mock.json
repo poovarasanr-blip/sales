@@ -1,0 +1,104 @@
+{
+  "list": {
+    "status": "confirmed-from-mock-config",
+    "notes": "The Sales screen itself is still an empty stub in the UI code (no logic wired), but its mock data (salesConfig.json) and layout config (pageLayout.json) are fully specified, so the intended shape is knowable. DESIGN NOTE: the existing mock models Pending/Approved/Rejected as three separate arrays; this document consolidates them into one list with a status field instead, because the Approved/Rejected mock records already carry a status field that Pending's doesn't — it's really one resource with three states, not three resources. achievementPercentage is returned as a raw number (e.g. 84.44) rather than the mock's pre-bucketed string band, so the frontend can apply the 80-85/86-90/100+ legend thresholds itself.",
+    "request": {
+      "status": "pending",
+      "month": "2026-05",
+      "managerCode": "",
+      "search": "",
+      "page": 1,
+      "pageSize": 10
+    },
+    "response": {
+      "data": [
+        {
+          "employeeCode": "PS0019",
+          "employeeName": "Aarav Sharma",
+          "dealerName": "Vasanth & Co - Chennai",
+          "managerCode": "PS0987",
+          "managerName": "Pawan Kumar",
+          "submittedDate": "2026-05-02",
+          "categories": [
+            { "categoryId": 101, "categoryName": "Mixer Grinders", "actualSales": 38, "regularizedSales": 38, "salesTarget": 45, "incentiveAmount": 600, "achievementPercentage": 84.44 },
+            { "categoryId": 102, "categoryName": "Microwave Ovens", "actualSales": 28, "regularizedSales": 28, "salesTarget": 30, "incentiveAmount": 600, "achievementPercentage": 93.33 },
+            { "categoryId": 103, "categoryName": "Rice Cookers", "actualSales": 32, "regularizedSales": 32, "salesTarget": 40, "incentiveAmount": 900, "achievementPercentage": 80.0 },
+            { "categoryId": 104, "categoryName": "Induction Cooktops", "actualSales": 46, "regularizedSales": 46, "salesTarget": 45, "incentiveAmount": 1000, "achievementPercentage": 102.22 },
+            { "categoryId": 105, "categoryName": "Refrigerators", "actualSales": 5, "regularizedSales": 5, "salesTarget": 15, "incentiveAmount": 0, "achievementPercentage": 33.33 }
+          ],
+          "actualIncentiveAmount": 3100,
+          "adjustmentAmount": 0,
+          "finalIncentiveAmount": 3100,
+          "status": "pending",
+          "rejectedDate": null
+        }
+      ],
+      "counts": { "pending": 95, "approved": 0, "rejected": 0 },
+      "pagination": { "page": 1, "pageSize": 10, "totalItems": 95, "totalPages": 10 }
+    }
+  },
+  "updateAdjustment": {
+    "status": "suggested",
+    "notes": "The Adjustment(₹) column is marked IsEditable in the config, mirroring the Incentive screen's identical inline-edit pattern.",
+    "request": {
+      "employeeCode": "PS0019",
+      "month": "2026-05",
+      "adjustment": 0
+    },
+    "response": {
+      "employeeCode": "PS0019",
+      "actualIncentiveAmount": 3100,
+      "adjustmentAmount": 0,
+      "finalIncentiveAmount": 3100
+    }
+  },
+  "approve": {
+    "status": "needs-backend-confirmation",
+    "notes": "A checkmark icon exists per row in the reference design, but the ApproveModal component behind it is a completely empty stub in the code — confirm whether approval is instant on click or opens a confirmation/remarks step first, and whether remarks is mandatory (the Incentive Activity Log's remarks field suggests that's this app's convention for incentive-affecting actions).",
+    "request": {
+      "employeeCode": "PS0019",
+      "month": "2026-05",
+      "remarks": ""
+    },
+    "response": {
+      "employeeCode": "PS0019",
+      "status": "approved"
+    }
+  },
+  "reject": {
+    "status": "needs-backend-confirmation",
+    "notes": "Same caveat as approve. Also unconfirmed: whether a rejection reason is mandatory.",
+    "request": {
+      "employeeCode": "PS0019",
+      "month": "2026-05",
+      "reason": ""
+    },
+    "response": {
+      "employeeCode": "PS0019",
+      "status": "rejected",
+      "rejectedDate": "2026-05-03"
+    }
+  },
+  "bulkApprove": {
+    "status": "needs-backend-confirmation",
+    "notes": "Row-selection checkboxes plus a top-level 'Approve' button exist in the layout config, implying a bulk action over the checked rows — exact contract not wired in code.",
+    "request": {
+      "month": "2026-05",
+      "employeeCodes": ["PS0019", "PS0099"]
+    },
+    "response": {
+      "approvedCount": 2
+    }
+  },
+  "bulkRejectOrRemove": {
+    "status": "needs-backend-confirmation",
+    "notes": "The top-level button is literally labeled 'Remove', not 'Reject' — confirm with the client whether this rejects the selected records (they'd move to the Rejected tab) or deletes them from the pending queue outright.",
+    "request": {
+      "month": "2026-05",
+      "employeeCodes": ["PS0019", "PS0099"]
+    },
+    "response": {
+      "processedCount": 2
+    }
+  }
+}

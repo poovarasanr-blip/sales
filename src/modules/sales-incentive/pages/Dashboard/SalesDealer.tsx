@@ -1,8 +1,4 @@
-import React from "react";
-import type {
-  chartValues,
-  SalesDealerProps,
-} from "../../types/salesIncentive.types";
+import type { SalesDealerProps } from "../../types/salesIncentive.types";
 import HorizontalGroupedBarChart from "../../../../shared/components/ui/ComparisonChart/Horizontalgroupedbarchart";
 import CustomDropdown from "../../../../shared/components/forms/FormSelect/CustomDropdown";
 
@@ -12,7 +8,7 @@ export default function SalesDealer({
   charData,
 }: SalesDealerProps) {
   const filterChartData = charData?.Branches?.find(
-    (branch: chartValues[]) => branch?.BranchName == "Vasanth & Co - Chennai",
+    (branch) => branch?.BranchName === "Vasanth & Co - Chennai",
   );
 
   const products = filterChartData?.Products;
@@ -44,11 +40,11 @@ export default function SalesDealer({
       <CustomDropdown
         className="my-3"
         options={[]}
-        onChange={function (value: string): void {
+        onChange={function (_value: string): void {
           throw new Error("Function not implemented.");
         }}
       />
-      <HorizontalGroupedBarChart data={products} />
+      <HorizontalGroupedBarChart data={products ?? []} />
     </div>
   );
 }

@@ -19,6 +19,7 @@ interface CustomDropdownProps {
   upArrow?: string;
   downArrow?: string;
   iconSize?: number;
+  titleTextColor?: string;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({
@@ -34,6 +35,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
   borderWidth = "border-1",
   upArrow = "FaAngleUp",
   downArrow = "FaAngleDown",
+  titleTextColor = "text-gray",
   iconSize = 14,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -62,7 +64,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     <div className={`relative ${className}`} ref={wrapperRef}>
       {label && (
         <div className="mb-1">
-          <p className="text-xs font-medium text-gray-500">{label}</p>
+          <p className={`text-xs font-normal ${titleTextColor}`}>{label}</p>
         </div>
       )}
 
@@ -89,7 +91,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
       </button>
 
       {isOpen && (
-        <ul className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl border border-gray-100 bg-white py-1 shadow-card-xl">
+        <ul className="absolute z-50 mt-1 min-h-60 w-full overflow-auto rounded-xl border border-gray-100 bg-white py-1 shadow-card-xl">
           {options.length === 0 && (
             <li className="px-4 py-2 text-sm text-gray-400">No options</li>
           )}

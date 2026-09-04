@@ -1,0 +1,86 @@
+{
+  "list": {
+    "status": "suggested",
+    "notes": "In-memory only in the current UI — populated exclusively via the bulk-upload flow, no load-on-open call exists. search matches Employee Name, Employee Code, Manager Name, and Category.",
+    "request": {
+      "month": "2026-05",
+      "managerCode": "",
+      "search": "",
+      "page": 1,
+      "pageSize": 10
+    },
+    "response": {
+      "data": [
+        {
+          "employeeCode": "PS0019",
+          "employeeName": "Aarav Sharma",
+          "managerCode": "PS0987",
+          "managerName": "Pawan Kumar",
+          "categories": [
+            { "categoryName": "Mixer Grinders", "actualSales": 35 },
+            { "categoryName": "Rice Cookers", "actualSales": 20 }
+          ]
+        }
+      ],
+      "pagination": { "page": 1, "pageSize": 10, "totalItems": 1, "totalPages": 1 }
+    }
+  },
+  "detail": {
+    "status": "confirmed-from-ui",
+    "notes": "The 'Detailed Sales' button on every row opens a modal with exactly this shape. IMPORTANT INCONSISTENCY: the bulk-upload template's 'Products' column is a single free-text string (e.g. 'Panasonic Mixer Grinder 3 Stainless Steel Jars'), while this detail view expects a structured product array with codes and per-product sales. The two don't currently reconcile — recommend the bulk-upload template capture a product code/ID too.",
+    "request": {
+      "employeeCode": "PS0019",
+      "month": "2026-05"
+    },
+    "response": {
+      "employeeCode": "PS0019",
+      "employeeName": "Aarav Sharma",
+      "role": "",
+      "company": "Vasanth & Co",
+      "location": "Chennai",
+      "managerName": "Pawan Kumar",
+      "month": "2026-05",
+      "categories": [
+        {
+          "categoryName": "Mixer Grinders",
+          "totalSales": 35,
+          "products": [
+            { "productCode": "MG001", "productName": "Panasonic Mixer Grinder 3 Stainless Steel Jars", "actualSales": 12 },
+            { "productCode": "MG002", "productName": "Panasonic Monster Mixer Grinder 750 Watts", "actualSales": 23 }
+          ]
+        },
+        {
+          "categoryName": "Rice Cookers",
+          "totalSales": 20,
+          "products": [
+            { "productCode": "RC001", "productName": "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker", "actualSales": 20 }
+          ]
+        }
+      ]
+    }
+  },
+  "bulkCreate": {
+    "status": "confirmed-from-ui",
+    "notes": "Matches the Excel bulk-upload template columns; Products is optional free text, per the current template (see the inconsistency noted on 'detail' above).",
+    "request": {
+      "rows": [
+        {
+          "employeeCode": "PS0019",
+          "employeeName": "Aarav Sharma",
+          "company": "Vasanth & Co",
+          "location": "Chennai",
+          "managerCode": "PS0987",
+          "managerName": "Pawan Kumar",
+          "month": "2026-05",
+          "categoryName": "Mixer Grinders",
+          "actualSales": 12,
+          "products": "Panasonic Mixer Grinder 3 Stainless Steel Jars"
+        }
+      ]
+    },
+    "response": {
+      "insertedCount": 1,
+      "failedRows": []
+    }
+  }
+}

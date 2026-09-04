@@ -1,0 +1,100 @@
+{
+  "list": {
+    "status": "suggested",
+    "notes": "No load-on-open exists in the current UI — today the Products list only ever gets data during this session via the bulk-upload flow. sortBy is only meaningful for targetQuantity and eligibleIncentive, the only two columns marked sortable in the table config. search matches Category, Sub Category, and Product name.",
+    "request": {
+      "search": "",
+      "sortBy": "targetQuantity",
+      "sortOrder": "desc",
+      "page": 1,
+      "pageSize": 20
+    },
+    "response": {
+      "data": [
+        {
+          "categoryId": 1,
+          "categoryName": "Mixer Grinder",
+          "targetQuantity": 200,
+          "eligibleIncentive": 500,
+          "subCategories": [
+            {
+              "subCategoryId": 11,
+              "subCategoryName": "Standard Mixer Grinder",
+              "products": [
+                { "productId": 301, "productName": "Panasonic MX-AC400-H 550W Mixer Grinder", "effectiveDate": "2026-01-01", "eligibleIncentive": 500 },
+                { "productId": 302, "productName": "Panasonic MX-AC430-H 550W Mixer Grinder", "effectiveDate": "2026-01-01", "eligibleIncentive": 500 }
+              ]
+            }
+          ]
+        }
+      ],
+      "pagination": { "page": 1, "pageSize": 20, "totalItems": 2, "totalPages": 1 }
+    }
+  },
+  "bulkCreate": {
+    "status": "confirmed-from-ui",
+    "notes": "Field names and required-ness match the Excel bulk-upload template exactly (Category / Sub Category / Product / Effective Date / Target Quantity / Eligible Incentive are all required columns). Rows are validated entirely client-side before this call is made in the current app.",
+    "request": {
+      "rows": [
+        {
+          "categoryName": "Mixer Grinder",
+          "subCategoryName": "Standard Mixer Grinder",
+          "productName": "Panasonic MX-AC300-H",
+          "effectiveDate": "2026-01-01",
+          "targetQuantity": 200,
+          "eligibleIncentive": 600
+        },
+        {
+          "categoryName": "Microwave Oven",
+          "subCategoryName": "Solo Microwave Oven",
+          "productName": "Panasonic NN-ST26JMFDG",
+          "effectiveDate": "2026-01-01",
+          "targetQuantity": 250,
+          "eligibleIncentive": 800
+        }
+      ]
+    },
+    "response": {
+      "insertedCount": 2,
+      "failedRows": []
+    }
+  },
+  "update": {
+    "status": "needs-backend-confirmation",
+    "notes": "A pencil (edit) icon renders on every row of the list, but has no click handler wired in the current UI code, so it's unknown whether editing opens an inline row, a modal, or a separate page.",
+    "request": {
+      "productId": 301,
+      "productName": "Panasonic MX-AC400-H 550W Mixer Grinder",
+      "effectiveDate": "2026-01-01",
+      "eligibleIncentive": 500
+    },
+    "response": {
+      "productId": 301,
+      "productName": "Panasonic MX-AC400-H 550W Mixer Grinder",
+      "effectiveDate": "2026-01-01",
+      "eligibleIncentive": 500
+    }
+  },
+  "delete": {
+    "status": "needs-backend-confirmation",
+    "notes": "A trash-can icon renders on every row with no click handler wired.",
+    "request": {
+      "productId": 301
+    },
+    "response": {
+      "success": true
+    }
+  },
+  "history": {
+    "status": "needs-backend-confirmation",
+    "notes": "A history/revert icon renders on every row with no click handler wired; exact semantics (an audit trail vs. a one-click revert-to-previous-value) can't be determined from the UI alone. May reuse the same drawer pattern as the Incentive Activity Log — confirm with the client.",
+    "request": {
+      "productId": 301
+    },
+    "response": {
+      "data": [
+        { "changedAt": "2026-01-01T00:00:00Z", "changedBy": "Admin", "field": "eligibleIncentive", "oldValue": 450, "newValue": 500 }
+      ]
+    }
+  }
+}

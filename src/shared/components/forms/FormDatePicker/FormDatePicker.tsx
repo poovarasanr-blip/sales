@@ -148,7 +148,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
     <div className="flex flex-col gap-2">
       {/* Optional Label */}
       {title && (
-        <label className="text-sm font-medium text-[#373754]">{title}</label>
+        <label className="text-12 font-normal text-darkgray">{title}</label>
       )}
 
       <DatePicker

@@ -1,0 +1,98 @@
+{
+  "list": {
+    "status": "confirmed-from-ui",
+    "notes": "The frontend has an explicit TODO comment naming exactly this call: 'replace with real API call, e.g. fetchIncentiveData(appliedMonth, appliedManager).then(setRows)'. Every employee always carries exactly these 5 fixed categories, in this order: Mixer Grinders, Microwave Ovens, Rice Cookers, Induction Cooktops, Refrigerators.",
+    "request": {
+      "month": "2026-05",
+      "managerCode": "",
+      "search": "",
+      "page": 1,
+      "pageSize": 10
+    },
+    "response": {
+      "data": [
+        {
+          "employeeCode": "PS0019",
+          "employeeName": "Aarav Sharma",
+          "managerCode": "PS0987",
+          "managerName": "Pawan Kumar",
+          "dealerName": "Vasanth & Co - Chennai",
+          "submittedDate": "2026-05-02",
+          "categories": [
+            { "categoryName": "Mixer Grinders", "actual": 38, "regularized": 38, "target": 45, "incentive": 600 },
+            { "categoryName": "Microwave Ovens", "actual": 28, "regularized": 28, "target": 30, "incentive": 600 },
+            { "categoryName": "Rice Cookers", "actual": 32, "regularized": 32, "target": 40, "incentive": 900 },
+            { "categoryName": "Induction Cooktops", "actual": 46, "regularized": 46, "target": 45, "incentive": 1000 },
+            { "categoryName": "Refrigerators", "actual": 5, "regularized": 5, "target": 15, "incentive": null }
+          ],
+          "actualIncentiveAmount": 3100,
+          "adjustmentAmount": -200,
+          "finalIncentiveAmount": 2900
+        }
+      ],
+      "pagination": { "page": 1, "pageSize": 10, "totalItems": 1, "totalPages": 1 }
+    }
+  },
+  "updateAdjustment": {
+    "status": "confirmed-from-ui",
+    "notes": "The pencil icon on the Adjustment(₹) column turns it into an editable input with save (check) / cancel (x) icons — this is that save call.",
+    "request": {
+      "employeeCode": "PS0019",
+      "month": "2026-05",
+      "adjustment": -200
+    },
+    "response": {
+      "employeeCode": "PS0019",
+      "actualIncentiveAmount": 3100,
+      "adjustmentAmount": -200,
+      "finalIncentiveAmount": 2900
+    }
+  },
+  "activityLog": {
+    "status": "confirmed-from-ui",
+    "notes": "The history icon opens this exact drawer. Field names match the app's own ActivityLogEntry type precisely.",
+    "request": {
+      "employeeCode": "PS0019",
+      "month": "2026-05"
+    },
+    "response": {
+      "data": [
+        {
+          "date": "2026-05-22",
+          "time": "13:15",
+          "subject": "Sales",
+          "verb": "approved",
+          "verbColor": "success",
+          "suffix": "and incentive adjusted by HR Manager",
+          "existingIncentive": 3100,
+          "adjustment": 300,
+          "finalIncentive": 3400,
+          "remarks": "Incentive amount revised based on attachments"
+        },
+        {
+          "date": "2026-05-21",
+          "time": "12:40",
+          "subject": "Sales",
+          "verb": "approved",
+          "verbColor": "success",
+          "suffix": "and incentive adjusted by HR Manager",
+          "existingIncentive": 3400,
+          "adjustment": -300,
+          "finalIncentive": 3100,
+          "remarks": ""
+        }
+      ]
+    }
+  },
+  "submitForPayment": {
+    "status": "confirmed-from-ui",
+    "notes": "Bulk action triggered by the top-right 'Submit for Payment' button, applied to the currently filtered/listed set of employees.",
+    "request": {
+      "month": "2026-05",
+      "managerCode": ""
+    },
+    "response": {
+      "submittedCount": 42
+    }
+  }
+}

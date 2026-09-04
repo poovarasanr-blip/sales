@@ -1,4 +1,3 @@
-import React from "react";
 import type { SalesOverviewProps } from "../../types/salesIncentive.types";
 import CustomBarChart from "../../../../shared/components/ui/ComparisonChart/CustomBarChart";
 

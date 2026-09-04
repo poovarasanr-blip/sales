@@ -14,6 +14,7 @@ export interface ProductUploadRow {
   "Effective Date": string;
   "Target Quantity": number;
   "Eligible Incentive (₹)": number;
+  [key: string]: string | number;
 }
 
 export const PRODUCT_UPLOAD_COLUMNS: BulkUploadColumnConfig<ProductUploadRow>[] =

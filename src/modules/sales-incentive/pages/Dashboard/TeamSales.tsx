@@ -1,4 +1,3 @@
-import React from "react";
 import type {
   CategoryGroup,
   GroupedTableColumn,
@@ -187,7 +186,7 @@ export default function TeamSales({ pageLayOutData, labels }: TeamSalesProps) {
             borderWidth="border-0"
             // className="my-2"
             options={[]}
-            onChange={function (value: string): void {
+            onChange={function (_value: string): void {
               throw new Error("Function not implemented.");
             }}
           />

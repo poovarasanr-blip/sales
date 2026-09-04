@@ -1,0 +1,86 @@
+{
+  "summary": {
+    "status": "confirmed-from-ui",
+    "notes": "One JSON object backs 5 dashboard widgets: Sales Overview, Sales Submissions, Sales-Dealer, Top 10 Achieved Team, Team Sales. Every response field below is confirmed against the app's own dashboardConfig.json mock. The month selector button and both widget dropdowns (dealer, and the unlabeled Team Sales employee dropdown) render in the UI but have no wired onChange/onClick yet, so the request parameters are the intended shape, not yet a proven contract.",
+    "request": {
+      "month": "2026-05",
+      "dealerId": "",
+      "employeeId": ""
+    },
+    "response": {
+      "salesOverview": {
+        "title": "Sales Overview",
+        "date": "May 2025",
+        "descriptionText": "Target vs Sales vs Actual",
+        "legend": [
+          { "label": "Target", "color": "#FFD2AD" },
+          { "label": "Achieved", "color": "#BCB1FF" },
+          { "label": "Actual", "color": "#A8EACF" }
+        ],
+        "yAxisLabels": [0, 25, 50, 75, 100, 125],
+        "series": [
+          { "categoryName": "Mixer Grinders", "target": 12, "achieved": 55, "actual": 85 },
+          { "categoryName": "Microwave Ovens", "target": 12, "achieved": 55, "actual": 85 },
+          { "categoryName": "Rice Cookers", "target": 12, "achieved": 55, "actual": 85 },
+          { "categoryName": "Induction Cooktops", "target": 12, "achieved": 55, "actual": 85 },
+          { "categoryName": "Refrigerators", "target": 12, "achieved": 55, "actual": 85 }
+        ]
+      },
+      "salesSubmissions": {
+        "title": "Sales Submissions",
+        "date": "May 2025",
+        "metrics": [
+          { "key": "managersSubmitted", "label": "Managers Submitted", "value": 38, "backgroundColor": "#D9F6EA", "textColor": "#25B480", "icon": "IoMdCheckmarkCircleOutline" },
+          { "key": "managersYetToSubmit", "label": "Managers Yet to Submit", "value": 32, "backgroundColor": "#FFE2F2", "textColor": "#FF67BA", "icon": "LuFileInput" },
+          { "key": "salesYetToReview", "label": "Sales Yet to Review", "value": 123, "backgroundColor": "#FFF4EA", "textColor": "#FFB54D", "icon": "LuClock3" },
+          { "key": "employeesGotIncentive", "label": "Employee(s) got Incentive", "value": 132, "backgroundColor": "#F1EEFF", "textColor": "#5C67FD", "icon": "AiOutlineTrophy" }
+        ]
+      },
+      "salesDealer": {
+        "title": "Sales - Dealer",
+        "date": "May 2025",
+        "descriptionText": "Target vs Sales vs Actual",
+        "dealerOptions": ["Vasanth & Co - Chennai", "Vasanth & Co - Benglore"],
+        "selectedDealer": "Vasanth & Co - Chennai",
+        "legend": [
+          { "label": "Target", "color": "#FFD2AD" },
+          { "label": "Achieved", "color": "#BCB1FF" },
+          { "label": "Actual", "color": "#A8EACF" }
+        ],
+        "series": [
+          { "categoryName": "Mixer Grinders", "target": 60, "achieved": 48, "actual": 12 },
+          { "categoryName": "Microwave Ovens", "target": 60, "achieved": 35, "actual": 25 },
+          { "categoryName": "Rice Cookers", "target": 60, "achieved": 52, "actual": 8 }
+        ]
+      },
+      "topAchievedTeam": {
+        "title": "Top 10 Achieved Team",
+        "date": "May 2025",
+        "totalAchievement": 125383,
+        "totalEmployees": 56,
+        "employees": [
+          { "employeeId": "1", "employeeName": "Pawan Kumar", "employeeCount": 12, "percentage": 21.93, "amount": 27500, "color": "#AAD5E3" },
+          { "employeeId": "2", "employeeName": "Priya Patel", "employeeCount": 8, "percentage": 15.0, "amount": 18800, "color": "#FFB9DF" },
+          { "employeeId": "3", "employeeName": "Kishore Kumar", "employeeCount": 7, "percentage": 13.48, "amount": 16900, "color": "#96CCFF" }
+        ]
+      },
+      "teamSales": {
+        "title": "Team Sales",
+        "date": "May 2025",
+        "descriptionText": "Target vs Sales vs Actual",
+        "employee": { "employeeId": "101", "employeeName": "Pawan Kumar" },
+        "summary": { "target": 290, "achieved": 237, "actual": 202 },
+        "legend": [
+          { "label": "80-85%", "color": "#F8B4E2" },
+          { "label": "86-90%", "color": "#FFC89A" },
+          { "label": "100%+", "color": "#A8EBCF" }
+        ],
+        "products": [
+          { "id": 1, "categoryName": "Mixer Grinders", "target": 45, "achieved": 38, "actual": 38, "achievementPercentage": 86.67 },
+          { "id": 2, "categoryName": "Microwave Ovens", "target": 30, "achieved": 28, "actual": 24, "achievementPercentage": 93.33 },
+          { "id": 3, "categoryName": "Rice Cookers", "target": 40, "achieved": 32, "actual": 29, "achievementPercentage": 80.0 }
+        ]
+      }
+    }
+  }
+}

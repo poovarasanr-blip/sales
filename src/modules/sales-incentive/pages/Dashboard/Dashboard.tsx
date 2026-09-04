@@ -17,7 +17,7 @@ export default function Dashboard() {
     })) ?? [];
 
   return (
-    <div className="px-h pt-v overflow-scroll scrollbar-hide bg-bgcolor">
+    <div className="px-h pt-12 overflow-scroll scrollbar-hide bg-bgcolor">
       <div className="flex items-center justify-between">
         <p className="text-heading-6 text-darkgray">
           {PageLayOut?.Dashboard?.PageTitle}

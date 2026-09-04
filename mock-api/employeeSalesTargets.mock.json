@@ -1,0 +1,66 @@
+{
+  "list": {
+    "status": "suggested",
+    "notes": "In-memory only in the current UI — populated exclusively via the bulk-upload flow, no load-on-open call exists. search matches Employee Name, Employee Code, Manager Name, and Category. This screen has no row-level action icons at all (read-only list; data entry only via bulk upload).",
+    "request": {
+      "month": "2026-05",
+      "managerCode": "",
+      "search": "",
+      "page": 1,
+      "pageSize": 10
+    },
+    "response": {
+      "data": [
+        {
+          "employeeCode": "PS0019",
+          "employeeName": "Aarav Sharma",
+          "company": "Vasanth & Co",
+          "location": "Chennai",
+          "managerCode": "PS0987",
+          "managerName": "Pawan Kumar",
+          "month": "2026-05",
+          "categories": [
+            { "categoryName": "Mixer Grinders", "salesTarget": 45 },
+            { "categoryName": "Microwave Ovens", "salesTarget": 25 },
+            { "categoryName": "Rice Cookers", "salesTarget": 60 }
+          ]
+        }
+      ],
+      "pagination": { "page": 1, "pageSize": 10, "totalItems": 1, "totalPages": 1 }
+    }
+  },
+  "bulkCreate": {
+    "status": "confirmed-from-ui",
+    "notes": "Matches the Excel bulk-upload template columns and required-ness exactly.",
+    "request": {
+      "rows": [
+        {
+          "employeeCode": "PS0019",
+          "employeeName": "Aarav Sharma",
+          "company": "Vasanth & Co",
+          "location": "Chennai",
+          "managerCode": "PS0987",
+          "managerName": "Pawan Kumar",
+          "month": "2026-05",
+          "categoryName": "Mixer Grinders",
+          "salesTarget": 45
+        },
+        {
+          "employeeCode": "PS0019",
+          "employeeName": "Aarav Sharma",
+          "company": "Vasanth & Co",
+          "location": "Chennai",
+          "managerCode": "PS0987",
+          "managerName": "Pawan Kumar",
+          "month": "2026-05",
+          "categoryName": "Microwave Ovens",
+          "salesTarget": 25
+        }
+      ]
+    },
+    "response": {
+      "insertedCount": 2,
+      "failedRows": []
+    }
+  }
+}

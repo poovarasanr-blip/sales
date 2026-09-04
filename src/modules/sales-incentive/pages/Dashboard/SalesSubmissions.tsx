@@ -1,4 +1,3 @@
-import React from "react";
 import type { SalesSubmissionsProps } from "../../types/salesIncentive.types";
 import IconRenderer from "../../../../shared/components/ui/IconRender/IconRenderer";
 

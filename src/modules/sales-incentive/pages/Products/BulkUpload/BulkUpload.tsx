@@ -10,6 +10,10 @@ import {
   type ProductUploadRow,
 } from "../../../config/Productbulkupload";
 import { showToast } from "../../../../../shared/components/ui/CustomToast/UseToast";
+import InvalidRecordsTable, {
+  type InvalidRow,
+} from "../../../../../shared/components/ui/DataTable/InvalidRecordsTable";
+import { PRODUCT_UPLOAD_COLUMNS } from "../../../config/Productbulkupload";
 
 interface BulkUploadLocationState {
   validRows: RowValidationResult<ProductUploadRow>[];
@@ -23,8 +27,17 @@ export default function BulkUpload() {
   const location = useLocation();
   const state = location.state as BulkUploadLocationState | undefined;
 
-  const validRows = state?.validRows ?? [];
-  const invalidRows = state?.invalidRows ?? [];
+  const [validRows, setValidRows] = useState(() =>
+    (state?.validRows ?? []).map((r, i) => ({ ...r, __id: `val-${i}` })),
+  );
+  const [invalidRows, setInvalidRows] = useState<
+    InvalidRow<ProductUploadRow>[]
+  >(() =>
+    (state?.invalidRows ?? []).map((r, i) => ({
+      __id: `inv-${i}`,
+      data: r.data,
+    })),
+  );
 
   const [activeTab, setActiveTab] = useState<TabKey>(
     validRows.length > 0 || invalidRows.length === 0 ? "valid" : "invalid",
@@ -35,7 +48,16 @@ export default function BulkUpload() {
     () => groupProductRows(validRows.map((r) => r.data)),
     [validRows],
   );
+  const handleRemoveInvalid = (ids: string[]) =>
+    setInvalidRows((prev) => prev.filter((r) => !ids.includes(r.__id)));
 
+  const handleRowValidated = (row: ProductUploadRow, id: string) => {
+    setInvalidRows((prev) => prev.filter((r) => r.__id !== id));
+    setValidRows((prev) => [
+      ...prev,
+      { data: row, __id: `val-${Date.now()}`, rowNumber: prev.length + 1, errors: [] },
+    ]);
+  };
   const handleCancel = () => navigate("/product");
 
   const handleAddProducts = async () => {
@@ -71,7 +93,7 @@ export default function BulkUpload() {
   }
 
   return (
-    <div className="pt-v flex flex-col h-full overflow-hidden bg-bgcolor">
+    <div className="pt-12 flex flex-col h-full overflow-hidden bg-bgcolor">
       <div className="flex items-center gap-8 shrink-0 mx-24">
         <button
           onClick={handleCancel}
@@ -114,48 +136,102 @@ export default function BulkUpload() {
               emptyMessage="No valid records."
             />
           )}
+          {activeTab === "invalid" && (
+            <InvalidRecordsTable
+              columns={PRODUCT_UPLOAD_COLUMNS}
+              rows={invalidRows}
+              onRemove={handleRemoveInvalid}
+              onValidated={handleRowValidated}
+              emptyMessage="No invalid records."
+            />
+          )}
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-12 h-[54px] shrink-0 border-t-1 border-strokegray bg-white px-h">
-        <CustomButton
-          title="Cancel"
-          backgroundColor="bg-white"
-          textColor="text-darkgray"
-          borderColor="border-strokegray"
-          borderWidth="border-1"
-          gap="gap-[5px]"
-          height="h-[34px]"
-          onClick={handleCancel}
-          icon={
-            <IconRenderer
-              icon="FaRegTimesCircle"
-              size={16}
-              className="text-litegray"
-            />
-          }
-          iconPosition="left"
-          disabled={isSubmitting}
-        />
-        <CustomButton
-          title="Add Products"
-          backgroundColor="bg-primary"
-          textColor="text-white"
-          gap="gap-[5px]"
-          height="h-[34px]"
-          borderRadius="rounded-6"
-          icon={
-            <IconRenderer
-              icon="FiCheckCircle"
-              size={16}
-              className="text-white"
-            />
-          }
-          iconPosition="left"
-          onClick={handleAddProducts}
-          disabled={validRows.length === 0 || isSubmitting}
-        />
-      </div>
+      {activeTab === "valid" && (
+        <div className="flex items-center justify-end gap-12 h-[54px] shrink-0 border-t-1 border-strokegray bg-white px-h">
+          <CustomButton
+            title="Cancel"
+            backgroundColor="bg-white"
+            textColor="text-darkgray"
+            borderColor="border-strokegray"
+            borderWidth="border-1"
+            gap="gap-[5px]"
+            height="h-[34px]"
+            onClick={handleCancel}
+            icon={
+              <IconRenderer
+                icon="FaRegTimesCircle"
+                size={16}
+                className="text-litegray"
+              />
+            }
+            iconPosition="left"
+            disabled={isSubmitting}
+          />
+          <CustomButton
+            title="Add Products"
+            backgroundColor="bg-primary"
+            textColor="text-white"
+            gap="gap-[5px]"
+            height="h-[34px]"
+            borderRadius="rounded-6"
+            icon={
+              <IconRenderer
+                icon="FiCheckCircle"
+                size={16}
+                className="text-white"
+              />
+            }
+            iconPosition="left"
+            onClick={handleAddProducts}
+            disabled={validRows.length === 0 || isSubmitting}
+          />
+        </div>
+      )}
+      {activeTab === "invalid" && (
+        <div className="flex items-center justify-end gap-12 h-[54px] shrink-0 border-t-1 border-strokegray bg-white px-h">
+          <CustomButton
+            title="Remove"
+            backgroundColor="bg-white"
+            textColor="text-danger"
+            borderColor="border-danger"
+            borderWidth="border-1"
+            gap="gap-[5px]"
+            width="w-[95px]"
+            height="h-[34px]"
+            onClick={handleCancel}
+            icon={
+              <IconRenderer
+                icon="FaRegTimesCircle"
+                size={16}
+                className="text-danger"
+              />
+            }
+            iconPosition="left"
+            disabled={isSubmitting}
+          />
+          <CustomButton
+            title="Update"
+            backgroundColor="bg-primary"
+            textColor="text-white"
+            gap="gap-[5px]"
+            height="h-[34px]"
+            borderRadius="rounded-6"
+            width="w-[125px]"
+            icon={
+              <IconRenderer
+                icon="FiCheckCircle"
+                size={16}
+                className="text-white"
+              />
+            }
+            iconPosition="left"
+            onClick={handleAddProducts}
+            disabled={validRows.length === 0 || isSubmitting}
+          />
+        </div>
+      )}
     </div>
   );
 }
