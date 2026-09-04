@@ -353,7 +353,9 @@
   },
   "NoDataFound": {
     "Title": "Looks like empty",
-    "SubTitle": "Let’s add product using the bulk upload option",
+    "SubTitle": "Let’s add product using the bulk upload option"
+  },
+  "BuldUploadcard": {
     "CardTitle": "Bulk Upload",
     "CardSubTitle": "Download the sample file, fill in the required data, and upload it",
     "DownloadButtonText": "Sample Document",

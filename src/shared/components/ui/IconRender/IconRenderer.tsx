@@ -20,6 +20,7 @@ interface IconRendererProps {
   size?: number | string;
   imageUrl?: string;
   onClick?: () => void;
+  color?: string;
 }
 
 export default function IconRenderer({
@@ -28,6 +29,7 @@ export default function IconRenderer({
   className = "",
   size = 18,
   imageUrl = "",
+  color = "",
   onClick = () => {},
 }: IconRendererProps) {
   console.log(imageUrl, "icon");
@@ -51,7 +53,14 @@ export default function IconRenderer({
       ...Fa6Icons,
     };
     const Icons = iconLibraries[icon as keyof typeof iconLibraries];
-    return <Icons className={className} size={size} onClick={onClick} />;
+    return (
+      <Icons
+        className={className}
+        size={size}
+        onClick={onClick}
+        color={color}
+      />
+    );
   }
 
   // SVG / image path

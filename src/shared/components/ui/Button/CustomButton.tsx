@@ -28,6 +28,7 @@ interface CustomButtonProps {
   justifyContent?: string;
   gap?: string;
   fontSize?: string;
+  borderWidth?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -52,6 +53,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   justifyContent = "justify-center",
   gap = "gap-2",
   fontSize = "text-13",
+  borderWidth = "border-0",
 }) => {
   const buttonClasses = [
     "inline-flex",
@@ -73,6 +75,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     clickEffect && !disabled ? "active:scale-97" : "",
     disabled ? "cursor-not-allowed" : "cursor-pointer",
     className,
+    borderWidth,
   ]
     .filter(Boolean)
     .join(" ");

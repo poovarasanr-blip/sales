@@ -1,11 +1,6 @@
 import React, { useMemo } from "react";
-
-export interface BarChartItem {
-  label: string;
-  values: number[];
-}
-
-export interface CustomBarChartProps {
+import type { BarChartItem } from "../../../../modules/sales-incentive/types/salesIncentive.types";
+interface CustomBarChartProps {
   data?: BarChartItem[];
   maxValue?: number;
   yAxisSteps?: number;
@@ -97,11 +92,11 @@ const CustomBarChart: React.FC<CustomBarChartProps> = ({
   yAxisSteps = 5,
   height = 224,
   barColors = defaultColors,
-  barWidth = 15,
-  barGap = 4,
+  barWidth = 18,
+  barGap = 7,
   yAxisColor = "#8A8A8A",
   xAxisColor = "#666666",
-  fontSize = 10,
+  fontSize = 12,
   showYAxis = true,
   showYAxisLine = true,
   showGrid = false,
@@ -220,7 +215,7 @@ const CustomBarChart: React.FC<CustomBarChartProps> = ({
           {showXAxis && (
             <line
               x1={leftPadding}
-              x2={790 - rightPadding}
+              x2={1000 - rightPadding}
               y1={chartBottom}
               y2={chartBottom}
               stroke="#D9D9D9"
@@ -228,7 +223,7 @@ const CustomBarChart: React.FC<CustomBarChartProps> = ({
             />
           )}
           {data.map((item, categoryIndex) => {
-            const availableWidth = 800 - leftPadding - rightPadding;
+            const availableWidth = 1000 - leftPadding - rightPadding;
             const categoryWidth = availableWidth / data.length;
             const categoryCenter =
               leftPadding + categoryWidth * categoryIndex + categoryWidth / 2;
@@ -264,11 +259,14 @@ const CustomBarChart: React.FC<CustomBarChartProps> = ({
                 })}
                 {(() => {
                   const lines = labelFormatter(item.label);
+                  const lineHeight = fontSize + 2;
+                  const startY =
+                    chartBottom + 25 - ((lines.length - 1) * lineHeight) / 2;
 
                   return (
                     <text
                       x={categoryCenter}
-                      y={chartBottom + 15}
+                      y={startY}
                       textAnchor="middle"
                       fontSize={fontSize}
                       fontWeight={400}
@@ -279,7 +277,8 @@ const CustomBarChart: React.FC<CustomBarChartProps> = ({
                         <tspan
                           key={lineIndex}
                           x={categoryCenter}
-                          dy={lineIndex === 0 ? 0 : fontSize + 2}
+                          dy={lineIndex === 0 ? 0 : lineHeight}
+                          textAnchor="middle"
                         >
                           {line}
                         </tspan>

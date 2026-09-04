@@ -13,71 +13,54 @@
   "SalesOverview": {
     "Title": "Sales Overview",
     "Date": "May 2025",
-    "Label1": "Target",
-    "Label2": "Achieved",
-    "Label3": "Actual",
+    "DescriptionText": "Target vs Sales vs Actual",
+    "Labels": [
+      { "label": "Target", "color": "#FFD2AD" },
+      { "label": "Achieved", "color": "#BCB1FF" },
+      { "label": "Actual", "color": "#A8EACF" }
+    ],
     "Data": {
       "YLabel": [0, 25, 50, 75, 100, 125],
       "Values": [
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Mixer Grinders"
+          "Values": [12, 55, 85],
+          "label": "Mixer Grinders"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Microwave Ovens"
+          "Values": [12, 55, 85],
+          "label": "Microwave Ovens"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Rice Cookers"
+          "Values": [12, 55, 85],
+          "label": "Rice Cookers"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Induction Cooktops"
+          "Values": [12, 55, 85],
+          "label": "Induction Cooktops"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Refrigerators"
+          "Values": [12, 55, 85],
+          "label": "Refrigerators"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Air fryers"
+          "Values": [12, 55, 85],
+          "label": "Air fryers"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Wet grinders"
+          "Values": [12, 55, 85],
+          "label": "Wet grinders"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "OTG ovens"
+          "Values": [12, 55, 85],
+          "label": "OTG ovens"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Electric kettles"
+          "Values": [12, 55, 85],
+          "label": "Electric kettles"
         },
         {
-          "Value1": 20,
-          "Value2": 80,
-          "Value3": 100,
-          "Key": "Chimneys"
+          "Values": [12, 55, 85],
+          "label": "Chimneys"
         }
       ]
     }
@@ -90,33 +73,44 @@
       {
         "Icon": "IoMdCheckmarkCircleOutline",
         "Name": "Managers Submitted",
-        "Value": 38
+        "Value": 38,
+        "BackgroundColor": "#D9F6EA",
+        "TextColor": "#25B480"
       },
       {
         "Icon": "LuFileInput",
         "Name": "Managers Yet to Submit",
-        "Value": 32
+        "Value": 32,
+        "BackgroundColor": "#FFE2F2",
+        "TextColor": "#FF67BA"
       },
       {
         "Icon": "LuClock3",
         "Name": "Sales Yet to Review",
-        "Value": 123
+        "Value": 123,
+        "BackgroundColor": "#FFF4EA",
+        "TextColor": "#FFB54D"
       },
       {
-        "Icon": "CiTrophy",
+        "Icon": "AiOutlineTrophy",
         "Name": "Employee(s) got Incentive",
-        "Value": 132
+        "Value": 132,
+        "BackgroundColor": "#F1EEFF",
+        "TextColor": "#5C67FD"
       }
     ]
   },
   "SalesDealer": {
     "Title": "Sales - Dealer",
     "Date": "May 2025",
-    "Label1": "Target",
-    "Label2": "Achieved",
-    "Label3": "Actual",
+    "DescriptionText": "Target vs Sales vs Actual",
     "SelectedValue": "Vasanth & Co - Chennai",
     "DropdownData": ["Vasanth & Co - Chennai", "Vasanth & Co - Benglore"],
+    "Labels": [
+      { "label": "Target", "color": "#FFD2AD" },
+      { "label": "Achieved", "color": "#BCB1FF" },
+      { "label": "Actual", "color": "#A8EACF" }
+    ],
     "ChartData": {
       "XAxis": [0, 20, 40, 60],
       "Branches": [
@@ -124,129 +118,64 @@
           "BranchName": "Vasanth & Co - Chennai",
           "Products": [
             {
-              "SalesProductName": "Mixer Grinders",
-              "Remaining": 12,
-              "Achieved": 48,
-              "Target": 60
+              "label": "Mixer Grinders",
+              "value3": 12,
+              "value2": 48,
+              "value1": 60
             },
             {
-              "SalesProductName": "Microwave Ovens",
-              "Remaining": 25,
-              "Achieved": 35,
-              "Target": 60
+              "label": "Microwave Ovens",
+              "value3": 25,
+              "value2": 35,
+              "value1": 60
             },
             {
-              "SalesProductName": "Rice Cookers",
-              "Remaining": 8,
-              "Achieved": 52,
-              "Target": 60
+              "label": "Rice Cookers",
+              "value3": 8,
+              "value2": 52,
+              "value1": 60
             },
             {
-              "SalesProductName": "Induction Cooktops",
-              "Remaining": 18,
-              "Achieved": 42,
-              "Target": 60
+              "label": "Induction Cooktops",
+              "value3": 18,
+              "value2": 42,
+              "value1": 60
             },
             {
-              "SalesProductName": "Refrigerators",
-              "Remaining": 30,
-              "Achieved": 30,
-              "Target": 60
+              "label": "Refrigerators",
+              "value3": 30,
+              "value2": 30,
+              "value1": 60
             },
             {
-              "SalesProductName": "Air Fryers",
-              "Remaining": 15,
-              "Achieved": 45,
-              "Target": 60
+              "label": "Air Fryers",
+              "value3": 15,
+              "value2": 45,
+              "value1": 60
             },
             {
-              "SalesProductName": "Wet Grinders",
-              "Remaining": 22,
-              "Achieved": 38,
-              "Target": 60
+              "label": "Wet Grinders",
+              "value3": 22,
+              "value2": 38,
+              "value1": 60
             },
             {
-              "SalesProductName": "OTG Ovens",
-              "Remaining": 5,
-              "Achieved": 55,
-              "Target": 60
+              "label": "OTG Ovens",
+              "value3": 5,
+              "value2": 55,
+              "value1": 60
             },
             {
-              "SalesProductName": "Electric Kettles",
-              "Remaining": 28,
-              "Achieved": 32,
-              "Target": 60
+              "label": "Electric Kettles",
+              "value3": 28,
+              "value2": 32,
+              "value1": 60
             },
             {
-              "SalesProductName": "Chimneys",
-              "Remaining": 10,
-              "Achieved": 50,
-              "Target": 60
-            }
-          ]
-        },
-        {
-          "BranchName": "Vasanth & Co - Bangalore",
-          "Products": [
-            {
-              "SalesProductName": "Mixer Grinders",
-              "Remaining": 20,
-              "Achieved": 40,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Microwave Ovens",
-              "Remaining": 14,
-              "Achieved": 46,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Rice Cookers",
-              "Remaining": 26,
-              "Achieved": 34,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Induction Cooktops",
-              "Remaining": 9,
-              "Achieved": 51,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Refrigerators",
-              "Remaining": 17,
-              "Achieved": 43,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Air Fryers",
-              "Remaining": 24,
-              "Achieved": 36,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Wet Grinders",
-              "Remaining": 7,
-              "Achieved": 53,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "OTG Ovens",
-              "Remaining": 19,
-              "Achieved": 41,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Electric Kettles",
-              "Remaining": 11,
-              "Achieved": 49,
-              "Target": 60
-            },
-            {
-              "SalesProductName": "Chimneys",
-              "Remaining": 29,
-              "Achieved": 31,
-              "Target": 60
+              "label": "Chimneys",
+              "value3": 10,
+              "value2": 50,
+              "value1": 60
             }
           ]
         }
@@ -344,6 +273,7 @@
   "TeamSales": {
     "Title": "Team Sales",
     "Date": "May 2025",
+    "DescriptionText": "Target vs Sales vs Actual",
     "Employee": {
       "Id": 101,
       "Name": "Pawan Kumar"
@@ -355,16 +285,16 @@
     },
     "Legend": [
       {
-        "Label": "80-85%",
-        "Color": "#F8B4E2"
+        "label": "80-85%",
+        "color": "#F8B4E2"
       },
       {
-        "Label": "86-90%",
-        "Color": "#FFC89A"
+        "label": "86-90%",
+        "color": "#FFC89A"
       },
       {
-        "Label": "100%+",
-        "Color": "#A8EBCF"
+        "label": "100%+",
+        "color": "#A8EBCF"
       }
     ],
     "Products": [
