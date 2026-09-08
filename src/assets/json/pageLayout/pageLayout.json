@@ -95,6 +95,11 @@
         "Name": "Remove",
         "Icon": "FaRegTimesCircle"
       },
+      "AddProductButton": {
+        "Id": "ADDPRODUCT",
+        "Name": "+ Add Products",
+        "Icon": ""
+      },
       "AddProductsButton": {
         "Id": "ADDPRODUCTS",
         "Name": "Add Products",

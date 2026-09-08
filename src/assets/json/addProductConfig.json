@@ -1,0 +1,218 @@
+{
+  "title": "Add Product",
+  "breadcrumb": ["Products", "Add Product"],
+  "classification": {
+    "title": "Product Classification",
+    "subtitle": "All products in this batch are created under this hierarchy",
+    "icon": "FiGrid",
+    "steps": [
+      {
+        "id": "category",
+        "label": "Category",
+        "order": 1,
+        "placeholder": "Choose",
+        "searchable": true,
+        "allowAdd": true,
+        "addLabel": "Add New Category",
+        "options": [
+          { "label": "Kitchen Appliances", "value": "kitchen-appliances" },
+          { "label": "Home Decor", "value": "home-decor" },
+          { "label": "Home Appliances", "value": "home-appliances" },
+          { "label": "Wellness Products", "value": "wellness-products" },
+          { "label": "Lorem Ipsum", "value": "lorem-ipsum" },
+          { "label": "Lorem Ipsum Dolor", "value": "lorem-ipsum-dolor" }
+        ]
+      },
+      {
+        "id": "subCategory",
+        "label": "Sub Category",
+        "order": 2,
+        "placeholder": "Choose",
+        "searchable": true,
+        "allowAdd": true,
+        "addLabel": "Add New Sub Category",
+        "dependsOn": "category",
+        "optionsByParent": {
+          "kitchen-appliances": [
+            { "label": "Mixer Grinders", "value": "mixer-grinders" },
+            { "label": "Microwave Ovens", "value": "microwave-ovens" },
+            { "label": "Rice Cookers", "value": "rice-cookers" }
+          ],
+          "home-decor": [
+            { "label": "Wall Art", "value": "wall-art" },
+            { "label": "Lighting", "value": "lighting" }
+          ],
+          "home-appliances": [
+            { "label": "Washing Machines", "value": "washing-machines" },
+            { "label": "Refrigerators", "value": "refrigerators" }
+          ],
+          "wellness-products": [
+            { "label": "Air Purifiers", "value": "air-purifiers" },
+            { "label": "Water Purifiers", "value": "water-purifiers" }
+          ]
+        }
+      }
+    ]
+  },
+  "hierarchy": {
+    "title": "Product Hierarchy",
+    "icon": "FiGrid"
+  },
+  "sections": [
+    {
+      "id": "category",
+      "label": "Category",
+      "icon": "FiGrid",
+      "appliesTo": "category",
+      "fields": [
+        {
+          "key": "effectiveDate",
+          "label": "Effective Date",
+          "type": "date",
+          "placeholder": "DD MM YYYY"
+        },
+        {
+          "key": "targetQuantity",
+          "label": "Target Quantity",
+          "type": "number",
+          "placeholder": "Enter here"
+        },
+        {
+          "key": "eligibleIncentive",
+          "label": "Eligible Incentive (₹)",
+          "type": "number",
+          "placeholder": "Enter here"
+        },
+        {
+          "key": "status",
+          "label": "Status",
+          "type": "select",
+          "placeholder": "Choose",
+          "options": ["Active", "Inactive", "Not Available"]
+        }
+      ]
+    },
+    {
+      "id": "subCategory",
+      "label": "Sub Category",
+      "icon": "FiGrid",
+      "appliesTo": "subCategory",
+      "fields": [
+        {
+          "key": "customField1",
+          "label": "Custom Fields",
+          "type": "number",
+          "placeholder": "Placeholder"
+        },
+        {
+          "key": "customField2",
+          "label": "Custom Fields",
+          "type": "number",
+          "placeholder": "Placeholder"
+        },
+        {
+          "key": "customField3",
+          "label": "Custom Fields",
+          "type": "number",
+          "placeholder": "Placeholder"
+        }
+      ]
+    },
+
+    {
+      "id": "Products",
+      "label": "Products",
+      "icon": "FiGrid",
+      "appliesTo": "type",
+      "fields": [
+        {
+          "key": "customField1",
+          "label": "Custom Fields",
+          "type": "number",
+          "placeholder": "Placeholder"
+        },
+        {
+          "key": "customField2",
+          "label": "Custom Fields",
+          "type": "number",
+          "placeholder": "Placeholder"
+        },
+        {
+          "key": "customField3",
+          "label": "Custom Fields",
+          "type": "number",
+          "placeholder": "Placeholder"
+        }
+      ]
+    }
+  ],
+  "productSection": {
+    "title": "Products",
+    "subtitle": "Every product below is created under the selected hierarchy in one go.",
+    "icon": "FiGlobe",
+    "fields": [
+      {
+        "key": "productName",
+        "label": "Product Name",
+        "type": "text",
+        "placeholder": "Enter here",
+        "row": 1
+      },
+      {
+        "key": "price",
+        "label": "Price (₹)",
+        "type": "number",
+        "placeholder": "Enter here",
+        "row": 1
+      },
+      {
+        "key": "location",
+        "label": "Location",
+        "type": "select",
+        "placeholder": "Choose",
+        "options": ["T.Nagar", "Anna Nagar", "HSR Layout", "Perambalur"],
+        "row": 1
+      },
+      {
+        "key": "effectiveDate",
+        "label": "Effective Date",
+        "type": "date",
+        "placeholder": "DD MM YYYY",
+        "row": 1
+      },
+      {
+        "key": "customField1",
+        "label": "Custom Field",
+        "type": "text",
+        "placeholder": "Placeholder",
+        "row": 2
+      },
+      {
+        "key": "customField2",
+        "label": "Custom Field",
+        "type": "text",
+        "placeholder": "Placeholder",
+        "row": 2
+      },
+      {
+        "key": "customField3",
+        "label": "Custom Field",
+        "type": "text",
+        "placeholder": "Placeholder",
+        "row": 2
+      },
+      {
+        "key": "status",
+        "label": "Status",
+        "type": "select",
+        "placeholder": "Choose",
+        "options": ["Active", "Inactive", "Not Available"],
+        "row": 2
+      }
+    ]
+  },
+  "buttons": {
+    "cancel": { "label": "Cancel", "icon": "FaRegTimesCircle" },
+    "submit": { "label": "Add Product", "icon": "LuCircleCheckBig" }
+  }
+}

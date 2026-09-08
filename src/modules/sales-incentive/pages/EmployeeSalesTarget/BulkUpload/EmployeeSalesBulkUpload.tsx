@@ -1,5 +1,3 @@
-// src/modules/sales-incentive/pages/EmployeeSalesTarget/EmployeeSalesTargetBulkUpload.tsx
-
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { RowValidationResult } from "../../../types/salesIncentive.types";
@@ -8,10 +6,14 @@ import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRen
 import GroupedIncentiveTable from "../../../../../shared/components/ui/DataTable/CustomTable";
 import {
   EMPLOYEE_TARGET_TABLE_COLUMNS,
+  EMPLOYEE_TARGET_UPLOAD_COLUMNS,
   groupEmployeeTargetRows,
 } from "../../../config/EmployeeSalesTargetBulkUpload";
 import type { EmployeeSalesTargetUploadRow } from "../../../types/salesIncentive.types";
 import { showToast } from "../../../../../shared/components/ui/CustomToast/UseToast";
+import InvalidRecordsTable, {
+  type InvalidRow,
+} from "../../../../../shared/components/ui/DataTable/InvalidRecordsTable";
 
 interface BulkUploadLocationState {
   validRows: RowValidationResult<EmployeeSalesTargetUploadRow>[];
@@ -25,8 +27,17 @@ export default function EmployeeSalesTargetBulkUpload() {
   const location = useLocation();
   const state = location.state as BulkUploadLocationState | undefined;
 
-  const validRows = state?.validRows ?? [];
-  const invalidRows = state?.invalidRows ?? [];
+  const [validRows, setValidRows] = useState(() =>
+    (state?.validRows ?? []).map((r, i) => ({ ...r, __id: `val-${i}` })),
+  );
+  const [invalidRows, setInvalidRows] = useState<
+    InvalidRow<EmployeeSalesTargetUploadRow>[]
+  >(() =>
+    (state?.invalidRows ?? []).map((r, i) => ({
+      __id: `inv-${i}`,
+      data: r.data,
+    })),
+  );
 
   const [activeTab, setActiveTab] = useState<TabKey>(
     validRows.length > 0 || invalidRows.length === 0 ? "valid" : "invalid",
@@ -37,6 +48,25 @@ export default function EmployeeSalesTargetBulkUpload() {
     () => groupEmployeeTargetRows(validRows.map((r) => r.data)),
     [validRows],
   );
+
+  const handleRemoveInvalid = (ids: string[]) =>
+    setInvalidRows((prev) => prev.filter((r) => !ids.includes(r.__id)));
+
+  const handleRowValidated = (
+    row: EmployeeSalesTargetUploadRow,
+    id: string,
+  ) => {
+    setInvalidRows((prev) => prev.filter((r) => r.__id !== id));
+    setValidRows((prev) => [
+      ...prev,
+      {
+        data: row,
+        __id: `val-${Date.now()}`,
+        rowNumber: prev.length + 1,
+        errors: [],
+      },
+    ]);
+  };
 
   const handleCancel = () => navigate("/employeeSalesTarget");
 
@@ -116,50 +146,102 @@ export default function EmployeeSalesTargetBulkUpload() {
               emptyMessage="No valid records."
             />
           )}
-          {/* NOTE: mirror Product's invalid-rows table here if you render
-              per-row error messages for invalid records elsewhere. */}
+          {activeTab === "invalid" && (
+            <InvalidRecordsTable
+              columns={EMPLOYEE_TARGET_UPLOAD_COLUMNS}
+              rows={invalidRows}
+              onRemove={handleRemoveInvalid}
+              onValidated={handleRowValidated}
+              emptyMessage="No invalid records."
+            />
+          )}
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-12 h-[54px] shrink-0 border-t-1 border-strokegray bg-white px-h">
-        <CustomButton
-          title="Cancel"
-          backgroundColor="bg-white"
-          textColor="text-darkgray"
-          borderColor="border-strokegray"
-          borderWidth="border-1"
-          gap="gap-[5px]"
-          height="h-[34px]"
-          onClick={handleCancel}
-          icon={
-            <IconRenderer
-              icon="FaRegTimesCircle"
-              size={16}
-              className="text-litegray"
-            />
-          }
-          iconPosition="left"
-          disabled={isSubmitting}
-        />
-        <CustomButton
-          title="Add Records"
-          backgroundColor="bg-primary"
-          textColor="text-white"
-          gap="gap-[5px]"
-          height="h-[34px]"
-          borderRadius="rounded-6"
-          icon={
-            <IconRenderer
-              icon="FiCheckCircle"
-              size={16}
-              className="text-white"
-            />
-          }
-          iconPosition="left"
-          onClick={handleAddRecords}
-          disabled={validRows.length === 0 || isSubmitting}
-        />
-      </div>
+      {activeTab === "valid" && (
+        <div className="flex items-center justify-end gap-12 h-[54px] shrink-0 border-t-1 border-strokegray bg-white px-h">
+          <CustomButton
+            title="Cancel"
+            backgroundColor="bg-white"
+            textColor="text-darkgray"
+            borderColor="border-strokegray"
+            borderWidth="border-1"
+            gap="gap-[5px]"
+            height="h-[34px]"
+            onClick={handleCancel}
+            icon={
+              <IconRenderer
+                icon="FaRegTimesCircle"
+                size={16}
+                className="text-litegray"
+              />
+            }
+            iconPosition="left"
+            disabled={isSubmitting}
+          />
+          <CustomButton
+            title="Add Records"
+            backgroundColor="bg-primary"
+            textColor="text-white"
+            gap="gap-[5px]"
+            height="h-[34px]"
+            borderRadius="rounded-6"
+            icon={
+              <IconRenderer
+                icon="FiCheckCircle"
+                size={16}
+                className="text-white"
+              />
+            }
+            iconPosition="left"
+            onClick={handleAddRecords}
+            disabled={validRows.length === 0 || isSubmitting}
+          />
+        </div>
+      )}
+      {activeTab === "invalid" && (
+        <div className="flex items-center justify-end gap-12 h-[54px] shrink-0 border-t-1 border-strokegray bg-white px-h">
+          <CustomButton
+            title="Remove"
+            backgroundColor="bg-white"
+            textColor="text-danger"
+            borderColor="border-danger"
+            borderWidth="border-1"
+            gap="gap-[5px]"
+            width="w-[95px]"
+            height="h-[34px]"
+            onClick={handleCancel}
+            icon={
+              <IconRenderer
+                icon="FaRegTimesCircle"
+                size={16}
+                className="text-danger"
+              />
+            }
+            iconPosition="left"
+            disabled={isSubmitting}
+          />
+          <CustomButton
+            title="Update"
+            backgroundColor="bg-primary"
+            textColor="text-white"
+            gap="gap-[5px]"
+            height="h-[34px]"
+            borderRadius="rounded-6"
+            width="w-[125px]"
+            icon={
+              <IconRenderer
+                icon="FiCheckCircle"
+                size={16}
+                className="text-white"
+              />
+            }
+            iconPosition="left"
+            onClick={handleAddRecords}
+            disabled={validRows.length === 0 || isSubmitting}
+          />
+        </div>
+      )}
     </div>
   );
 }

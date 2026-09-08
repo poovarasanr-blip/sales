@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ProductList from "./pages/Products/ProductList/ProductList";
+import AddProduct from "./pages/Products/AddProduct/AddProduct";
 import BulkUpload from "./pages/Products/BulkUpload/BulkUpload";
 import EmployeeSalesTarget from "./pages/EmployeeSalesTarget/EmployeeSalesTarget";
 import EmployeeSalesTargetBulkUpload from "./pages/EmployeeSalesTarget/BulkUpload/EmployeeSalesBulkUpload";
@@ -19,6 +20,7 @@ const AppRoutes: React.FC = () => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/product" element={<ProductList />} />
+      <Route path="/product/add" element={<AddProduct />} />
       <Route path="/bulkUpload" element={<BulkUpload />} />
       <Route path="/employeeSales" element={<EmployeeSalesTarget />} />
       <Route path="/bulkUpload" element={<BulkUpload />} />

@@ -77,7 +77,7 @@ export interface GroupedTableColumn {
   align?: "left" | "center" | "right";
   width?: string;
   sortable?: boolean;
-  filterable?: "text" | "date";
+  filterable?: "text" | "date" | "select";
   alineItem?: string;
   testSize?: number;
   fontWeight?: number;
@@ -87,7 +87,99 @@ export interface GroupedTableColumn {
 export interface ProductEntry {
   product: string;
   effectiveDate: string;
+  location?: string;
 }
+export interface ProductFlatRow {
+  category: string;
+  subCategoryCount: number;
+  effectiveDate: string;
+  targetQuantity: number;
+  eligibleIncentive: number;
+  productCount: number;
+  status: "Active" | "Inactive" | "Not Available";
+}
+export interface ProductDetailEntry {
+  product: string;
+  effectiveDate: string;
+  location: string;
+  status: "Active" | "Inactive" | "Not Available";
+}
+export interface ProductDetailSubCategory {
+  subCategory: string;
+  products: ProductDetailEntry[];
+}
+export interface ProductDetailData {
+  category: string;
+  subCategories: ProductDetailSubCategory[];
+}
+export interface ProductActivityLogField {
+  label: string;
+  value: string;
+}
+export interface ProductActivityLogEntry {
+  date: string;
+  time: string;
+  updatedBy: string;
+  fields: ProductActivityLogField[];
+}
+/* ---- Add Product Config Types ---- */
+export interface AddProductOption {
+  label: string;
+  value: string;
+}
+export interface AddProductStep {
+  id: string;
+  label: string;
+  order: number;
+  placeholder: string;
+  searchable?: boolean;
+  allowAdd?: boolean;
+  addLabel?: string;
+  dependsOn?: string;
+  options?: AddProductOption[];
+  optionsByParent?: Record<string, AddProductOption[]>;
+}
+export interface AddProductFieldConfig {
+  key: string;
+  label: string;
+  type: "text" | "number" | "date" | "select";
+  placeholder: string;
+  options?: string[];
+  row?: number;
+}
+export interface AddProductSectionConfig {
+  id: string;
+  label: string;
+  icon: string;
+  appliesTo: string;
+  fields: AddProductFieldConfig[];
+}
+export interface AddProductConfig {
+  title: string;
+  breadcrumb: string[];
+  classification: {
+    title: string;
+    subtitle: string;
+    icon: string;
+    steps: AddProductStep[];
+  };
+  hierarchy: {
+    title: string;
+    icon: string;
+  };
+  sections: AddProductSectionConfig[];
+  productSection: {
+    title: string;
+    subtitle: string;
+    icon: string;
+    fields: AddProductFieldConfig[];
+  };
+  buttons: {
+    cancel: { label: string; icon: string };
+    submit: { label: string; icon: string };
+  };
+}
+
 export interface SubCategoryGroup {
   subCategory: string;
   products: ProductEntry[];
@@ -100,6 +192,7 @@ export interface CategoryGroup {
   employeeCode?: string;
   employeeName?: string;
   category: string;
+  effectiveDate?: string;
   targetQuantity: string | number;
   eligibleIncentive: string | number;
   subCategories: SubCategoryGroup[];

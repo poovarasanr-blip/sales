@@ -205,11 +205,24 @@ function DefaultCell({ column, category, subCategory }: DefaultCellProps) {
         </div>
       );
     case "effectiveDate":
+      if (column.mergeRowSpan && category.effectiveDate) {
+        return <>{category.effectiveDate}</>;
+      }
       return (
         <div className="grouped-table__stack">
           {subCategory.products.map((p, i) => (
             <div key={`${p.product}-${i}`} className="grouped-table__stack-row">
               {p.effectiveDate}
+            </div>
+          ))}
+        </div>
+      );
+    case "locations":
+      return (
+        <div className="grouped-table__stack">
+          {subCategory.products.map((p, i) => (
+            <div key={`${p.product}-${i}`} className="grouped-table__stack-row">
+              {p.location || ""}
             </div>
           ))}
         </div>

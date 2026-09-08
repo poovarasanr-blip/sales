@@ -48,7 +48,6 @@ export default function ActivityLog({
         </div>
         <div className="border-t border-strokegray shrink-0 mx-24" />
 
-        {/* Timeline — one block per entry, however many there are */}
         <div className="flex-1 min-h-0 overflow-y-auto px-24 py-20">
           {entries.length === 0 ? (
             <p className="text-13 text-gray text-center py-40">
@@ -57,10 +56,6 @@ export default function ActivityLog({
           ) : (
             entries.map((entry, index) => {
               const isLast = index === entries.length - 1;
-              // The oldest entry in the log (rendered last) reflects the
-              // original system-calculated amount rather than a prior
-              // adjustment result, so its base column reads "Actual
-              // Incentive" instead of "Existing Incentive".
               const baseLabel = isLast
                 ? "Actual Incentive"
                 : "Existing Incentive";
@@ -71,19 +66,18 @@ export default function ActivityLog({
                   key={`${entry.date}-${entry.time}-${index}`}
                   className={`relative pl-[34px] ${isLast ? "" : "pb-20"}`}
                 >
-                  {/* Dot — fixed offset from the top of THIS entry, not stretched */}
                   <div
-                    className={`absolute left-0 ${index == 0 ? "top-[10px]" : "top-[85px]"} w-[12px] h-[12px] rounded-full bg-[#B9B7C6] flex items-center justify-center`}
+                    className={`absolute left-0 ${index == 0 ? "top-[10px]" : "top-[92px]"} w-[12px] h-[12px] rounded-full bg-[#B9B7C6] flex items-center justify-center`}
                   >
                     <div className="w-[5px] h-[5px] rounded-full bg-primary" />
                   </div>
                   {!isLast && (
                     <div
-                      className={`absolute flex left-[5.2px] ${index == 0 ? "top-[28px]" : "top-[103px]"} bottom-[-20px] ${index == 0 ? "h-[255px]" : "h-[180px]"}  w-[1.6px] bg-[#B9B7C6]`}
+                      className={`absolute flex left-[5.2px] ${index == 0 ? "top-[28px]" : "top-[109px]"} bottom-[-20px] ${index == 0 ? "h-[282px]" : "h-[200px]"}  w-[1.6px] bg-[#B9B7C6]`}
                     />
                   )}
 
-                  <div className="border border-strokegray rounded-8 py-16">
+                  <div className="border border-strokegray rounded-6 py-16">
                     <p className="text-12 text-darkgray flex items-center gap-[6px] mx-16">
                       <span className="font-medium text-14">{entry.date} </span>
                       <div className="w-[4px] h-[4px] rounded-full bg-litegray " />
