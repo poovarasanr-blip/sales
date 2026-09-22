@@ -40,23 +40,23 @@
     "RoleId": 8,
     "IsMobile": false
   },
-  "Key": "0xEA0E380C0A84A7",
-  "Vector": "0x35D27F631F9958",
-  "Token": "0xC7EB1B1A86FD82300E66C476F340E110BB962B1E616375B1A5DF1E0DE343685D0A8B74AF4A0CFBC3C8AC97D9FC1DB7539ABF",
+  "Key": "0x9F97B5EF6785C6",
+  "Vector": "0x9A0EC0971A85DA",
+  "Token": "0x051382B70EA1D86B0D1830DFF2E8FB427A888EFE490B96C83B35F15A559018F574BE69C628F420E3054AC5893E66FC82ECF5",
   "UserSession": {
     "browserDetails": {
       "Id": 0,
-      "Name": "Chrome",
-      "Version": "152.0"
+      "Name": "",
+      "Version": ""
     },
-    "Token": "0xC7EB1B1A86FD82300E66C476F340E110BB962B1E616375B1A5DF1E0DE343685D0A8B74AF4A0CFBC3C8AC97D9FC1DB7539ABF",
+    "Token": "0x051382B70EA1D86B0D1830DFF2E8FB427A888EFE490B96C83B35F15A559018F574BE69C628F420E3054AC5893E66FC82ECF5",
     "UserId": 226,
     "PersonId": 78,
     "PersonName": "HfactoR User",
-    "CreatedOn": "2026-09-08T04:45:21.793",
-    "LastCheckedOn": "2026-09-08T04:45:21.793",
-    "IPAddress": "183.82.247.222",
-    "RouterPublicIP": "183.82.247.222",
+    "CreatedOn": "2026-09-22T04:47:30.89",
+    "LastCheckedOn": "2026-09-22T04:47:30.89",
+    "IPAddress": "",
+    "RouterPublicIP": "",
     "RouterPrivateIP": "",
     "IMEI": "",
     "DeviceType": 0,
@@ -70,11 +70,11 @@
     },
     "BrowserDetails": {
       "Id": 0,
-      "Name": "Chrome",
-      "Version": "152.0"
+      "Name": "",
+      "Version": ""
     },
     "LocationJson": "{\"Id\":0,\"Latitude\":0.0,\"Longitude\":0.0,\"Radius\":0,\"RadiusDistanceIn\":0,\"Address\":\"\"}",
-    "BrowserJson": "{\"Id\":0,\"Name\":\"Chrome\",\"Version\":\"152.0\"}",
+    "BrowserJson": "{\"Id\":0,\"Name\":\"\",\"Version\":\"\"}",
     "MobileNumber": "9481169920",
     "EmailId": "dinesh.kumar@hfactor.app",
     "UserType": 1

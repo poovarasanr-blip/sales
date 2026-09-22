@@ -4,6 +4,8 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ProductList from "./pages/Products/ProductList/ProductList";
 import AddProduct from "./pages/Products/AddProduct/AddProduct";
 import BulkUpload from "./pages/Products/BulkUpload/BulkUpload";
+import IncentiveRatesList from "./pages/IncentiveRates/IncentiveRatesList/IncentiveRatesList";
+import IncentiveRatesBulkUpload from "./pages/IncentiveRates/BulkUpload/IncentiveRatesBulkUpload";
 import EmployeeSalesTarget from "./pages/EmployeeSalesTarget/EmployeeSalesTarget";
 import EmployeeSalesTargetBulkUpload from "./pages/EmployeeSalesTarget/BulkUpload/EmployeeSalesBulkUpload";
 import ActualSalesList from "./pages/ActualSales/ActualSalesList/ActualSalesList";
@@ -22,8 +24,12 @@ const AppRoutes: React.FC = () => {
       <Route path="/product" element={<ProductList />} />
       <Route path="/product/add" element={<AddProduct />} />
       <Route path="/bulkUpload" element={<BulkUpload />} />
+      <Route path="/incentiveRates" element={<IncentiveRatesList />} />
+      <Route
+        path="/incentiveRates/bulkUpload"
+        element={<IncentiveRatesBulkUpload />}
+      />
       <Route path="/employeeSales" element={<EmployeeSalesTarget />} />
-      <Route path="/bulkUpload" element={<BulkUpload />} />
       <Route
         path="/employeeSalesTarget/bulkUpload"
         element={<EmployeeSalesTargetBulkUpload />}

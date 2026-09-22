@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import Config from "../../../../../assets/json/Config.json";
 import type {
   RowValidationResult,
   BulkUploadColumnConfig,
@@ -18,34 +17,20 @@ import { handleImportIncentiveProduct } from "../../../../../query/api";
 import encrypt from "../../../../../utils/security/encrypt";
 import decrypt from "../../../../../utils/security/decrypt";
 import { parseNestedJson } from "../../../../../utils/security/ParseData";
-
-/* ---- Column config from Config.json ---- */
-
-const productUploadColumns: BulkUploadColumnConfig<Record<string, any>>[] = (
-  (Config as any).ProductUploadColumns ?? []
-).map((col: any) => ({
-  key: col.apiField,
-  header: col.header,
-  required: col.required ?? false,
-  type: (col.type as "string" | "number" | "date") ?? "string",
-  groupLevel: col.groupLevel as number | undefined,
-  headerIcon: col.headerIcon as string | undefined,
-}));
-
-const level1Cols = productUploadColumns.filter((c) => c.groupLevel === 1);
-const level2Cols = productUploadColumns.filter((c) => c.groupLevel === 2);
-const detailCols = productUploadColumns.filter((c) => !c.groupLevel);
+import { INCENTIVE_RATES_UPLOAD_COLUMNS } from "../../../config/IncentiveRatesConfig";
 
 /* ---- Grouping helpers ---- */
 
-interface Level2Group {
-  values: Record<string, any>;
-  rows: { data: Record<string, any>; __id: string }[];
-}
+const level1Cols = INCENTIVE_RATES_UPLOAD_COLUMNS.filter(
+  (c) => c.groupLevel === 1,
+);
+const detailCols = INCENTIVE_RATES_UPLOAD_COLUMNS.filter(
+  (c) => !c.groupLevel,
+);
 
 interface Level1Group {
   values: Record<string, any>;
-  level2Groups: Level2Group[];
+  rows: { data: Record<string, any>; __id: string }[];
   totalRows: number;
 }
 
@@ -64,31 +49,10 @@ function buildGroups(
       level1Cols.forEach((c) => {
         values[c.key as string] = row.data[c.key as string];
       });
-      l1Map.set(l1Key, { values, level2Groups: [], totalRows: 0 });
+      l1Map.set(l1Key, { values, rows: [], totalRows: 0 });
     }
     const l1Group = l1Map.get(l1Key)!;
-
-    const l2Key = level2Cols
-      .map((c) => String(row.data[c.key as string] ?? ""))
-      .join("||");
-
-    let l2Group = l1Group.level2Groups.find((g) =>
-      level2Cols.every(
-        (c) =>
-          String(g.values[c.key as string] ?? "") ===
-          String(row.data[c.key as string] ?? ""),
-      ),
-    );
-    if (!l2Group) {
-      const values: Record<string, any> = {};
-      level2Cols.forEach((c) => {
-        values[c.key as string] = row.data[c.key as string];
-      });
-      l2Group = { values, rows: [] };
-      l1Group.level2Groups.push(l2Group);
-    }
-
-    l2Group.rows.push(row);
+    l1Group.rows.push(row);
     l1Group.totalRows++;
   });
 
@@ -106,7 +70,7 @@ type TabKey = "valid" | "invalid";
 
 /* ---- Main component ---- */
 
-export default function BulkUpload() {
+export default function IncentiveRatesBulkUpload() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as BulkUploadLocationState | undefined;
@@ -134,93 +98,56 @@ export default function BulkUpload() {
       handleImportIncentiveProduct(variables.payload, variables.token),
     onSuccess: (response: any) => {
       setIsSubmitting(false);
-      console.log(response, "response");
       if (response?.status >= 200 && response?.status < 300) {
-        try {
-          const decryptedData = decrypt(
-            response?.data,
-            sessionData?.Key ?? "",
-            sessionData?.Vector ?? "",
-          );
-          const parsedData = parseNestedJson(JSON.parse(decryptedData));
-          console.log(parsedData, "parsedData");
-
-          if (parsedData?.Status) {
-            const results = Array.isArray(parsedData?.Result)
-              ? parsedData.Result
-              : [];
-
-            results.forEach((item: any) => {
-              if (item?.Status?.toLowerCase() === "success") {
-                showToast({
-                  type: "success",
-                  title: "Success!",
-                  message: `${item?.Code ?? "Product"} has been added successfully.`,
-                  duration: 3000,
-                });
-              } else {
-                showToast({
-                  type: "error",
-                  title: "Error!",
-                  message:
-                    item?.ErrorMessage ??
-                    `${item?.Code ?? "Product"} failed to add.`,
-                  duration: 5000,
-                });
-              }
-            });
-
-            const successItems = results.filter(
-              (item: any) => item?.Status?.toLowerCase() === "success",
-            );
-
-            if (successItems.length > 0) {
-              navigate("/product", {
-                state: {
-                  bulkUploadSuccessCount: successItems.length,
-                  addedProducts: successItems,
-                },
-              });
-            }
-          } else {
-            showToast({
-              type: "error",
-              title: "Error!",
-              message: parsedData?.Message,
-              duration: 3000,
-            });
-          }
-        } catch {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key ?? "",
+          sessionData?.Vector ?? "",
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        if (parsedData?.Status) {
+          showToast({
+            type: "success",
+            title: "Success!",
+            message: `${validRows.length} records have been added`,
+            duration: 3000,
+          });
+          navigate("/incentiveRates", {
+            state: {
+              bulkUploadSuccessCount: validRows.length,
+              addedProducts: validRows.map((r) => r.data),
+            },
+          });
+        } else {
           showToast({
             type: "error",
-            title: "Error",
-            message: "Failed to process server response. Please try again.",
+            title: "Error!",
+            message: parsedData?.Message,
             duration: 3000,
           });
         }
       } else {
-        console.error("Import Product API — Error Response:", response);
         showToast({
           type: "error",
           title: "Error",
           message:
             response?.data?.message ??
-            "Failed to add products. Please try again.",
+            "Failed to add records. Please try again.",
           duration: 3000,
         });
       }
     },
-    onError: (error: any) => {
+    onError: () => {
       setIsSubmitting(false);
-      console.error("Import Product API — Request Error:", error);
       showToast({
         type: "error",
         title: "Error",
-        message: "Failed to add products. Please try again.",
+        message: "Failed to add records. Please try again.",
         duration: 3000,
       });
     },
   });
+
   const [invalidSelectedCount, setInvalidSelectedCount] = useState(0);
   const invalidActionsRef = useRef<{
     removeSelected: () => void;
@@ -260,9 +187,9 @@ export default function BulkUpload() {
     ]);
   };
 
-  const handleCancel = () => navigate("/product");
+  const handleCancel = () => navigate("/incentiveRates");
 
-  const handleAddProducts = () => {
+  const handleAddRecords = () => {
     if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token) {
       showToast({
         type: "error",
@@ -276,13 +203,13 @@ export default function BulkUpload() {
     setIsSubmitting(true);
 
     const payload = validRows.map((r) => ({
-      Code: r.data.Code ?? "",
-      Name: r.data.Name ?? "",
-      Description: r.data.Description ?? "",
-      IncentiveProductCategoryName: r.data.IncentiveProductCategory ?? "",
-      IncentiveProductSubCategoryName: r.data.IncentiveProductSubCategory ?? "",
-      Price: Number(r.data.Price) || 0,
-      EffectiveDate: r.data.EffectiveDate || "",
+      Category: r.data.Category ?? r.data["Category"] ?? "",
+      SubCategory: r.data["Sub Category"] ?? "",
+      EligibleIncentive:
+        Number(r.data["Eligible Incentive"]) ||
+        Number(r.data["Eligible Incentive (₹)"]) ||
+        0,
+      EffectiveDate: r.data["Effective Date"] ?? "",
     }));
     const encPayload = encrypt(
       JSON.stringify(payload),
@@ -299,8 +226,8 @@ export default function BulkUpload() {
       <div className="px-h pt-v flex flex-col items-start gap-12">
         <p className="p-small text-gray">No file has been uploaded yet.</p>
         <CustomButton
-          title="Back to Products"
-          onClick={() => navigate("/product")}
+          title="Back to Incentive Rates"
+          onClick={() => navigate("/incentiveRates")}
         />
       </div>
     );
@@ -318,7 +245,7 @@ export default function BulkUpload() {
           <IconRenderer icon="LuArrowLeft" size={18} />
         </button>
         <p className="p-small text-gray">
-          Products /{" "}
+          Incentive Rates /{" "}
           <span className="text-darkgray font-semibold">Bulk Upload</span>
         </p>
       </div>
@@ -352,23 +279,14 @@ export default function BulkUpload() {
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b border-[#eee]">
-                    {productUploadColumns.map((col) => (
+                    {INCENTIVE_RATES_UPLOAD_COLUMNS.map((col) => (
                       <th
                         key={col.key as string}
                         className="h-[40px] px-16 py-2 sticky top-0 z-10 bg-white whitespace-nowrap text-left"
                       >
-                        <div className="flex items-center gap-8">
-                          <span className="text-12 font-semibold text-darkgray">
-                            {col.header}
-                          </span>
-                          {col.headerIcon && (
-                            <IconRenderer
-                              icon={col.headerIcon}
-                              size={14}
-                              className="text-gray"
-                            />
-                          )}
-                        </div>
+                        <span className="text-12 font-semibold text-darkgray">
+                          {col.header}
+                        </span>
                       </th>
                     ))}
                   </tr>
@@ -377,7 +295,7 @@ export default function BulkUpload() {
                   {validRows.length === 0 ? (
                     <tr>
                       <td
-                        colSpan={productUploadColumns.length}
+                        colSpan={INCENTIVE_RATES_UPLOAD_COLUMNS.length}
                         className="text-center py-20 text-gray text-13"
                       >
                         No valid records.
@@ -386,49 +304,33 @@ export default function BulkUpload() {
                   ) : (
                     groups.map((l1Group) => {
                       let isFirstL1 = true;
-                      return l1Group.level2Groups.map((l2Group, l2Idx) => {
-                        let isFirstL2 = true;
-                        return l2Group.rows.map((row, rIdx) => {
-                          const el = (
-                            <tr key={row.__id} className="border border-[#eee]">
-                              {isFirstL1 &&
-                                level1Cols.map((col) => (
-                                  <td
-                                    key={col.key as string}
-                                    rowSpan={l1Group.totalRows}
-                                    className="px-16 py-[11px] text-13 text-[#59596C] align-top border-r border-[#eee]"
-                                  >
-                                    {String(
-                                      l1Group.values[col.key as string] ?? "",
-                                    )}
-                                  </td>
-                                ))}
-                              {isFirstL2 &&
-                                level2Cols.map((col) => (
-                                  <td
-                                    key={col.key as string}
-                                    rowSpan={l2Group.rows.length}
-                                    className="px-16 py-[11px] text-13 text-[#59596C] align-top border-r border-[#eee]"
-                                  >
-                                    {String(
-                                      l2Group.values[col.key as string] ?? "",
-                                    )}
-                                  </td>
-                                ))}
-                              {detailCols.map((col) => (
+                      return l1Group.rows.map((row) => {
+                        const el = (
+                          <tr key={row.__id} className="border border-[#eee]">
+                            {isFirstL1 &&
+                              level1Cols.map((col) => (
                                 <td
                                   key={col.key as string}
-                                  className="px-16 py-[11px] text-13 text-[#59596C]"
+                                  rowSpan={l1Group.totalRows}
+                                  className="px-16 py-[11px] text-13 text-[#59596C] align-top border-r border-[#eee]"
                                 >
-                                  {String(row.data[col.key as string] ?? "")}
+                                  {String(
+                                    l1Group.values[col.key as string] ?? "",
+                                  )}
                                 </td>
                               ))}
-                            </tr>
-                          );
-                          if (isFirstL1) isFirstL1 = false;
-                          if (isFirstL2) isFirstL2 = false;
-                          return el;
-                        });
+                            {detailCols.map((col) => (
+                              <td
+                                key={col.key as string}
+                                className="px-16 py-[11px] text-13 text-[#59596C]"
+                              >
+                                {String(row.data[col.key as string] ?? "")}
+                              </td>
+                            ))}
+                          </tr>
+                        );
+                        if (isFirstL1) isFirstL1 = false;
+                        return el;
                       });
                     })
                   )}
@@ -439,7 +341,7 @@ export default function BulkUpload() {
 
           {activeTab === "invalid" && (
             <InvalidRecordsTable
-              columns={productUploadColumns}
+              columns={INCENTIVE_RATES_UPLOAD_COLUMNS}
               rows={invalidRows}
               onRemove={handleRemoveInvalid}
               onValidated={handleRowValidated}
@@ -453,34 +355,30 @@ export default function BulkUpload() {
 
       {/* Footer */}
       <div className="flex items-center justify-between h-[54px] shrink-0 border-t-1 border-strokegray bg-white px-h">
-        {/* Left side — invalid selection controls */}
         {activeTab === "invalid" && (
           <div className="flex items-center gap-12 justify-between w-full">
-            <>
-              <p className="text-14 text-secondary font-medium">
-                {invalidSelectedCount} records selected
-              </p>
-              <div className="flex items-center gap-12 ">
-                <button
-                  onClick={() => invalidActionsRef.current?.removeSelected()}
-                  className="h-[34px] px-16 rounded-6 border border-danger text-danger text-13 flex items-center gap-6"
-                >
-                  <IconRenderer icon="FaRegTimesCircle" size={14} />
-                  Remove
-                </button>
-                <button
-                  disabled={invalidSelectedCount === 0}
-                  onClick={() => invalidActionsRef.current?.updateSelected()}
-                  className="h-[34px] px-16 rounded-6 bg-primary text-white text-13 flex items-center gap-6"
-                >
-                  <IconRenderer icon="FiCheckCircle" size={14} />
-                  Update
-                </button>
-              </div>
-            </>
+            <p className="text-14 text-secondary font-medium">
+              {invalidSelectedCount} records selected
+            </p>
+            <div className="flex items-center gap-12">
+              <button
+                onClick={() => invalidActionsRef.current?.removeSelected()}
+                className="h-[34px] px-16 rounded-6 border border-danger text-danger text-13 flex items-center gap-6"
+              >
+                <IconRenderer icon="FaRegTimesCircle" size={14} />
+                Remove
+              </button>
+              <button
+                disabled={invalidSelectedCount === 0}
+                onClick={() => invalidActionsRef.current?.updateSelected()}
+                className="h-[34px] px-16 rounded-6 bg-primary text-white text-13 flex items-center gap-6"
+              >
+                <IconRenderer icon="FiCheckCircle" size={14} />
+                Update
+              </button>
+            </div>
           </div>
         )}
-        {/* Right side — Cancel + Add Products */}
         {activeTab === "valid" && (
           <div className="flex items-center w-full justify-end gap-12">
             <CustomButton
@@ -503,7 +401,7 @@ export default function BulkUpload() {
               disabled={isSubmitting}
             />
             <CustomButton
-              title="Add Products"
+              title="Add Records"
               backgroundColor="bg-primary"
               textColor="text-white"
               gap="gap-[5px]"
@@ -517,14 +415,14 @@ export default function BulkUpload() {
                 />
               }
               iconPosition="left"
-              onClick={handleAddProducts}
+              onClick={handleAddRecords}
               disabled={validRows.length === 0 || isSubmitting}
             />
           </div>
         )}
       </div>
 
-      <LoaderModal isOpen={isSubmitting} message="Adding products..." />
+      <LoaderModal isOpen={isSubmitting} message="Adding records..." />
     </div>
   );
 }

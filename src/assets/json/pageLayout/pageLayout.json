@@ -19,6 +19,12 @@
         "route": "/product"
       },
       {
+        "icon": "./src/assets/icons/SideBar/IncentiveRatesActiveIcon.svg",
+        "activeIcon": "./src/assets/icons/SideBar/IncentiveRatesIcon.svg",
+        "name": "Incentive Rates",
+        "route": "/incentiveRates"
+      },
+      {
         "icon": "./src/assets/icons/SideBar/EmployeSalesIcon.svg",
         "activeIcon": "./src/assets/icons/SideBar/EmployeeSalceActiveIcon.svg",
         "name": "Employee Sales Target",
@@ -109,6 +115,39 @@
         "Id": "CANCEL",
         "Name": "Cancel",
         "Icon": "FaRegTimesCircle"
+      }
+    }
+  },
+  "IncentiveRates": {
+    "Code": "PL007",
+    "Name": "Incentive Rates",
+    "PageTitle": "Incentive Rates",
+    "Description": "Layout configuration for Incentive Rates List",
+    "IsBulkUploadRequired": true,
+    "IsSearchRequired": true,
+    "IsDownloadRequired": true,
+    "EditIcon": "RxPencil1",
+    "HistoryIcon": "GoHistory",
+    "CustomButtons": {
+      "UploadButton": {
+        "Id": "BULKUPLOAD",
+        "Icon": "FiUpload",
+        "Name": "Bulk Upload"
+      },
+      "DownloadButton": {
+        "Id": "DOWNLOAD",
+        "Name": "Download Excel",
+        "Icon": "TbDownload"
+      },
+      "SearchInput": {
+        "Id": "SEARCH",
+        "Placeholder": "Search...",
+        "Icon": "RiSearchLine"
+      },
+      "AddProductButton": {
+        "Id": "ADDPRODUCT",
+        "Name": "+ Add Product",
+        "Icon": ""
       }
     }
   },

@@ -33,6 +33,7 @@ function applyFilters(
   const categoryQ = (textFilters.category ?? "").trim().toLowerCase();
   const subCategoryQ = (textFilters.subCategory ?? "").trim().toLowerCase();
   const productQ = (textFilters.product ?? "").trim().toLowerCase();
+  const configCodeQ = (textFilters.configCode ?? "").trim().toLowerCase();
   const selectedDate = dateFilter ? new Date(dateFilter) : null;
 
   return data
@@ -49,6 +50,11 @@ function applyFilters(
         .map((sub) => {
           const products = sub.products.filter((p) => {
             if (productQ && !p.product.toLowerCase().includes(productQ))
+              return false;
+            if (
+              configCodeQ &&
+              !(p.configCode ?? "").toLowerCase().includes(configCodeQ)
+            )
               return false;
             if (selectedDate) {
               const t = new Date(p.effectiveDate);
@@ -223,6 +229,36 @@ function DefaultCell({ column, category, subCategory }: DefaultCellProps) {
           {subCategory.products.map((p, i) => (
             <div key={`${p.product}-${i}`} className="grouped-table__stack-row">
               {p.location || ""}
+            </div>
+          ))}
+        </div>
+      );
+    case "configCode":
+      return (
+        <div className="grouped-table__stack">
+          {subCategory.products.map((p, i) => (
+            <div key={`${p.product}-${i}`} className="grouped-table__stack-row">
+              {p.configCode || ""}
+            </div>
+          ))}
+        </div>
+      );
+    case "incentive":
+      return (
+        <div className="grouped-table__stack">
+          {subCategory.products.map((p, i) => (
+            <div key={`${p.product}-${i}`} className="grouped-table__stack-row">
+              {p.incentive ?? ""}
+            </div>
+          ))}
+        </div>
+      );
+    case "eligibility":
+      return (
+        <div className="grouped-table__stack">
+          {subCategory.products.map((p, i) => (
+            <div key={`${p.product}-${i}`} className="grouped-table__stack-row">
+              {p.eligibility || ""}
             </div>
           ))}
         </div>
@@ -450,16 +486,19 @@ export default function GroupedIncentiveTable({
                   evenDataBackgroundColor && categoryIndex % 2 === 1;
                 return category.subCategories.map((subCategory, subIndex) => {
                   const isFirstSubRow = subIndex === 0;
-                  const isLastSubRow = subIndex === category.subCategories.length - 1;
+                  const isLastSubRow =
+                    subIndex === category.subCategories.length - 1;
 
                   let trBorderClass = "";
                   if (showVerticalLines) {
                     if (!hideSubRowBorders || (isFirstSubRow && isLastSubRow)) {
                       trBorderClass = "border-[1.5px] border-[#eee]";
                     } else if (isFirstSubRow) {
-                      trBorderClass = "border-x-[1.5px] border-t-[1.5px] border-[#eee]";
+                      trBorderClass =
+                        "border-x-[1.5px] border-t-[1.5px] border-[#eee]";
                     } else if (isLastSubRow) {
-                      trBorderClass = "border-x-[1.5px] border-b-[1.5px] border-[#eee]";
+                      trBorderClass =
+                        "border-x-[1.5px] border-b-[1.5px] border-[#eee]";
                     } else {
                       trBorderClass = "border-x-[1.5px] border-[#eee]";
                     }

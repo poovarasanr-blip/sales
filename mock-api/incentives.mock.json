@@ -19,18 +19,53 @@
           "dealerName": "Vasanth & Co - Chennai",
           "submittedDate": "2026-05-02",
           "categories": [
-            { "categoryName": "Mixer Grinders", "actual": 38, "regularized": 38, "target": 45, "incentive": 600 },
-            { "categoryName": "Microwave Ovens", "actual": 28, "regularized": 28, "target": 30, "incentive": 600 },
-            { "categoryName": "Rice Cookers", "actual": 32, "regularized": 32, "target": 40, "incentive": 900 },
-            { "categoryName": "Induction Cooktops", "actual": 46, "regularized": 46, "target": 45, "incentive": 1000 },
-            { "categoryName": "Refrigerators", "actual": 5, "regularized": 5, "target": 15, "incentive": null }
+            {
+              "categoryName": "Mixer Grinders",
+              "actual": 38,
+              "regularized": 38,
+              "target": 45,
+              "incentive": 600
+            },
+            {
+              "categoryName": "Microwave Ovens",
+              "actual": 28,
+              "regularized": 28,
+              "target": 30,
+              "incentive": 600
+            },
+            {
+              "categoryName": "Rice Cookers",
+              "actual": 32,
+              "regularized": 32,
+              "target": 40,
+              "incentive": 900
+            },
+            {
+              "categoryName": "Induction Cooktops",
+              "actual": 46,
+              "regularized": 46,
+              "target": 45,
+              "incentive": 1000
+            },
+            {
+              "categoryName": "Refrigerators",
+              "actual": 5,
+              "regularized": 5,
+              "target": 15,
+              "incentive": null
+            }
           ],
           "actualIncentiveAmount": 3100,
           "adjustmentAmount": -200,
           "finalIncentiveAmount": 2900
         }
       ],
-      "pagination": { "page": 1, "pageSize": 10, "totalItems": 1, "totalPages": 1 }
+      "pagination": {
+        "page": 1,
+        "pageSize": 10,
+        "totalItems": 1,
+        "totalPages": 1
+      }
     }
   },
   "updateAdjustment": {
@@ -68,18 +103,6 @@
           "adjustment": 300,
           "finalIncentive": 3400,
           "remarks": "Incentive amount revised based on attachments"
-        },
-        {
-          "date": "2026-05-21",
-          "time": "12:40",
-          "subject": "Sales",
-          "verb": "approved",
-          "verbColor": "success",
-          "suffix": "and incentive adjusted by HR Manager",
-          "existingIncentive": 3400,
-          "adjustment": -300,
-          "finalIncentive": 3100,
-          "remarks": ""
         }
       ]
     }

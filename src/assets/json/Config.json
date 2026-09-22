@@ -1,0 +1,128 @@
+{
+  "baseUrlRoute": "https://stfdev.hfactor.app/sales.api",
+  "baseUrlRoutes": "https://stfdev.hfactor.app/sales.api",
+  "resumeParserUrlRoute": "",
+  "secureBaseUrlRoute": "https://stfdev.hfactor.app/security.api/",
+  "baseUrlTemplateDownload": "https://stfdev.hfactor.app/hrsuiteuat.api/",
+  "uploadUrlRoute": "",
+  "redirectionUrl": "",
+  "urlcode": "qc",
+  "businessType": 0,
+  "ProductBulkConfig": {
+    "SearchElementList": [
+      { "FieldName": "CompanyId", "Value": 5 },
+      { "FieldName": "Status", "Value": true },
+      { "FieldName": "Code", "Value": "ImportIncentiveProduct" }
+    ],
+    "DataSource": { "Name": "ImportLayout", "Type": 1, "IsCoreEntity": false }
+  },
+  "ProductUploadColumns": [
+    {
+      "apiField": "IncentiveProductCategory",
+      "header": "Category",
+      "type": "string",
+      "required": true,
+      "groupLevel": 1,
+      "headerIcon": "LuSlidersHorizontal"
+    },
+    {
+      "apiField": "EffectiveDate",
+      "header": "Effective Date",
+      "type": "date",
+      "required": true,
+      "groupLevel": 1,
+      "headerIcon": "LuCalendar"
+    },
+    {
+      "apiField": "IncentiveProductSubCategory",
+      "header": "Sub Category",
+      "type": "string",
+      "required": true,
+      "groupLevel": 2,
+      "headerIcon": "FiSearch"
+    },
+    {
+      "apiField": "Name",
+      "header": "Product",
+      "type": "string",
+      "required": true,
+      "headerIcon": "FiSearch"
+    }
+  ],
+  "EmployeeSalesTargetBulkConfig": {
+    "SearchElementList": [
+      { "FieldName": "CompanyId", "Value": 5 },
+      { "FieldName": "Status", "Value": true },
+      {
+        "FieldName": "Code",
+        "Value": "ImportSalesIncentiveTargetsForEmployees"
+      }
+    ],
+    "DataSource": { "Name": "ImportLayout", "Type": 1, "IsCoreEntity": false }
+  },
+  "EmployeeSalesTargetUploadColumns": [
+    {
+      "apiField": "EmployeeCode",
+      "header": "Employee Code",
+      "type": "string",
+      "required": true,
+      "groupLevel": 1
+    },
+    {
+      "apiField": "EmployeeName",
+      "header": "Employee Name",
+      "type": "string",
+      "required": true,
+      "groupLevel": 1
+    },
+    {
+      "apiField": "SalesIncentiveConfigurationCode",
+      "header": "SalesIncentiveConfiguration Code",
+      "type": "string",
+      "required": true
+    },
+    {
+      "apiField": "IncentiveSubCategory",
+      "header": "IncentiveSubCategory",
+      "type": "string",
+      "required": true,
+      "groupLevel": 2
+    },
+    {
+      "apiField": "IncentiveProduct",
+      "header": "IncentiveProduct",
+      "type": "string",
+      "required": true
+    },
+    {
+      "apiField": "Month",
+      "header": "Month",
+      "type": "string",
+      "required": true
+    },
+    {
+      "apiField": "Year",
+      "header": "Year",
+      "type": "number",
+      "required": true
+    },
+    {
+      "apiField": "BaseTargetQuantity",
+      "header": "BaseTarget Quantity",
+      "type": "number",
+      "required": true
+    },
+    {
+      "apiField": "Incentive",
+      "header": "Incentive",
+      "type": "number",
+      "required": true
+    },
+    {
+      "apiField": "IncentiveEligibility",
+      "header": "Incentive Eligibility",
+      "type": "string",
+      "required": true
+    }
+  ]
+}

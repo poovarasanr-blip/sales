@@ -88,6 +88,9 @@ export interface ProductEntry {
   product: string;
   effectiveDate: string;
   location?: string;
+  configCode?: string;
+  incentive?: number;
+  eligibility?: string;
 }
 export interface ProductFlatRow {
   category: string;
@@ -262,6 +265,8 @@ export interface BulkUploadColumnConfig<T> {
   header: string;
   required?: boolean;
   type?: "string" | "number" | "date";
+  groupLevel?: number;
+  headerIcon?: string;
 }
 export interface RowValidationResult<T> {
   rowNumber: number;
@@ -278,15 +283,16 @@ export interface UploadingFileState {
   progress: number;
 }
 export interface EmployeeSalesTargetUploadRow {
-  "Employee Code": string;
-  "Employee Name": string;
-  Company: string;
-  Location: string;
-  "Manager Code": string;
-  "Manager Name": string;
+  EmployeeCode: string;
+  EmployeeName: string;
+  SalesIncentiveConfigurationCode: string;
+  IncentiveSubCategory: string;
+  IncentiveProduct: string;
   Month: string;
-  Category: string;
-  "Sales Target (nos)": number;
+  Year: number;
+  BaseTargetQuantity: number;
+  Incentive: number;
+  IncentiveEligibility: string;
   [key: string]: string | number;
 }
 export interface EmployeeTargetCategoryRow {

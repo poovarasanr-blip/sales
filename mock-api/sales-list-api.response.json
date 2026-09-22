@@ -1,0 +1,339 @@
+﻿{
+  "data": {
+    "pending": [
+      {
+        "Id": 1,
+        "Employee": {
+          "EmployeeId": "PS0019",
+          "EmployeeName": "Aarav Sharma",
+          "Dealer": {
+            "LocationId": 1,
+            "LocationName": "Vasanth \u0026 Co - Chennai"
+          }
+        },
+        "Role": {
+          "Id": "PS0987",
+          "Name": "Pawan Kumar",
+          "SubmittedDate": "2026-05-02",
+          "Role": "Loaction Manager"
+        },
+        "LocationDetails": {
+          "Dealer": "Vasanth \u0026 Co - Chennai"
+        },
+        "SalesProducts": [
+          {
+            "SalesProductId": 101,
+            "SalesProductName": "Mixer Grinders",
+            "ActualSales": 38,
+            "RegularizedSales": 38,
+            "SalesTarget": 45,
+            "IncentiveAmount": 600,
+            "AchievementPercentage": "84.44%"
+          },
+          {
+            "SalesProductId": 102,
+            "SalesProductName": "Microwave Ovens",
+            "ActualSales": 28,
+            "RegularizedSales": 28,
+            "SalesTarget": 30,
+            "IncentiveAmount": 600,
+            "AchievementPercentage": "93.33%"
+          },
+          {
+            "SalesProductId": 103,
+            "SalesProductName": "Rice Cookers",
+            "ActualSales": 32,
+            "RegularizedSales": 32,
+            "SalesTarget": 40,
+            "IncentiveAmount": 900,
+            "AchievementPercentage": "80%"
+          },
+          {
+            "SalesProductId": 104,
+            "SalesProductName": "Induction Cooktops",
+            "ActualSales": 46,
+            "RegularizedSales": 46,
+            "SalesTarget": 45,
+            "IncentiveAmount": 1000,
+            "AchievementPercentage": "102.22%"
+          },
+          {
+            "SalesProductId": 105,
+            "SalesProductName": "Refrigerators",
+            "ActualSales": 5,
+            "RegularizedSales": 5,
+            "SalesTarget": 15,
+            "IncentiveAmount": 0,
+            "AchievementPercentage": "33.33%"
+          }
+        ],
+        "ActualIncentiveAmount": 3100,
+        "AdjustmentAmount": 0,
+        "FinalIncentiveAmount": 3100,
+        "Status": "pending",
+        "Details": {
+          "RegularizedSales": {
+            "Date": "MMM YYYY",
+            "Data": [
+              {
+                "Id": 1,
+                "SalesProductName": "Mixer Grinders",
+                "Products": [
+                  "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                  "Panasonic Monster Mixer Grinder 750 Watts"
+                ],
+                "ActualSales": [23, 15],
+                "RegularizedSales": [23, 15],
+                "Remarks": {
+                  "HasAttachment": true,
+                  "HasDocument": true
+                },
+                "OverallRegularizedSales": 38,
+                "SalesTarget": 45,
+                "IncentiveAmount": 600,
+                "PerformanceRange": "80-85%"
+              }
+            ]
+          },
+          "MonthlySales": {
+            "Month": "MMM YYYY",
+            "Data": [
+              {
+                "Id": 1,
+                "SalesDate": "2026-05-02",
+                "SalesCategoryName": "Mixer Grinders",
+                "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "SalesQuantity": 19,
+                "Attachment": {
+                  "IsAvailable": true,
+                  "Label": "View",
+                  "FileName": "ps0019-mixer-grinder-01.pdf"
+                },
+                "SubmittedDate": "2026-05-02"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "approved": [
+      {
+        "Id": 1,
+        "ApprovedDate": "03 May 2026",
+        "Employee": {
+          "EmployeeId": "PS0019",
+          "EmployeeName": "Aarav Sharma",
+          "Dealer": {
+            "LocationId": 1,
+            "LocationName": "Vasanth \u0026 Co - Chennai"
+          }
+        },
+        "Role": {
+          "Id": "PS0987",
+          "Name": "Pawan Kumar",
+          "SubmittedDate": "2026-05-02",
+          "Role": "Loaction Manager"
+        },
+        "SalesProducts": [
+          {
+            "SalesProductId": 101,
+            "SalesProductName": "Mixer Grinders",
+            "ActualSales": 38,
+            "RegularizedSales": 38,
+            "SalesTarget": 45,
+            "IncentiveAmount": 600,
+            "AchievementPercentage": "84.44%"
+          },
+          {
+            "SalesProductId": 102,
+            "SalesProductName": "Microwave Ovens",
+            "ActualSales": 28,
+            "RegularizedSales": 28,
+            "SalesTarget": 30,
+            "IncentiveAmount": 600,
+            "AchievementPercentage": "93.33%"
+          },
+          {
+            "SalesProductId": 103,
+            "SalesProductName": "Rice Cookers",
+            "ActualSales": 32,
+            "RegularizedSales": 32,
+            "SalesTarget": 40,
+            "IncentiveAmount": 900,
+            "AchievementPercentage": "80%"
+          },
+          {
+            "SalesProductId": 104,
+            "SalesProductName": "Induction Cooktops",
+            "ActualSales": 46,
+            "RegularizedSales": 46,
+            "SalesTarget": 45,
+            "IncentiveAmount": 1000,
+            "AchievementPercentage": "102.22%"
+          },
+          {
+            "SalesProductId": 105,
+            "SalesProductName": "Refrigerators",
+            "ActualSales": 5,
+            "RegularizedSales": 5,
+            "SalesTarget": 15,
+            "IncentiveAmount": 0,
+            "AchievementPercentage": "33.33%"
+          }
+        ],
+        "ActualIncentiveAmount": 3100,
+        "AdjustmentAmount": 0,
+        "FinalIncentiveAmount": 3100,
+        "Status": "approved",
+        "Details": {
+          "RegularizedSales": {
+            "Date": "MMM YYYY",
+            "Data": [
+              {
+                "Id": 1,
+                "SalesProductName": "Mixer Grinders",
+                "Products": [
+                  "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                  "Panasonic Monster Mixer Grinder 750 Watts"
+                ],
+                "ActualSales": [23, 15],
+                "RegularizedSales": [23, 15],
+                "Remarks": {
+                  "HasAttachment": true,
+                  "HasDocument": true
+                },
+                "OverallRegularizedSales": 38,
+                "SalesTarget": 45,
+                "IncentiveAmount": 600,
+                "PerformanceRange": "80-85%"
+              }
+            ]
+          },
+          "MonthlySales": {
+            "Month": "MMM YYYY",
+            "Data": [
+              {
+                "Id": 1,
+                "SalesDate": "2026-05-02",
+                "SalesCategoryName": "Mixer Grinders",
+                "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "SalesQuantity": 19,
+                "Attachment": {
+                  "IsAvailable": true,
+                  "Label": "View",
+                  "FileName": "ps0019-mixer-grinder-01.pdf"
+                },
+                "SubmittedDate": "2026-05-02"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "rejected": [
+      {
+        "Id": 1,
+        "RejectedDate": "03 May 2026",
+        "Employee": {
+          "EmployeeId": "PS0019",
+          "EmployeeName": "Aarav Sharma",
+          "Dealer": {
+            "LocationId": 1,
+            "LocationName": "Vasanth \u0026 Co - Chennai"
+          }
+        },
+        "Role": {
+          "Id": "PS0987",
+          "Name": "Pawan Kumar",
+          "SubmittedDate": "2026-05-02",
+          "Role": "Loaction Manager"
+        },
+        "SalesProducts": [
+          {
+            "SalesProductId": 101,
+            "SalesProductName": "Mixer Grinders",
+            "ActualSales": 38,
+            "RegularizedSales": 38,
+            "SalesTarget": 45,
+            "IncentiveAmount": 600
+          },
+          {
+            "SalesProductId": 102,
+            "SalesProductName": "Microwave Ovens",
+            "ActualSales": 28,
+            "RegularizedSales": 28,
+            "SalesTarget": 30,
+            "IncentiveAmount": 600
+          }
+        ],
+        "ActualIncentiveAmount": 3100,
+        "AdjustmentAmount": 0,
+        "FinalIncentiveAmount": 3100,
+        "Status": "rejected",
+        "Details": {
+          "RegularizedSales": {
+            "Date": "MMM YYYY",
+            "Data": [
+              {
+                "Id": 1,
+                "SalesProductName": "Mixer Grinders",
+                "Products": [
+                  "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                  "Panasonic Monster Mixer Grinder 750 Watts"
+                ],
+                "ActualSales": [23, 15],
+                "RegularizedSales": [23, 15],
+                "Remarks": {
+                  "HasAttachment": true,
+                  "HasDocument": true
+                },
+                "OverallRegularizedSales": 38,
+                "SalesTarget": 45,
+                "IncentiveAmount": 600,
+                "PerformanceRange": "80-85%"
+              }
+            ]
+          },
+          "MonthlySales": {
+            "Month": "MMM YYYY",
+            "Data": [
+              {
+                "Id": 1,
+                "SalesDate": "2026-05-02",
+                "SalesCategoryName": "Mixer Grinders",
+                "SalesProductName": "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+                "SalesQuantity": 19,
+                "Attachment": {
+                  "IsAvailable": true,
+                  "Label": "View",
+                  "FileName": "ps0019-mixer-grinder-01.pdf"
+                },
+                "SubmittedDate": "2026-05-02"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "meta": {
+    "total": 13,
+    "counts": {
+      "pending": 10,
+      "approved": 1,
+      "rejected": 2
+    },
+    "pagination": {
+      "page": 1,
+      "pageSize": 10,
+      "totalPages": 2,
+      "totalItems": 13
+    },
+    "availableManagers": [
+      {
+        "ManagerId": "PS0987",
+        "ManagerName": "Pawan Kumar"
+      }
+    ]
+  }
+}

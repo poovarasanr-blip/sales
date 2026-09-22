@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import IconRenderer from "../../../../shared/components/ui/IconRender/IconRenderer";
 import { showToast } from "../CustomToast/UseToast";
 import type { BulkUploadColumnConfig } from "../../../../modules/sales-incentive/types/salesIncentive.types";
@@ -6,30 +6,31 @@ import type { BulkUploadColumnConfig } from "../../../../modules/sales-incentive
 /* ---------- helpers ---------- */
 
 function toInputDate(display: string): string {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(display)) return display;
   const d = new Date(display);
   if (Number.isNaN(d.getTime())) return "";
-  return d.toISOString().slice(0, 10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
 function fromInputDate(iso: string): string {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return d
-    .toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    })
-    .replace(",", "");
+  return d.toISOString().slice(0, 10);
 }
 
 function validateField<T>(
   value: unknown,
   col: BulkUploadColumnConfig<T>,
 ): string | null {
-  if (col.required && (value === undefined || value === null || value === "")) {
+  const isEmpty = value === undefined || value === null || String(value).trim() === "";
+  if (col.required && isEmpty) {
     return `${col.header} is required`;
   }
+  if (isEmpty) return null;
   if (col.type === "number") {
     const n = Number(value);
     if (Number.isNaN(n)) return `${col.header} must be a number`;
@@ -57,6 +58,14 @@ interface InvalidRecordsTableProps<T extends Record<string, any>> {
   /** Called once a row passes validation — parent moves it into the valid list */
   onValidated: (row: T, id: string) => void;
   emptyMessage?: string;
+  /** Hide the built-in selection bar so the parent can render controls externally */
+  hideSelectionBar?: boolean;
+  /** Fires whenever selection changes so the parent can render external controls */
+  onSelectionChange?: (info: {
+    count: number;
+    removeSelected: () => void;
+    updateSelected: () => void;
+  }) => void;
 }
 
 /* ---------- component ---------- */
@@ -67,6 +76,8 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
   onRemove,
   onValidated,
   emptyMessage = "No invalid records.",
+  hideSelectionBar = false,
+  onSelectionChange,
 }: InvalidRecordsTableProps<T>) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   // Live, always-editable values for every row — keyed by row id.
@@ -83,11 +94,25 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
       });
       return next;
     });
+
     setSelectedIds((prev) => {
       const ids = new Set(rows.map((r) => r.__id));
       const next = new Set<string>();
       prev.forEach((id) => {
         if (ids.has(id)) next.add(id);
+      });
+      return next;
+    });
+
+    setFieldErrors((prev) => {
+      const next: Record<string, Partial<Record<keyof T, string>>> = { ...prev };
+      rows.forEach((r) => {
+        const errs: Partial<Record<keyof T, string>> = {};
+        columns.forEach((col) => {
+          const err = validateField(r.data?.[col.key], col);
+          if (err) errs[col.key] = err;
+        });
+        if (Object.keys(errs).length > 0) next[r.__id] = errs;
       });
       return next;
     });
@@ -156,7 +181,12 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
     });
   }
 
-  function updateSelected() {
+  const removeSelectedBulk = useCallback(() => {
+    onRemove(Array.from(selectedIds));
+    setSelectedIds(new Set());
+  }, [selectedIds, onRemove]);
+
+  const updateSelectedBulk = useCallback(() => {
     const ids = Array.from(selectedIds);
     const validIds = ids.filter((id) => validateRow(id));
     const invalidCount = ids.length - validIds.length;
@@ -183,7 +213,15 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
         duration: 2500,
       });
     }
-  }
+  }, [selectedIds, values, columns, onValidated]);
+
+  useEffect(() => {
+    onSelectionChange?.({
+      count: selectedIds.size,
+      removeSelected: removeSelectedBulk,
+      updateSelected: updateSelectedBulk,
+    });
+  }, [selectedIds.size, removeSelectedBulk, updateSelectedBulk, onSelectionChange]);
 
   return (
     <div className="grouped-table__wrapper h-full flex flex-col">
@@ -318,24 +356,21 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
         </table>
       </div>
 
-      {hasSelection && (
+      {hasSelection && !hideSelectionBar && (
         <div className="flex items-center justify-between px-3 py-10 shrink-0 border-t-1 border-strokegray bg-white">
           <p className="text-13 text-primary font-semibold">
             {selectedIds.size} records selected
           </p>
           <div className="flex items-center gap-12">
             <button
-              onClick={() => {
-                onRemove(Array.from(selectedIds));
-                setSelectedIds(new Set());
-              }}
+              onClick={removeSelectedBulk}
               className="h-[34px] px-16 rounded-6 border border-danger text-danger text-13 flex items-center gap-6"
             >
               <IconRenderer icon="FaRegTimesCircle" size={14} />
               Remove
             </button>
             <button
-              onClick={updateSelected}
+              onClick={updateSelectedBulk}
               className="h-[34px] px-16 rounded-6 bg-primary text-white text-13 flex items-center gap-6"
             >
               <IconRenderer icon="FiCheckCircle" size={14} />

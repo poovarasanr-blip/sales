@@ -8,8 +8,11 @@ import SalesSubmissions from "./SalesSubmissions";
 import SalesDealer from "./SalesDealer";
 import AchievedTeam from "./AchievedTeam";
 import TeamSales from "./TeamSales";
+import { useAuthStore } from "../../../../app/store/useAuthStore";
 
 export default function Dashboard() {
+  const sessionData = useAuthStore((s) => s.sessionData);
+
   const chartData: BarChartItem[] =
     PageValues?.SalesOverview?.Data?.Values?.map((item) => ({
       label: item.label,

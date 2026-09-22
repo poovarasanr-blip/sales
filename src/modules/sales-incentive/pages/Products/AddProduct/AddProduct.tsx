@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import addProductConfig from "../../../../../assets/json/addProductConfig.json";
 import CustomButton from "../../../../../shared/components/ui/Button/CustomButton";
@@ -12,6 +12,9 @@ import ProductClassification from "./ProductClassification";
 import ProductHierarchy from "./ProductHierarchy";
 import ProductRows from "./ProductRows";
 import SectionFields from "./SectionFields";
+import { useMutation } from "@tanstack/react-query";
+import { handleGetcategory } from "../../../../../query/api";
+import { useAuthStore } from "../../../../../app/store/useAuthStore";
 
 const config = addProductConfig as unknown as AddProductConfig;
 
@@ -26,6 +29,7 @@ function makeRowId() {
 
 export default function AddProduct() {
   const navigate = useNavigate();
+  const sessionData = useAuthStore((s) => s.sessionData);
 
   const [classificationValues, setClassificationValues] = useState<
     Record<string, string>
@@ -39,6 +43,26 @@ export default function AddProduct() {
   const [dynamicOptions, setDynamicOptions] = useState<
     Record<string, AddProductOption[]>
   >({});
+
+  const {
+    isPending: handlefetchCategoryLoader,
+    mutate: handlefetchCategoryData,
+  } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleGetcategory(variables?.payload, sessionData?.Token),
+    onSuccess: (response) => {
+      console.log(response, "response");
+      if (response?.data?.Status) {
+        console.log(response, "response");
+      }
+    },
+    onError: (error) => {
+      console.log("fetch category api:", error);
+    },
+  });
+  useEffect(() => {
+    handlefetchCategoryData();
+  }, []);
 
   const mergedSteps = config.classification.steps.map((step) => {
     const extra = dynamicOptions[step.id];
@@ -231,9 +255,11 @@ export default function AddProduct() {
             title={config.hierarchy.title}
             icon={config.hierarchy.icon}
             productCount={productRows.length}
-            productNames={productRows
-              .map((r) => r.values.productName?.trim())
-              .filter(Boolean) as string[]}
+            productNames={
+              productRows
+                .map((r) => r.values.productName?.trim())
+                .filter(Boolean) as string[]
+            }
           />
         </div>
       </div>

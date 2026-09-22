@@ -49,6 +49,33 @@ export function generateSampleFile<T extends Record<string, unknown>>(
   XLSX.writeFile(workbook, fileName);
 }
 
+function toYMD(raw: unknown): string {
+  if (typeof raw === "number") {
+    const ms = Math.round((raw - 25569) * 86400 * 1000);
+    const d = new Date(ms);
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(d.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+  if (raw instanceof Date) {
+    const y = raw.getFullYear();
+    const m = String(raw.getMonth() + 1).padStart(2, "0");
+    const day = String(raw.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+  const str = String(raw).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+  const d = new Date(str);
+  if (!Number.isNaN(d.getTime())) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+  return str;
+}
+
 export function parseWorkbook<T extends Record<string, unknown>>(
   buffer: ArrayBuffer,
   columns: BulkUploadColumnConfig<T>[],
@@ -85,8 +112,9 @@ export function parseWorkbook<T extends Record<string, unknown>>(
     return { ...empty, headerErrors: ["The uploaded file is empty."] };
   }
 
-  const actualHeaders = rows[0].map((h) => String(h ?? "").trim());
+  const rawHeaders = rows[0].map((h) => String(h ?? "").trim());
   const expectedHeaders = columns.map((c) => c.header);
+  const actualHeaders = rawHeaders.slice(0, expectedHeaders.length);
 
   const missing = expectedHeaders.filter((h) => !actualHeaders.includes(h));
   const unexpected = actualHeaders.filter(
@@ -129,6 +157,9 @@ export function parseWorkbook<T extends Record<string, unknown>>(
         } else {
           value = num;
         }
+      }
+      if (!isBlank && col.type === "date") {
+        value = toYMD(rawValue);
       }
       (data as Record<string, unknown>)[col.key as string] = isBlank
         ? ""

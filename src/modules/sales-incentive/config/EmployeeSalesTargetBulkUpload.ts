@@ -1,151 +1,70 @@
+import Config from "../../../assets/json/Config.json";
 import type {
   BulkUploadColumnConfig,
   CategoryGroup,
-  EmployeeSalesTargetUploadRow,
   GroupedTableColumn,
-  ManagerOption,
 } from "../types/salesIncentive.types";
 
-export const EMPLOYEE_TARGET_UPLOAD_COLUMNS: BulkUploadColumnConfig<EmployeeSalesTargetUploadRow>[] =
-  [
-    {
-      key: "Employee Code",
-      header: "Employee Code",
-      required: true,
-      type: "string",
-    },
-    {
-      key: "Employee Name",
-      header: "Employee Name",
-      required: true,
-      type: "string",
-    },
-    { key: "Company", header: "Company", required: true, type: "string" },
-    { key: "Location", header: "Location", required: true, type: "string" },
-    {
-      key: "Manager Code",
-      header: "Manager Code",
-      required: true,
-      type: "string",
-    },
-    {
-      key: "Manager Name",
-      header: "Manager Name",
-      required: true,
-      type: "string",
-    },
-    { key: "Month", header: "Month", required: true, type: "string" },
-    { key: "Category", header: "Category", required: true, type: "string" },
-    {
-      key: "Sales Target (nos)",
-      header: "Sales Target (nos)",
-      required: true,
-      type: "number",
-    },
-  ];
+/* ---- Config.json-driven column config ---- */
 
-export const EMPLOYEE_TARGET_SAMPLE_ROWS: EmployeeSalesTargetUploadRow[] = [
-  {
-    "Employee Code": "PSO019",
-    "Employee Name": "Aarav Sharma",
-    Company: "Vasanth & Co",
-    Location: "Chennai",
-    "Manager Code": "PSO987",
-    "Manager Name": "Pawan Kumar",
-    Month: "May 2026",
-    Category: "Mixer Grinders",
-    "Sales Target (nos)": 45,
-  },
-  {
-    "Employee Code": "PSO019",
-    "Employee Name": "Aarav Sharma",
-    Company: "Vasanth & Co",
-    Location: "Chennai",
-    "Manager Code": "PSO987",
-    "Manager Name": "Pawan Kumar",
-    Month: "May 2026",
-    Category: "Microwave Ovens",
-    "Sales Target (nos)": 25,
-  },
-  {
-    "Employee Code": "PSO019",
-    "Employee Name": "Aarav Sharma",
-    Company: "Vasanth & Co",
-    Location: "Chennai",
-    "Manager Code": "PSO987",
-    "Manager Name": "Pawan Kumar",
-    Month: "May 2026",
-    Category: "Rice Cookers",
-    "Sales Target (nos)": 60,
-  },
+export const EMPLOYEE_TARGET_UPLOAD_COLUMNS: BulkUploadColumnConfig<
+  Record<string, any>
+>[] = ((Config as any).EmployeeSalesTargetUploadColumns ?? []).map(
+  (col: any) => ({
+    key: col.apiField,
+    header: col.header,
+    required: col.required ?? false,
+    type: (col.type as "string" | "number" | "date") ?? "string",
+    groupLevel: col.groupLevel as number | undefined,
+    headerIcon: col.headerIcon as string | undefined,
+  }),
+);
+
+/* ---- Table columns for the parent list page ---- */
+
+export const EMPLOYEE_TARGET_TABLE_COLUMNS: GroupedTableColumn[] = [
+  { key: "category", label: "Employee", filterable: "text", icon: "FiSearch", fontWeight: 500, color: "#31314D", width: "22%" },
+  { key: "manager", label: "Manager", icon: "FiSearch", mergeRowSpan: true, width: "15%" },
+  { key: "product", label: "Sub Category", filterable: "text", icon: "FiSearch", width: "18%" },
+  { key: "locations", label: "Sales Target (nos)", width: "12%" },
+  { key: "incentive", label: "Incentive (₹)", width: "11%" },
+  { key: "eligibility", label: "Incentive Eligibility", width: "14%" },
+  { key: "action", label: "Action", align: "center", mergeRowSpan: true, width: "8%" },
 ];
 
+/* ---- Grouping helper for the parent list page ---- */
+
 export function groupEmployeeTargetRows(
-  rows: EmployeeSalesTargetUploadRow[],
+  rows: Record<string, any>[],
 ): CategoryGroup[] {
   const employees = new Map<string, CategoryGroup>();
 
   rows.forEach((row) => {
-    const key = row["Employee Code"];
+    const key = String(row.EmployeeCode ?? "");
 
     if (!employees.has(key)) {
       employees.set(key, {
-        category: `${row["Employee Name"]}`, //(${row["Employee Code"]})
+        category: String(row.EmployeeName ?? ""),
+        employeeCode: key,
+        managerName: String(row.ManagerName ?? ""),
+        managerCode: String(row.ManagerCode ?? ""),
+        storeName: String(row.StoreName ?? ""),
         targetQuantity: 0,
         eligibleIncentive: 0,
-        subCategories: [
-          {
-            subCategory: `${row["Manager Name"]} (${row["Manager Code"]})`,
-            products: [],
-          },
-        ],
+        subCategories: [{ subCategory: "", products: [] }],
       } as CategoryGroup);
     }
 
-    const group = employees.get(key) as CategoryGroup & {
-      subCategories: {
-        subCategory: string;
-        products: { product: string; effectiveDate: string }[];
-      }[];
-    };
+    const group = employees.get(key)!;
     group.subCategories[0].products.push({
-      product: row.Category,
-      effectiveDate: String(row["Sales Target (nos)"]),
+      product: String(row.IncentiveProduct ?? row.IncentiveSubCategory ?? ""),
+      effectiveDate: `${row.Month ?? ""} ${row.Year ?? ""}`,
+      location: String(row.BaseTargetQuantity ?? ""),
+      configCode: String(row.SalesIncentiveConfigurationCode ?? ""),
+      incentive: Number(row.Incentive) || 0,
+      eligibility: String(row.IncentiveEligibility ?? ""),
     });
   });
 
   return Array.from(employees.values());
-}
-
-export const EMPLOYEE_TARGET_TABLE_COLUMNS: GroupedTableColumn[] = [
-  {
-    key: "category",
-    label: "Employee",
-    fontWeight: 500,
-    color: "#31314D",
-  },
-  {
-    key: "subCategory",
-    label: "Manager",
-    filterable: "text",
-    icon: "FiSearch",
-  },
-  { key: "product", label: "Category", filterable: "text", icon: "FiSearch" },
-  { key: "effectiveDate", label: "Sales Target (nos)", sortable: true },
-];
-
-/** Unique "Managers" dropdown options derived from the loaded dataset. */
-export function getManagerOptions(
-  rows: EmployeeSalesTargetUploadRow[],
-): ManagerOption[] {
-  const seen = new Map<string, string>();
-  rows.forEach((row) => {
-    if (!seen.has(row["Manager Code"])) {
-      seen.set(row["Manager Code"], row["Manager Name"]);
-    }
-  });
-  return [
-    { label: "All", value: "" },
-    ...Array.from(seen.entries()).map(([value, label]) => ({ label, value })),
-  ];
 }

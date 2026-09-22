@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import PageLayOut from "../../../../assets/json/pageLayout/pageLayout.json";
+import Config from "../../../../assets/json/Config.json";
 import CustomButton from "../../../../shared/components/ui/Button/CustomButton";
 import IconRenderer from "../../../../shared/components/ui/IconRender/IconRenderer";
 import CustomDatePicker from "../../../../shared/components/forms/FormDatePicker/FormDatePicker";
-import CustomDropdown from "../../../../shared/components/forms/FormSelect/CustomDropdown";
 import CustomInput from "../../../../shared/components/forms/FormInput/CustomTextInput";
 import NoDataFound from "../../../../shared/components/ui/NoDataFound/NoDataFound";
 import BulkUploadCard from "../../../../shared/components/ui/BulkUpload/BulkUploadCard";
@@ -13,17 +14,30 @@ import { showToast } from "../../../../shared/components/ui/CustomToast/UseToast
 import { generateSampleFile } from "../../../../shared/utils/BulkuploadUtils";
 import { useBulkUpload } from "../../hooks/Usebulkupload";
 import {
-  EMPLOYEE_TARGET_SAMPLE_ROWS,
   EMPLOYEE_TARGET_UPLOAD_COLUMNS,
   EMPLOYEE_TARGET_TABLE_COLUMNS,
   groupEmployeeTargetRows,
-  getManagerOptions,
 } from "../../config/EmployeeSalesTargetBulkUpload";
-import type { EmployeeSalesTargetUploadRow } from "../../types/salesIncentive.types";
+import { useAuthStore } from "../../../../app/store/useAuthStore";
+import {
+  handleGetProductBulkTemplate,
+  handleGetExcelTemplate,
+} from "../../../../query/api";
+import encrypt from "../../../../utils/security/encrypt";
+import decrypt from "../../../../utils/security/decrypt";
+import { parseNestedJson } from "../../../../utils/security/ParseData";
+import { downloadExcelFromBase64 } from "../../../../shared/utils/downloadExcel";
+import SampleDownloadModal from "./SampleDownloadModal";
+import type { SearchField } from "./SampleDownloadModal";
+import type {
+  CategoryGroup,
+  GroupedTableColumn,
+  SubCategoryGroup,
+} from "../../types/salesIncentive.types";
 
 interface EmployeeTargetListLocationState {
   bulkUploadSuccessCount?: number;
-  addedRows?: EmployeeSalesTargetUploadRow[];
+  addedRows?: Record<string, any>[];
 }
 
 const EMPLOYEE_TARGET_BULK_UPLOAD_ROUTE = "/employeeSalesTarget/bulkUpload";
@@ -32,19 +46,76 @@ const EMPLOYEE_TARGET_PAGE_SIZE = 10;
 export default function EmployeeSalesTarget() {
   const navigate = useNavigate();
   const location = useLocation();
+  const sessionData = useAuthStore((s) => s.sessionData);
+  const [employeeTemplate, setEmployeeTemplate] = useState<any>([]);
+  const [showSampleModal, setShowSampleModal] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState<Record<string, any>[]>([]);
 
   const { uploadingFile, fileError, startUpload } =
-    useBulkUpload<EmployeeSalesTargetUploadRow>(EMPLOYEE_TARGET_UPLOAD_COLUMNS);
+    useBulkUpload<Record<string, any>>(EMPLOYEE_TARGET_UPLOAD_COLUMNS);
 
-  const [rows, setRows] = useState<EmployeeSalesTargetUploadRow[]>([]);
+  const { mutate: fetchBulkTemplate } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleGetProductBulkTemplate(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key,
+          sessionData?.Vector,
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        setEmployeeTemplate(parsedData?.dynamicObject[0]);
+      }
+    },
+  });
+
+  const downloadExcelTemplate = (response: any) => {
+    const base64 = response?.dynamicObject;
+    if (!base64) return;
+    downloadExcelFromBase64(base64, "EmployeeSalesTargetTemplate.xlsx");
+  };
+
+  const { mutate: fetchExcelTemplate } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleGetExcelTemplate(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key,
+          sessionData?.Vector,
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        console.log(parsedData, "parsedData");
+        downloadExcelTemplate(parsedData);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
+      const encPayload = encrypt(
+        JSON.stringify(Config.EmployeeSalesTargetBulkConfig),
+        sessionData.Key,
+        sessionData.Vector,
+      );
+      const stdBase64 = encPayload.replace(/\*/g, "+").replace(/-/g, "/");
+      fetchBulkTemplate({
+        payload: stdBase64,
+        token: sessionData.Token,
+      });
+    }
+  }, []);
+
+  const [rows, setRows] = useState<Record<string, any>[]>([]);
   const [showFilter, setShowFilter] = useState<boolean>(true);
   const processedNavKeyRef = useRef<string | null>(null);
   const [appliedMonth, setAppliedMonth] = useState<string>("");
-  const [appliedManager, setAppliedManager] = useState<string>("");
   const [monthDraft, setMonthDraft] = useState<Date | null>(null);
-  const [managerDraft, setManagerDraft] = useState<string>("");
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [managerFilter, setManagerFilter] = useState<string>("All");
 
   useEffect(() => {
     const incoming = location.state as
@@ -63,27 +134,42 @@ export default function EmployeeSalesTarget() {
     });
     navigate(location.pathname, { replace: true, state: null });
   }, [location.state, location.key, navigate]);
-  const managerOptions = useMemo(() => getManagerOptions(rows), [rows]);
 
   const monthLabel = useCallback((d: Date | null) => {
     if (!d) return "";
     return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
   }, []);
 
+  const uniqueManagers = useMemo(() => {
+    const managers = new Set<string>();
+    rows.forEach((row) => {
+      const name = String(row.ManagerName ?? "").trim();
+      if (name) managers.add(name);
+    });
+    return Array.from(managers).sort();
+  }, [rows]);
+
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
-      if (appliedMonth && row.Month !== appliedMonth) return false;
-      if (appliedManager && row["Manager Code"] !== appliedManager)
-        return false;
+      if (appliedMonth) {
+        const parts = appliedMonth.split(" ");
+        const monthName = parts[0];
+        const yearStr = parts[1];
+        if (String(row.Month) !== monthName) return false;
+        if (yearStr && String(row.Year) !== yearStr) return false;
+      }
+      if (managerFilter !== "All") {
+        if (String(row.ManagerName ?? "").trim() !== managerFilter) return false;
+      }
       if (searchTerm.trim()) {
         const q = searchTerm.trim().toLowerCase();
         const haystack =
-          `${row["Employee Name"]} ${row["Employee Code"]} ${row["Manager Name"]} ${row.Category}`.toLowerCase();
+          `${row.EmployeeName} ${row.EmployeeCode} ${row.ManagerName ?? ""} ${row.IncentiveSubCategory} ${row.IncentiveProduct} ${row.IncentiveEligibility}`.toLowerCase();
         if (!haystack.includes(q)) return false;
       }
       return true;
     });
-  }, [rows, appliedMonth, appliedManager, searchTerm]);
+  }, [rows, appliedMonth, searchTerm, managerFilter]);
 
   const employeeGroups = useMemo(
     () => groupEmployeeTargetRows(filteredRows),
@@ -92,23 +178,85 @@ export default function EmployeeSalesTarget() {
 
   const handleGetResults = useCallback(() => {
     setAppliedMonth(monthLabel(monthDraft));
-    setAppliedManager(managerDraft);
-  }, [monthDraft, managerDraft, monthLabel]);
+  }, [monthDraft, monthLabel]);
 
   const handleClearFilters = useCallback(() => {
     setMonthDraft(null);
-    setManagerDraft("");
     setAppliedMonth("");
-    setAppliedManager("");
+    setManagerFilter("All");
   }, []);
 
+  const renderCustomCell = useCallback(
+    (
+      column: GroupedTableColumn,
+      category: CategoryGroup,
+      _subCategory: SubCategoryGroup,
+    ): React.ReactNode => {
+      if (column.key === "category") {
+        return (
+          <div>
+            <p className="text-13 font-semibold text-[#31314D]">
+              {category.category}
+            </p>
+            {category.employeeCode && (
+              <p className="text-11 text-[#8E8EA9] mt-1">
+                {category.employeeCode}
+                {category.storeName ? ` • ${category.storeName}` : ""}
+              </p>
+            )}
+          </div>
+        );
+      }
+      if (column.key === "manager") {
+        return (
+          <div>
+            <p className="text-13 font-medium text-[#31314D]">
+              {category.managerName || "—"}
+            </p>
+            {category.managerCode && (
+              <p className="text-11 text-[#8E8EA9] mt-1">
+                {category.managerCode}
+              </p>
+            )}
+          </div>
+        );
+      }
+      if (column.key === "action") {
+        return (
+          <div className="flex items-center gap-10 justify-center">
+            <button
+              className="text-[#8E8EA9] hover:text-[#EF4444] transition-colors"
+              aria-label="Delete"
+            >
+              <IconRenderer icon="FiTrash2" size={15} />
+            </button>
+            <button
+              className="text-[#8E8EA9] hover:text-primary transition-colors"
+              aria-label="Edit"
+            >
+              <IconRenderer icon="FiEdit2" size={15} />
+            </button>
+          </div>
+        );
+      }
+      return undefined;
+    },
+    [],
+  );
+
+  const searchFields: SearchField[] = useMemo(
+    () =>
+      employeeTemplate?.CreateExcelConfiguration?.SearchConfiguration
+        ?.SearchElementList ?? [],
+    [employeeTemplate],
+  );
+
   const handleSampleDownload = useCallback(() => {
-    generateSampleFile(
-      EMPLOYEE_TARGET_UPLOAD_COLUMNS,
-      EMPLOYEE_TARGET_SAMPLE_ROWS,
-      "Employee_Sales_Target_Sample.xlsx",
-      "EmployeeSalesTarget",
-    );
+    setShowSampleModal(true);
+  }, []);
+
+  const handleUserSelect = useCallback((users: Record<string, any>[]) => {
+    setSelectedUsers(users);
   }, []);
 
   const handleDownloadExcel = useCallback(() => {
@@ -128,8 +276,26 @@ export default function EmployeeSalesTarget() {
       const result = await startUpload(file);
       if (!result) return;
 
+      const validAfter: typeof result.validRows = [];
+      const invalidAfter = [...result.invalidRows];
+
+      result.validRows.forEach((row) => {
+        const errors: string[] = [];
+        EMPLOYEE_TARGET_UPLOAD_COLUMNS.forEach((col) => {
+          const val = row.data[col.key as string];
+          if (val === undefined || val === null || String(val).trim() === "") {
+            errors.push(`${col.header} is required`);
+          }
+        });
+        if (errors.length > 0) {
+          invalidAfter.push({ ...row, errors });
+        } else {
+          validAfter.push(row);
+        }
+      });
+
       navigate(EMPLOYEE_TARGET_BULK_UPLOAD_ROUTE, {
-        state: { validRows: result.validRows, invalidRows: result.invalidRows },
+        state: { validRows: validAfter, invalidRows: invalidAfter },
       });
     },
     [startUpload, navigate],
@@ -204,7 +370,7 @@ export default function EmployeeSalesTarget() {
           </div>
           {showFilter && (
             <div className="border-t border-strokegray pt-12 mt-12 flex justify-between items-end">
-              <div className="flex gap-5 items-center">
+              <div className="flex gap-16 items-end">
                 <CustomDatePicker
                   backgroundColor="bg-white"
                   borderRadious="rounded-4"
@@ -222,17 +388,22 @@ export default function EmployeeSalesTarget() {
                   value={monthDraft}
                   onChange={(date: Date | null) => setMonthDraft(date)}
                 />
-                <div className="w-[288px]">
-                  <CustomDropdown
-                    borderColor="text-strokegray"
-                    options={managerOptions}
-                    value={managerDraft}
-                    onChange={(value: string) => setManagerDraft(value)}
-                    borderRadius="rounded-4"
-                    borderWidth="border-1"
-                    label="Managers"
-                    titleTextColor="text-darkgray"
-                  />
+                <div className="flex flex-col">
+                  <label className="text-12 font-medium text-darkgray mb-4">
+                    Managers
+                  </label>
+                  <select
+                    value={managerFilter}
+                    onChange={(e) => setManagerFilter(e.target.value)}
+                    className="h-[37px] w-[288px] rounded-4 border border-strokegray text-13 text-darkgray px-12 bg-white outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="All">All</option>
+                    {uniqueManagers.map((m) => (
+                      <option key={m} value={m}>
+                        {m}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="flex gap-10">
@@ -314,7 +485,20 @@ export default function EmployeeSalesTarget() {
             </div>
           </div>
 
-          <div className="flex-1 mt-14">
+          <style>{`
+            .employee-target-listing .grouped-table tbody tr {
+              border-left: none !important;
+              border-right: none !important;
+              border-top: none !important;
+            }
+            .employee-target-listing .grouped-table thead tr {
+              border-bottom: 1.5px solid #eee !important;
+            }
+            .employee-target-listing .grouped-table__stack-row {
+              padding: 2px 0;
+            }
+          `}</style>
+          <div className="employee-target-listing flex-1 mt-14">
             <GroupedIncentiveTable
               columns={EMPLOYEE_TARGET_TABLE_COLUMNS}
               data={employeeGroups}
@@ -322,6 +506,7 @@ export default function EmployeeSalesTarget() {
               pagination
               showVerticalLines={true}
               pageSize={EMPLOYEE_TARGET_PAGE_SIZE}
+              renderCustomCell={renderCustomCell}
             />
           </div>
         </div>
@@ -367,6 +552,15 @@ export default function EmployeeSalesTarget() {
           )}
         </div>
       )}
+
+      <SampleDownloadModal
+        isOpen={showSampleModal}
+        onClose={() => setShowSampleModal(false)}
+        searchFields={searchFields}
+        sessionData={sessionData}
+        employeeTemplate={employeeTemplate}
+        onUserSelect={handleUserSelect}
+      />
     </div>
   );
 }

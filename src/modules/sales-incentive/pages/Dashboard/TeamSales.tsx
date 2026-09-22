@@ -1,17 +1,30 @@
 import type {
   CategoryGroup,
   GroupedTableColumn,
+  SubCategoryGroup,
   TeamSalesProps,
 } from "../../types/salesIncentive.types";
 import CustomDropdown from "../../../../shared/components/forms/FormSelect/CustomDropdown";
 import GroupedIncentiveTable from "../../../../shared/components/ui/DataTable/CustomTable";
+
+function getSalesPercentage(actualSales: number, totalSales: number) {
+  if (!totalSales || totalSales <= 0) return 0;
+  return (actualSales / totalSales) * 100;
+}
+
+function getPercentageColor(percentage: number) {
+  if (percentage >= 91) return "#A8EACF";
+  if (percentage >= 86) return "#FFD2AD";
+  if (percentage >= 80) return "#FFB9DF";
+  return "#fff";
+}
 
 export default function TeamSales({ pageLayOutData, labels }: TeamSalesProps) {
   const columns: GroupedTableColumn[] = [
     {
       key: "category",
       label: "Category ",
-      width: "60%",
+      width: "50%",
       testSize: 13,
       fontWeight: 500,
       color: "#31314D",
@@ -26,9 +39,9 @@ export default function TeamSales({ pageLayOutData, labels }: TeamSalesProps) {
     },
     {
       key: "product",
-      label: "Achieved",
+      label: "Achieved/Regularized",
       filterable: "text",
-      width: "24%",
+      width: "35%",
       alineItem: "center",
       align: "center",
     },
@@ -48,7 +61,7 @@ export default function TeamSales({ pageLayOutData, labels }: TeamSalesProps) {
       eligibleIncentive: 600,
       subCategories: [
         {
-          subCategory: "45",
+          subCategory: "38",
           products: [{ product: "38", effectiveDate: "38" }],
         },
       ],
@@ -197,6 +210,34 @@ export default function TeamSales({ pageLayOutData, labels }: TeamSalesProps) {
           columns={columns}
           data={data}
           showVerticalLines={true}
+          renderCustomCell={(
+            column: GroupedTableColumn,
+            category: CategoryGroup,
+            subCategory: SubCategoryGroup,
+          ) => {
+            const actualSales = subCategory.products[0]?.product ?? 0;
+            const totalSales = subCategory.subCategory ?? 0;
+            const percentage = getSalesPercentage(actualSales, totalSales);
+            const color = getPercentageColor(percentage);
+            switch (column.key) {
+              case "product":
+                return (
+                  <div className="flex items-center justify-center">
+                    <div
+                      className={`w-[25px] rounded-[2px]`}
+                      style={{ backgroundColor: color }}
+                    >
+                      <p className="text-darkgray text-12 font-normal">
+                        {subCategory.products[0]?.product}
+                      </p>
+                    </div>
+                  </div>
+                );
+
+              default:
+                return undefined;
+            }
+          }}
         />
       </div>
       <div className="flex items-center justify-center gap-5 mt-3">

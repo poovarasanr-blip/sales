@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
 import type {
   AddProductOption,
@@ -7,6 +7,19 @@ import type {
 import AddNewModal from "./AddNewModal";
 import SearchableDropdown from "./SearchableDropdown";
 import ProductClassificationIcon from "../../../../../assets/icons/AddProduct/ProductClassification.svg";
+import {
+  handleCreatecategory,
+  handleCreateSubcategory,
+} from "../../../../../query/api";
+import { useMutation } from "@tanstack/react-query";
+import { useAuthStore } from "../../../../../app/store/useAuthStore";
+import {
+  ClientContractId,
+  ClientId,
+  CompanyId,
+  teamId,
+} from "../../../../../config/env";
+import encrypt from "../../../../../utils/security/encrypt";
 
 interface ProductClassificationProps {
   steps: AddProductStep[];
@@ -30,11 +43,98 @@ export default function ProductClassification({
   productCount = 0,
 }: ProductClassificationProps) {
   const [addModalStepId, setAddModalStepId] = useState<string | null>(null);
+  const sessionData = useAuthStore((s) => s.sessionData);
+  const pendingAddRef = useRef<{ name: string; stepId: string } | null>(null);
+
+  const handleMutationResult = (response: any) => {
+    const isSuccess = response?.status >= 200 && response?.status < 300;
+    if (isSuccess && pendingAddRef.current) {
+      const { name, stepId } = pendingAddRef.current;
+      onAddOption(stepId, { label: name, value: name });
+      onChange(stepId, name);
+      pendingAddRef.current = null;
+      setAddModalStepId(null);
+    } else {
+      pendingAddRef.current = null;
+    }
+  };
+
+  const { isPending: createCategoryPending, mutate: handlecreateCat } =
+    useMutation({
+      mutationFn: (variables: { payload: string; token: string }) =>
+        handleCreatecategory(variables.payload, variables.token),
+      onSuccess: handleMutationResult,
+      onError: (error) => {
+        console.log("Create category error:", error);
+        pendingAddRef.current = null;
+      },
+    });
+
+  const { isPending: createSubCategoryPending, mutate: handlecreateSubCat } =
+    useMutation({
+      mutationFn: (variables: { payload: string; token: string }) =>
+        handleCreateSubcategory(variables.payload, variables.token),
+      onSuccess: handleMutationResult,
+      onError: (error) => {
+        console.log("Create subcategory error:", error);
+        pendingAddRef.current = null;
+      },
+    });
+
+  const handleCreate = (item: string) => {
+    if (!modalStep) return;
+    if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token) return;
+    pendingAddRef.current = { name: item, stepId: modalStep.id };
+    if (modalStep.id === "category") {
+      const params = {
+        id: 0,
+        companyId: CompanyId,
+        clientId: ClientId,
+        clientContractId: ClientContractId,
+        teamId: teamId,
+        code: item,
+        name: item,
+        description: item,
+        status: 0,
+      };
+      const encParams = encrypt(
+        JSON.stringify(params),
+        sessionData?.Key,
+        sessionData?.Vector,
+      );
+      handlecreateCat({
+        payload: encParams,
+        token: sessionData?.Token ?? "",
+      });
+    } else {
+      const params = {
+        id: 0,
+        companyId: CompanyId,
+        clientId: ClientId,
+        clientContractId: ClientContractId,
+        teamId: teamId,
+        code: item,
+        name: item,
+        description: item,
+        status: 0,
+        incentiveProductCategoryId: 0,
+      };
+      const encParams = encrypt(
+        JSON.stringify(params),
+        sessionData?.Key,
+        sessionData?.Vector,
+      );
+      handlecreateSubCat({
+        payload: encParams,
+        token: sessionData?.Token ?? "",
+      });
+    }
+  };
+
   const sorted = [...steps].sort((a, b) => a.order - b.order);
   const modalStep = addModalStepId
     ? sorted.find((s) => s.id === addModalStepId)
     : null;
-
   function getOptions(step: AddProductStep) {
     if (step.options) return step.options;
     if (step.dependsOn && step.optionsByParent) {
@@ -62,8 +162,9 @@ export default function ProductClassification({
     if (!hasAnySelection) return false;
     return true;
   }
-
   const nextStepIdx = sorted.findIndex((s) => isNextToFill(s));
+
+  const isSaving = createCategoryPending || createSubCategoryPending;
 
   return (
     <div className="border border-strokegray rounded-6 bg-white shadow-card-xl">
@@ -171,13 +272,7 @@ export default function ProductClassification({
           placeholder={`Enter ${modalStep.label} Name`}
           onCancel={() => setAddModalStepId(null)}
           onSave={(name) => {
-            const slug = name
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, "-")
-              .replace(/(^-|-$)/g, "");
-            onAddOption(modalStep.id, { label: name, value: slug });
-            onChange(modalStep.id, slug);
-            setAddModalStepId(null);
+            handleCreate(name);
           }}
         />
       )}

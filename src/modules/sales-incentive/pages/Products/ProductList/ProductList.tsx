@@ -1,19 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import * as XLSX from "xlsx";
 import PageLayOut from "../../../../../assets/json/pageLayout/pageLayout.json";
+import Config from "../../../../../assets/json/Config.json";
 import CustomButton from "../../../../../shared/components/ui/Button/CustomButton";
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
 import NoDataFound from "../../../../../shared/components/ui/NoDataFound/NoDataFound";
 import BulkUploadCard from "../../../../../shared/components/ui/BulkUpload/BulkUploadCard";
 import {
-  PRODUCT_SAMPLE_ROWS,
-  PRODUCT_UPLOAD_COLUMNS,
   PRODUCT_FLAT_COLUMNS,
   PRODUCT_MOCK_FLAT_DATA,
-  flattenProducts,
   getProductDetailData,
   getSubCategoryActivityLog,
-  type ProductUploadRow,
 } from "../../../config/Productbulkupload";
 import type {
   ProductFlatRow,
@@ -21,18 +20,87 @@ import type {
   ProductActivityLogEntry,
   GroupedTableColumn,
   SortDirection,
+  UploadingFileState,
+  RowValidationResult,
+  BulkUploadColumnConfig,
 } from "../../../types/salesIncentive.types";
 import CustomModal from "../../../../../shared/components/ui/Modal/CustomModal";
 import ProductDetailModal from "../ProductDetailModal/ProductDetailModal";
 import ProductActivityLog from "../ActivityLog/ProductActivityLog";
 import { generateSampleFile } from "../../../../../shared/utils/BulkuploadUtils";
-import { useBulkUpload } from "../../../hooks/Usebulkupload";
 import { showToast } from "../../../../../shared/components/ui/CustomToast/UseToast";
 import CustomInput from "../../../../../shared/components/forms/FormInput/CustomTextInput";
+import { useAuthStore } from "../../../../../app/store/useAuthStore";
+import {
+  handleGetProductBulkTemplate,
+  handleGetExcelTemplate,
+} from "../../../../../query/api";
+import encrypt from "../../../../../utils/security/encrypt";
+import decrypt from "../../../../../utils/security/decrypt";
+import { parseNestedJson } from "../../../../../utils/security/ParseData";
+import { downloadExcelFromBase64 } from "../../../../../shared/utils/downloadExcel";
+
+/* ---- Bulk-upload column config (from Config.json) ---- */
+
+const productUploadColumns: BulkUploadColumnConfig<Record<string, any>>[] = (
+  (Config as any).ProductUploadColumns ?? []
+).map((col: any) => ({
+  key: col.apiField,
+  header: col.header,
+  required: col.required ?? false,
+  type: (col.type as "string" | "number" | "date") ?? "string",
+}));
+
+function rawProductsToFlat(rows: Record<string, any>[]): ProductFlatRow[] {
+  const categoryMap = new Map<
+    string,
+    {
+      subCats: Set<string>;
+      productCount: number;
+      effectiveDate: string;
+      targetQuantity: number;
+      eligibleIncentive: number;
+    }
+  >();
+
+  rows.forEach((row) => {
+    const category = String(row.IncentiveProductCategory ?? row.Category ?? "");
+    if (!category) return;
+    if (!categoryMap.has(category)) {
+      categoryMap.set(category, {
+        subCats: new Set(),
+        productCount: 0,
+        effectiveDate: String(row.EffectiveDate ?? row["Effective Date"] ?? ""),
+        targetQuantity: Number(
+          row["Target Quantity"] ?? row.TargetQuantity ?? 0,
+        ),
+        eligibleIncentive: Number(
+          row["Eligible Incentive (₹)"] ?? row.EligibleIncentive ?? 0,
+        ),
+      });
+    }
+    const cat = categoryMap.get(category)!;
+    const subCat = String(
+      row.IncentiveProductSubCategory ?? row["Sub Category"] ?? "",
+    );
+    if (subCat) cat.subCats.add(subCat);
+    cat.productCount++;
+  });
+
+  return Array.from(categoryMap.entries()).map(([category, data]) => ({
+    category,
+    subCategoryCount: data.subCats.size,
+    effectiveDate: data.effectiveDate,
+    targetQuantity: data.targetQuantity,
+    eligibleIncentive: data.eligibleIncentive,
+    productCount: data.productCount,
+    status: "Active" as const,
+  }));
+}
 
 interface ProductListLocationState {
   bulkUploadSuccessCount?: number;
-  addedProducts?: ProductUploadRow[];
+  addedProducts?: Record<string, any>[];
 }
 
 const PAGE_SIZE = 10;
@@ -129,7 +197,7 @@ function FlatHeaderCell({
 
   return (
     <th
-      className="h-[33px] px-4 py-2 sticky top-0 z-10 bg-white whitespace-nowrap"
+      className="h-[33px] px-4 py-2 sticky top-0 z-10 bg-white whitespace-nowrap pl-3.5"
       style={{ textAlign: column.align ?? "left", width: column.width }}
     >
       <div className="flex items-center w-full">
@@ -406,8 +474,68 @@ function EditCell({
 export default function ProductList() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { uploadingFile, fileError, startUpload } =
-    useBulkUpload<ProductUploadRow>(PRODUCT_UPLOAD_COLUMNS);
+  const sessionData = useAuthStore((s) => s.sessionData);
+  const [productTemplate, setProductTemplate] = useState<any>([]);
+  const [uploadingFile, setUploadingFile] = useState<UploadingFileState | null>(
+    null,
+  );
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  /* ---- Template Download (API-based) ---- */
+
+  const { mutate: fetchBulkTemplate } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleGetProductBulkTemplate(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key,
+          sessionData?.Vector,
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        console.log(parsedData, "parsedData");
+        setProductTemplate(parsedData?.dynamicObject[0]);
+      }
+    },
+  });
+  const downloadExcelTemplate = (response: any) => {
+    const base64 = response?.dynamicObject;
+    if (!base64) return;
+    downloadExcelFromBase64(base64, "ProductTemplate.xlsx");
+  };
+
+  const { mutate: fetchExcelTemplate } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleGetExcelTemplate(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key,
+          sessionData?.Vector,
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        console.log(parsedData, "parsedData");
+        downloadExcelTemplate(parsedData);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
+      const encPayload = encrypt(
+        JSON.stringify(Config.ProductBulkConfig),
+        sessionData.Key,
+        sessionData.Vector,
+      );
+      const stdBase64 = encPayload.replace(/\*/g, "+").replace(/-/g, "/");
+      fetchBulkTemplate({
+        payload: stdBase64,
+        token: sessionData.Token,
+      });
+    }
+  }, []);
 
   const [products, setProducts] = useState<ProductFlatRow[]>(
     PRODUCT_MOCK_FLAT_DATA,
@@ -446,7 +574,7 @@ export default function ProductList() {
   useEffect(() => {
     const state = location.state as ProductListLocationState | undefined;
     if (!state?.addedProducts?.length) return;
-    const newFlat = flattenProducts(state.addedProducts);
+    const newFlat = rawProductsToFlat(state.addedProducts);
     setProducts((prev) => [...prev, ...newFlat]);
     showToast({
       type: "success",
@@ -545,13 +673,25 @@ export default function ProductList() {
   }
 
   const handleSampleDownload = useCallback(() => {
-    generateSampleFile(
-      PRODUCT_UPLOAD_COLUMNS,
-      PRODUCT_SAMPLE_ROWS,
-      "Product_Bulk_Upload_Sample.xlsx",
-      "Products",
+    if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token)
+      return;
+    const param = {
+      ImportLayout: productTemplate,
+      FillWithData: null,
+      SearchElements: [],
+      ExtraParameters: null,
+    };
+    const encPayload = encrypt(
+      JSON.stringify(param),
+      sessionData.Key,
+      sessionData.Vector,
     );
-  }, []);
+    const stdBase64 = encPayload.replace(/\*/g, "+").replace(/-/g, "/");
+    fetchExcelTemplate({
+      payload: stdBase64,
+      token: sessionData.Token,
+    });
+  }, [productTemplate, sessionData, fetchExcelTemplate]);
 
   const handleDownloadExcel = useCallback(() => {
     const exportRows = filteredProducts.map((p) => ({
@@ -604,16 +744,72 @@ export default function ProductList() {
     async (files: FileList) => {
       const file = files[0];
       if (!file) return;
-      const result = await startUpload(file);
-      if (!result) return;
-      navigate("/bulkUpload", {
-        state: {
-          validRows: result.validRows,
-          invalidRows: result.invalidRows,
-        },
-      });
+
+      setFileError(null);
+      setUploadingFile({ name: file.name, progress: 0 });
+
+      try {
+        const buffer = await file.arrayBuffer();
+        setUploadingFile((prev) => (prev ? { ...prev, progress: 100 } : prev));
+
+        const workbook = XLSX.read(buffer, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        if (!sheetName) {
+          setFileError("The uploaded file has no sheets.");
+          setUploadingFile(null);
+          return;
+        }
+
+        const jsonData = XLSX.utils.sheet_to_json(
+          workbook.Sheets[sheetName],
+        ) as Record<string, any>[];
+        console.log("Extracted Excel JSON:", jsonData);
+
+        const validRows: RowValidationResult<Record<string, any>>[] = [];
+        const invalidRows: RowValidationResult<Record<string, any>>[] = [];
+
+        jsonData.forEach((row, i) => {
+          const errors: string[] = [];
+          productUploadColumns.forEach((col) => {
+            const value = row[col.key as string];
+            const isEmpty =
+              value === undefined ||
+              value === null ||
+              String(value).trim() === "";
+            if (col.required && isEmpty) {
+              errors.push(`${col.header} is required`);
+            }
+            if (!isEmpty) {
+              if (col.type === "number" && isNaN(Number(value))) {
+                errors.push(`${col.header} must be a number`);
+              }
+              if (col.type === "date") {
+                const d = new Date(value as string);
+                if (isNaN(d.getTime())) {
+                  errors.push(`${col.header} must be a valid date`);
+                }
+              }
+            }
+          });
+
+          const result: RowValidationResult<Record<string, any>> = {
+            rowNumber: i + 1,
+            data: row,
+            errors,
+          };
+          (errors.length === 0 ? validRows : invalidRows).push(result);
+        });
+
+        setUploadingFile(null);
+        navigate("/bulkUpload", { state: { validRows, invalidRows } });
+      } catch {
+        setFileError(
+          "Could not read the file. It may be corrupted or in an unsupported format.",
+        );
+        setUploadingFile(null);
+      }
     },
-    [startUpload, navigate],
+    [navigate],
   );
 
   const handleBrowseClick = useCallback(() => {
@@ -691,7 +887,7 @@ export default function ProductList() {
         </div>
       </div>
 
-      {hasProducts ? (
+      {!hasProducts ? (
         <div className="flex-1 min-h-0 border-1 border-strokegray rounded-6 bg-white mt-14 mb-14 flex flex-col">
           {/* Toolbar */}
           <div className="flex items-center justify-between px-16 mt-14">
@@ -731,7 +927,7 @@ export default function ProductList() {
 
           {/* Table */}
           <div className="flex-1 min-h-0 px-16 mt-10">
-            <div className="border border-[#eee] rounded-4 overflow-auto max-h-full">
+            <div className=" border-[#eee] rounded-4 overflow-auto max-h-full">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b border-[#eee]">
@@ -777,12 +973,12 @@ export default function ProductList() {
                       return (
                         <tr
                           key={row.category}
-                          className={`border-b border-[#eee] ${isEditing ? "bg-[#f9f9ff]" : ""}`}
+                          className={`border border-[#eee] ${isEditing ? "bg-[#f9f9ff]" : ""}`}
                         >
                           {PRODUCT_FLAT_COLUMNS.map((col) => (
                             <td
                               key={col.key}
-                              className="px-4 py-[11px] text-13 text-[#59596C]"
+                              className="px-4 py-[11px] text-13 text-[#59596C] pl-3.5"
                               style={{ textAlign: col.align ?? "left" }}
                             >
                               {isEditing ? (

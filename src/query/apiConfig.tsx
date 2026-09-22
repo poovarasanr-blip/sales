@@ -1,0 +1,72 @@
+import Config from "../assets/json/Config.json";
+
+type ApiConfig = {
+  name: string;
+  urlEndPoint: string;
+  httpMethod: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+};
+
+type ApiPayload = {
+  queryProps?: string;
+};
+
+export const apiConfig: Record<string, ApiConfig> = {
+  updateRoleApi: {
+    name: "updateRoleApi",
+    urlEndPoint: `${Config?.secureBaseUrlRoute}api/Security/UpdateRoleInSession`,
+    httpMethod: "PUT",
+  },
+  createCategory: {
+    name: "createCategory",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpsertIncentiveProductCategory`,
+    httpMethod: "POST",
+  },
+  getCategory: {
+    name: "getCategory",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetIncentiveProductCategories`,
+    httpMethod: "GET",
+  },
+  createSubCategory: {
+    name: "createSubCategory",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpsertIncentiveProductSubCategory`,
+    httpMethod: "POST",
+  },
+  productBulkTemplate: {
+    name: "productBulkTemplate",
+    urlEndPoint: `${Config?.baseUrlTemplateDownload}api/PageLayout/FetchDataset`,
+    httpMethod: "POST",
+  },
+  getExcelTemplate: {
+    name: "getExcelTemplate",
+    urlEndPoint: `${Config?.baseUrlTemplateDownload}api/PageLayout/GetExcelTemplate`,
+    httpMethod: "POST",
+  },
+  importIncentiveProduct: {
+    name: "importIncentiveProduct",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/ImportIncentiveProduct`,
+    httpMethod: "POST",
+  },
+  importSalesIncentiveTarget: {
+    name: "importSalesIncentiveTarget",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/ImportSalesIncentiveTargetsForEmployees`,
+    httpMethod: "POST",
+  },
+};
+
+export const getApiUrl = (
+  payload: ApiPayload | undefined,
+  name: keyof typeof apiConfig,
+): {
+  url: string;
+  httpMethod: ApiConfig["httpMethod"];
+} => {
+  if (payload?.queryProps)
+    return {
+      url: apiConfig[name].urlEndPoint + payload.queryProps,
+      httpMethod: apiConfig[name].httpMethod,
+    };
+  return {
+    url: apiConfig[name].urlEndPoint,
+    httpMethod: apiConfig[name].httpMethod,
+  };
+};
