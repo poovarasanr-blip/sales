@@ -49,6 +49,28 @@
       "headerIcon": "FiSearch"
     }
   ],
+  "ActualSalesBulkConfig": {
+    "SearchElementList": [
+      { "FieldName": "CompanyId", "Value": 5 },
+      { "FieldName": "Status", "Value": true },
+      {
+        "FieldName": "Code",
+        "Value": "ImportActualSalesForEmployees"
+      }
+    ],
+    "DataSource": { "Name": "ImportLayout", "Type": 1, "IsCoreEntity": false }
+  },
+  "IncentiveRatesBulkConfig": {
+    "SearchElementList": [
+      { "FieldName": "CompanyId", "Value": 5 },
+      { "FieldName": "Status", "Value": true },
+      {
+        "FieldName": "Code",
+        "Value": "ImportIncentiveRates"
+      }
+    ],
+    "DataSource": { "Name": "ImportLayout", "Type": 1, "IsCoreEntity": false }
+  },
   "EmployeeSalesTargetBulkConfig": {
     "SearchElementList": [
       { "FieldName": "CompanyId", "Value": 5 },

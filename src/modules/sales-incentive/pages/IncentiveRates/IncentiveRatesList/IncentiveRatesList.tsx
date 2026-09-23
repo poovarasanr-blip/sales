@@ -37,6 +37,7 @@ import type {
   RowValidationResult,
   BulkUploadColumnConfig,
   ProductActivityLogEntry,
+  IncentiveRatesUploadRow,
 } from "../../../types/salesIncentive.types";
 
 /* ---- Bulk-upload column config (from Config.json) ---- */
@@ -169,7 +170,7 @@ export default function IncentiveRatesList() {
   useEffect(() => {
     if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
       const encPayload = encrypt(
-        JSON.stringify(Config.ProductBulkConfig),
+        JSON.stringify(Config.IncentiveRatesBulkConfig),
         sessionData.Key,
         sessionData.Vector,
       );
@@ -397,13 +398,14 @@ export default function IncentiveRatesList() {
 
         const jsonData = XLSX.utils.sheet_to_json(
           workbook.Sheets[sheetName],
-        ) as Record<string, any>[];
+        ) as IncentiveRatesUploadRow[];
 
-        const validRows: RowValidationResult<Record<string, any>>[] = [];
-        const invalidRows: RowValidationResult<Record<string, any>>[] = [];
+        const validRows: RowValidationResult<IncentiveRatesUploadRow>[] = [];
+        const invalidRows: RowValidationResult<IncentiveRatesUploadRow>[] = [];
 
         jsonData.forEach((row, i) => {
           const errors: string[] = [];
+
           INCENTIVE_RATES_UPLOAD_COLUMNS.forEach((col) => {
             const value = row[col.key as string];
             const isEmpty =
@@ -418,15 +420,29 @@ export default function IncentiveRatesList() {
                 errors.push(`${col.header} must be a number`);
               }
               if (col.type === "date") {
-                const d = new Date(value as string);
-                if (isNaN(d.getTime())) {
-                  errors.push(`${col.header} must be a valid date`);
+                const dateStr = String(value).trim();
+                const isValidFormat =
+                  /^\d{2}\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{4}$/.test(
+                    dateStr,
+                  );
+                if (!isValidFormat) {
+                  errors.push(
+                    `${col.header} must be in DD MMM YYYY format (e.g. 22 Aug 2027)`,
+                  );
                 }
               }
             }
           });
 
-          const result: RowValidationResult<Record<string, any>> = {
+          const isRowFullyBlank = INCENTIVE_RATES_UPLOAD_COLUMNS.every(
+            (col) => {
+              const v = row[col.key as string];
+              return v === undefined || v === null || String(v).trim() === "";
+            },
+          );
+          if (isRowFullyBlank) return;
+
+          const result: RowValidationResult<IncentiveRatesUploadRow> = {
             rowNumber: i + 1,
             data: row,
             errors,
@@ -459,7 +475,7 @@ export default function IncentiveRatesList() {
     input.click();
   }, [handleFilesReceived]);
 
-  const hasData = categories.length > 0;
+  const hasData = categories.length == 0;
 
   return (
     <div

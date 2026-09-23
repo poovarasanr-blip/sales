@@ -51,6 +51,16 @@ export const apiConfig: Record<string, ApiConfig> = {
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/ImportSalesIncentiveTargetsForEmployees`,
     httpMethod: "POST",
   },
+  bulkUpdateActualSales: {
+    name: "bulkUpdateActualSales",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/ImportActualSalesForEmployees`,
+    httpMethod: "POST",
+  },
+  ImportIncentiveRates: {
+    name: "ImportIncentiveRates",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/ImportIncentiveRates`,
+    httpMethod: "POST",
+  },
 };
 
 export const getApiUrl = (

@@ -46,11 +46,13 @@ interface SampleDownloadModalProps {
   sessionData: SessionData | null;
   employeeTemplate: any;
   onUserSelect: (users: Record<string, any>[]) => void;
+  searchDataSourceName?: string;
+  downloadFileName?: string;
 }
 
 const ENV_FIELD_VALUES: Record<string, number> = {
-  "@clientId": ClientId,
-  "@clientcontractId": ClientContractId,
+  "@clientId": 304, // ClientId,
+  "@clientcontractId": 73, // ClientContractId,
 };
 
 export default function SampleDownloadModal({
@@ -60,6 +62,8 @@ export default function SampleDownloadModal({
   sessionData,
   employeeTemplate,
   onUserSelect,
+  searchDataSourceName = "GetEmployeeDetailsForSalesIncentiveTargetsImport",
+  downloadFileName = "EmployeeSalesTargetTemplate.xlsx",
 }: SampleDownloadModalProps) {
   const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const [fieldOptions, setFieldOptions] = useState<
@@ -190,7 +194,7 @@ export default function SampleDownloadModal({
       SearchElementList: searchElements,
       DataSource: {
         Type: 0,
-        Name: "GetEmployeeDetailsForSalesIncentiveTargetsImport",
+        Name: searchDataSourceName,
         EntityType: 0,
         IsCoreEntity: false,
       },
@@ -221,7 +225,7 @@ export default function SampleDownloadModal({
     } finally {
       setIsSearching(false);
     }
-  }, [sessionData, searchFields, fieldValues]);
+  }, [sessionData, searchFields, fieldValues, searchDataSourceName]);
 
   const toggleUserSelection = useCallback(
     (user: Record<string, any>, idx: number) => {
@@ -286,7 +290,7 @@ export default function SampleDownloadModal({
         const parsed = parseNestedJson(JSON.parse(decrypted));
         const base64 = parsed?.dynamicObject;
         if (base64) {
-          downloadExcelFromBase64(base64, "EmployeeSalesTargetTemplate.xlsx");
+          downloadExcelFromBase64(base64, downloadFileName);
           onClose();
         }
       }
@@ -295,7 +299,14 @@ export default function SampleDownloadModal({
     } finally {
       setIsDownloading(false);
     }
-  }, [sessionData, employeeTemplate, selectedUsers, selectedUserIds]);
+  }, [
+    sessionData,
+    employeeTemplate,
+    selectedUsers,
+    selectedUserIds,
+    downloadFileName,
+    onClose,
+  ]);
 
   const canSearch = visibleFields
     .filter((f) => f.IsFieldMandatory)

@@ -321,17 +321,25 @@ export interface TablePaginationProps {
   totalPages: number;
   onPageChange: (page: number) => void;
 }
+export interface IncentiveRatesUploadRow {
+  IncentiveProductCategory: string;
+  IncentiveProductSubCategory: string;
+  IncentiveProduct: string;
+  EligibleIncentive: number;
+  "Effective Date": string;
+  [key: string]: string | number | undefined;
+}
 export interface ActualSalesUploadRow {
-  "Employee Code": string;
+  SalesEntryId?: number | string;
+  "Employee Code": number | string;
   "Employee Name": string;
-  Company: string;
-  Location: string;
-  "Manager Code": string;
+  "Dealer Name": string;
   "Manager Name": string;
-  Month: string;
-  Category: string;
-  "Actual Sales": number;
-  Products?: string;
+  IncentiveSubCategory: string;
+  IncentiveProduct: string;
+  SubmittedOn?: string;
+  "Original Quantity": number;
+  "Actual Quantity": number;
   [key: string]: string | number | undefined;
 }
 export interface ProductSalesDetail {

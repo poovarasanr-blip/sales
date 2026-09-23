@@ -10,6 +10,7 @@ import type {
 
 export const ACTUAL_SALES_UPLOAD_COLUMNS: BulkUploadColumnConfig<ActualSalesUploadRow>[] =
   [
+    { key: "SalesEntryId", header: "SalesEntryId", type: "string" },
     {
       key: "Employee Code",
       header: "Employee Code",
@@ -22,11 +23,9 @@ export const ACTUAL_SALES_UPLOAD_COLUMNS: BulkUploadColumnConfig<ActualSalesUplo
       required: true,
       type: "string",
     },
-    { key: "Company", header: "Company", required: true, type: "string" },
-    { key: "Location", header: "Location", required: true, type: "string" },
     {
-      key: "Manager Code",
-      header: "Manager Code",
+      key: "Dealer Name",
+      header: "Dealer Name",
       required: true,
       type: "string",
     },
@@ -36,108 +35,116 @@ export const ACTUAL_SALES_UPLOAD_COLUMNS: BulkUploadColumnConfig<ActualSalesUplo
       required: true,
       type: "string",
     },
-    { key: "Month", header: "Month", required: true, type: "string" },
-    { key: "Category", header: "Category", required: true, type: "string" },
     {
-      key: "Actual Sales",
-      header: "Actual Sales",
+      key: "IncentiveSubCategory",
+      header: "IncentiveSubCategory",
+      required: true,
+      type: "string",
+    },
+    {
+      key: "IncentiveProduct",
+      header: "IncentiveProduct",
+      required: true,
+      type: "string",
+    },
+    {
+      key: "SubmittedOn",
+      header: "SubmittedOn",
+      required: false,
+      type: "string",
+    },
+    {
+      key: "Original Quantity",
+      header: "Original Quantity",
       required: true,
       type: "number",
     },
-    { key: "Products", header: "Products", type: "string" },
+    {
+      key: "Actual Quantity",
+      header: "Actual Quantity",
+      required: true,
+      type: "number",
+    },
   ];
 
 export const ACTUAL_SALES_SAMPLE_ROWS: ActualSalesUploadRow[] = [
   {
-    "Employee Code": "PSO019",
-    "Employee Name": "Aarav Sharma",
-    Company: "Vasanth & Co",
-    Location: "Chennai",
-    "Manager Code": "PSO987",
-    "Manager Name": "Pawan Kumar",
-    Month: "May 2026",
-    Category: "Mixer Grinders",
-    "Actual Sales": 12,
-    Products: "Panasonic Mixer Grinder 3 Stainless Steel Jars",
+    SalesEntryId: 1,
+    "Employee Code": "76077",
+    "Employee Name": "Test update Shalini",
+    "Dealer Name": "Bangalore",
+    "Manager Name": "rajesh magaji",
+    IncentiveSubCategory: "Standard Mixer Grinder",
+    IncentiveProduct: "Panasonic MX-AC300-H 550W Mixer Grinder",
+    SubmittedOn: "2026-09-15",
+    "Original Quantity": 10,
+    "Actual Quantity": 2,
   },
   {
-    "Employee Code": "PSO019",
-    "Employee Name": "Aarav Sharma",
-    Company: "Vasanth & Co",
-    Location: "Chennai",
-    "Manager Code": "PSO987",
-    "Manager Name": "Pawan Kumar",
-    Month: "May 2026",
-    Category: "Mixer Grinders",
-    "Actual Sales": 23,
-    Products: "Panasonic Monster Mixer Grinder 750 Watts",
+    SalesEntryId: 2,
+    "Employee Code": "76077",
+    "Employee Name": "Test update Shalini",
+    "Dealer Name": "Bangalore",
+    "Manager Name": "rajesh magaji",
+    IncentiveSubCategory: "Standard Mixer Grinder",
+    IncentiveProduct: "Panasonic Monster Mixer Grinder 750 Watts",
+    SubmittedOn: "2026-09-15",
+    "Original Quantity": 15,
+    "Actual Quantity": 5,
   },
   {
-    "Employee Code": "PSO019",
-    "Employee Name": "Aarav Sharma",
-    Company: "Vasanth & Co",
-    Location: "Chennai",
-    "Manager Code": "PSO987",
-    "Manager Name": "Pawan Kumar",
-    Month: "May 2026",
-    Category: "Rice Cookers",
-    "Actual Sales": 20,
-    Products: "Panasonic Warmer Series 1.8 Litre Electric Rice Cooker",
+    SalesEntryId: 3,
+    "Employee Code": "76078",
+    "Employee Name": "Ravi Kumar",
+    "Dealer Name": "Chennai",
+    "Manager Name": "rajesh magaji",
+    IncentiveSubCategory: "Premium Mixer Grinder",
+    IncentiveProduct: "Panasonic Warmer Series 1.8 Litre Rice Cooker",
+    SubmittedOn: "2026-09-15",
+    "Original Quantity": 20,
+    "Actual Quantity": 8,
   },
 ];
 
 export function groupActualSalesRows(
   rows: ActualSalesUploadRow[],
 ): (CategoryGroup & { employeeCode: string })[] {
-  const employees = new Map<string, CategoryGroup & { employeeCode: string }>();
+  const employees = new Map<
+    string,
+    CategoryGroup & { employeeCode: string }
+  >();
 
   rows.forEach((row) => {
-    const key = row["Employee Code"];
+    const key = String(row["Employee Code"]);
 
     if (!employees.has(key)) {
       employees.set(key, {
-        category: row["Employee Name"],
-        employeeName: row["Employee Name"], // required by CategoryGroup — restored
+        category: String(row["Employee Name"]),
+        employeeName: String(row["Employee Name"]),
         employeeCode: key,
+        managerName: String(row["Manager Name"] ?? ""),
+        storeName: String(row["Dealer Name"] ?? ""),
         targetQuantity: 0,
         eligibleIncentive: 0,
-        subCategories: [
-          {
-            subCategory: `${row["Manager Name"]} (${row["Manager Code"]})`,
-            products: [],
-          },
-        ],
-      } as CategoryGroup & {
-        employeeCode: string;
-        subCategories: {
-          subCategory: string;
-          products: { product: string; effectiveDate: string }[];
-        }[];
+        subCategories: [],
       });
     }
 
-    const group = employees.get(key) as CategoryGroup & {
-      employeeCode: string;
-      subCategories: {
-        subCategory: string;
-        products: { product: string; effectiveDate: string }[];
-      }[];
-    };
+    const group = employees.get(key)!;
+    const subCatName = String(row.IncentiveSubCategory ?? "");
 
-    const products = group.subCategories[0].products;
-    const existing = products.find((p) => p.product === row.Category);
-    const actualSales = Number(row["Actual Sales"]) || 0;
-
-    if (existing) {
-      existing.effectiveDate = String(
-        Number(existing.effectiveDate) + actualSales,
-      );
-    } else {
-      products.push({
-        product: row.Category,
-        effectiveDate: String(actualSales),
-      });
+    let subCat = group.subCategories.find(
+      (sc) => sc.subCategory === subCatName,
+    );
+    if (!subCat) {
+      subCat = { subCategory: subCatName, products: [] };
+      group.subCategories.push(subCat);
     }
+
+    subCat.products.push({
+      product: String(row.IncentiveProduct ?? ""),
+      effectiveDate: String(row["Actual Quantity"] ?? 0),
+    });
   });
 
   return Array.from(employees.values());
@@ -146,38 +153,38 @@ export function groupActualSalesRows(
 export function buildActualSalesEmployeeDetail(
   rows: ActualSalesUploadRow[],
   employeeCode: string,
-  month?: string,
 ): ActualSalesEmployeeDetail | null {
   const employeeRows = rows.filter(
-    (r) => r["Employee Code"] === employeeCode && (!month || r.Month === month),
+    (r) => String(r["Employee Code"]) === employeeCode,
   );
   if (employeeRows.length === 0) return null;
 
   const first = employeeRows[0];
 
-  const categoryMap = new Map<
+  const subCatMap = new Map<
     string,
     { products: { product: string; effectiveDate: string }[]; total: number }
   >();
 
   employeeRows.forEach((row) => {
-    if (!categoryMap.has(row.Category)) {
-      categoryMap.set(row.Category, { products: [], total: 0 });
+    const subCat = String(row.IncentiveSubCategory ?? "");
+    if (!subCatMap.has(subCat)) {
+      subCatMap.set(subCat, { products: [], total: 0 });
     }
-    const entry = categoryMap.get(row.Category)!;
-    const actualSales = Number(row["Actual Sales"]) || 0;
+    const entry = subCatMap.get(subCat)!;
+    const qty = Number(row["Actual Quantity"]) || 0;
     entry.products.push({
-      product: row.Products || row.Category,
-      effectiveDate: String(actualSales),
+      product: String(row.IncentiveProduct ?? ""),
+      effectiveDate: String(qty),
     });
-    entry.total += actualSales;
+    entry.total += qty;
   });
 
-  const groups: CategoryGroup[] = Array.from(categoryMap.entries()).map(
-    ([category, { products, total }]) => ({
-      category,
-      employeeCode: first["Employee Code"],
-      employeeName: first["Employee Name"],
+  const groups: CategoryGroup[] = Array.from(subCatMap.entries()).map(
+    ([subCat, { products, total }]) => ({
+      category: subCat,
+      employeeCode: String(first["Employee Code"]),
+      employeeName: String(first["Employee Name"]),
       targetQuantity: total,
       eligibleIncentive: 0,
       subCategories: [{ subCategory: "", products }],
@@ -185,9 +192,9 @@ export function buildActualSalesEmployeeDetail(
   );
 
   const categories: ActualSalesDetailCategory[] = Array.from(
-    categoryMap.entries(),
-  ).map(([category, { products, total }]) => ({
-    category,
+    subCatMap.entries(),
+  ).map(([subCat, { products, total }]) => ({
+    category: subCat,
     totalSales: total,
     products: products.map((p) => ({
       product: p.product,
@@ -196,12 +203,12 @@ export function buildActualSalesEmployeeDetail(
   }));
 
   return {
-    employeeCode: first["Employee Code"],
-    employeeName: first["Employee Name"],
-    company: first.Company,
-    location: first.Location,
-    managerName: first["Manager Name"],
-    month: first.Month,
+    employeeCode: String(first["Employee Code"]),
+    employeeName: String(first["Employee Name"]),
+    company: String(first["Dealer Name"] ?? ""),
+    location: "",
+    managerName: String(first["Manager Name"] ?? ""),
+    month: "",
     categories,
     groups,
   };
@@ -211,12 +218,12 @@ export const ACTUAL_SALES_TABLE_COLUMNS: GroupedTableColumn[] = [
   { key: "category", label: "Employee", fontWeight: 500, color: "#31314D" },
   {
     key: "subCategory",
-    label: "Manager",
+    label: "Sub Category",
     filterable: "text",
     icon: "FiSearch",
   },
-  { key: "product", label: "Category", filterable: "text", icon: "FiSearch" },
-  { key: "effectiveDate", label: "Actual Sales", sortable: true },
+  { key: "product", label: "Product", filterable: "text", icon: "FiSearch" },
+  { key: "effectiveDate", label: "Actual Quantity", sortable: true },
   { key: "action", label: "Action", width: "137px" },
 ];
 
@@ -248,14 +255,13 @@ export const ACTUAL_SALES_DETAIL_COLUMNS: GroupedTableColumn[] = [
 export function getManagerOptions(
   rows: ActualSalesUploadRow[],
 ): ManagerOption[] {
-  const seen = new Map<string, string>();
+  const seen = new Set<string>();
   rows.forEach((row) => {
-    if (!seen.has(row["Manager Code"])) {
-      seen.set(row["Manager Code"], row["Manager Name"]);
-    }
+    const name = String(row["Manager Name"] ?? "");
+    if (name) seen.add(name);
   });
   return [
     { label: "All", value: "" },
-    ...Array.from(seen.entries()).map(([value, label]) => ({ label, value })),
+    ...Array.from(seen).map((name) => ({ label: name, value: name })),
   ];
 }

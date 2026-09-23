@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import PageLayOut from "../../../../../assets/json/pageLayout/pageLayout.json";
+import Config from "../../../../../assets/json/Config.json";
 import CustomButton from "../../../../../shared/components/ui/Button/CustomButton";
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
 import CustomDatePicker from "../../../../../shared/components/forms/FormDatePicker/FormDatePicker";
@@ -13,13 +15,23 @@ import { showToast } from "../../../../../shared/components/ui/CustomToast/UseTo
 import { generateSampleFile } from "../../../../../shared/utils/BulkuploadUtils";
 import { useBulkUpload } from "../../../hooks/Usebulkupload";
 import {
-  ACTUAL_SALES_SAMPLE_ROWS,
   ACTUAL_SALES_UPLOAD_COLUMNS,
   ACTUAL_SALES_TABLE_COLUMNS,
   groupActualSalesRows,
   buildActualSalesEmployeeDetail,
   getManagerOptions,
 } from "../../../config/ActualSalesBulkUpload";
+import {
+  parseWorkbook,
+  readFileAsArrayBuffer,
+} from "../../../../../shared/utils/BulkuploadUtils";
+import { useAuthStore } from "../../../../../app/store/useAuthStore";
+import { handleGetProductBulkTemplate } from "../../../../../query/api";
+import encrypt from "../../../../../utils/security/encrypt";
+import decrypt from "../../../../../utils/security/decrypt";
+import { parseNestedJson } from "../../../../../utils/security/ParseData";
+import SampleDownloadModal from "../../EmployeeSalesTarget/SampleDownloadModal";
+import type { SearchField } from "../../EmployeeSalesTarget/SampleDownloadModal";
 import type {
   ActualSalesUploadRow,
   ActualSalesEmployeeDetail,
@@ -37,9 +49,45 @@ const ACTUAL_SALES_PAGE_SIZE = 10;
 export default function ActualSalesList() {
   const navigate = useNavigate();
   const location = useLocation();
+  const sessionData = useAuthStore((s) => s.sessionData);
+  const [actualSalesTemplate, setActualSalesTemplate] = useState<any>(null);
+  const [showSampleModal, setShowSampleModal] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState<Record<string, any>[]>([]);
 
   const { uploadingFile, fileError, startUpload } =
     useBulkUpload<ActualSalesUploadRow>(ACTUAL_SALES_UPLOAD_COLUMNS);
+
+  const { mutate: fetchBulkTemplate } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleGetProductBulkTemplate(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key,
+          sessionData?.Vector,
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        const templateData = parsedData?.dynamicObject[0];
+        setActualSalesTemplate(templateData);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
+      const encPayload = encrypt(
+        JSON.stringify((Config as any).ActualSalesBulkConfig),
+        sessionData.Key,
+        sessionData.Vector,
+      );
+      const stdBase64 = encPayload.replace(/\*/g, "+").replace(/-/g, "/");
+      fetchBulkTemplate({
+        payload: stdBase64,
+        token: sessionData.Token,
+      });
+    }
+  }, []);
 
   const [rows, setRows] = useState<ActualSalesUploadRow[]>([]);
   const [showFilter, setShowFilter] = useState<boolean>(true);
@@ -80,18 +128,17 @@ export default function ActualSalesList() {
 
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
-      if (appliedMonth && row.Month !== appliedMonth) return false;
-      if (appliedManager && row["Manager Code"] !== appliedManager)
+      if (appliedManager && String(row["Manager Name"]) !== appliedManager)
         return false;
       if (searchTerm.trim()) {
         const q = searchTerm.trim().toLowerCase();
         const haystack =
-          `${row["Employee Name"]} ${row["Employee Code"]} ${row["Manager Name"]} ${row.Category}`.toLowerCase();
+          `${row["Employee Name"]} ${row["Employee Code"]} ${row["Manager Name"]} ${row.IncentiveSubCategory} ${row.IncentiveProduct}`.toLowerCase();
         if (!haystack.includes(q)) return false;
       }
       return true;
     });
-  }, [rows, appliedMonth, appliedManager, searchTerm]);
+  }, [rows, appliedManager, searchTerm]);
 
   const employeeGroups = useMemo(
     () => groupActualSalesRows(filteredRows),
@@ -110,13 +157,19 @@ export default function ActualSalesList() {
     setAppliedManager("");
   }, []);
 
+  const searchFields: SearchField[] = useMemo(
+    () =>
+      actualSalesTemplate?.CreateExcelConfiguration?.SearchConfiguration
+        ?.SearchElementList ?? [],
+    [actualSalesTemplate],
+  );
+
   const handleSampleDownload = useCallback(() => {
-    generateSampleFile(
-      ACTUAL_SALES_UPLOAD_COLUMNS,
-      ACTUAL_SALES_SAMPLE_ROWS,
-      "Actual_Sales_Sample.xlsx",
-      "ActualSales",
-    );
+    setShowSampleModal(true);
+  }, []);
+
+  const handleUserSelect = useCallback((users: Record<string, any>[]) => {
+    setSelectedUsers(users);
   }, []);
 
   const handleDownloadExcel = useCallback(() => {
@@ -133,14 +186,49 @@ export default function ActualSalesList() {
       const file = files[0];
       if (!file) return;
 
-      const result = await startUpload(file);
-      if (!result) return;
+      try {
+        const buffer = await readFileAsArrayBuffer(file);
+        const result = parseWorkbook<ActualSalesUploadRow>(
+          buffer,
+          ACTUAL_SALES_UPLOAD_COLUMNS,
+        );
 
-      navigate(ACTUAL_SALES_BULK_UPLOAD_ROUTE, {
-        state: { validRows: result.validRows, invalidRows: result.invalidRows },
-      });
+        if (result.headerErrors.length > 0) {
+          console.log("[ActualSales] Header validation errors:", result.headerErrors);
+          showToast({
+            type: "error",
+            title: "Invalid Template",
+            message: result.headerErrors.join(" "),
+            duration: 5000,
+          });
+          return;
+        }
+
+        console.log("[ActualSales] Extracted valid rows:", result.validRows);
+        console.log("[ActualSales] Extracted invalid rows:", result.invalidRows);
+        console.log(
+          "[ActualSales] Summary — valid:",
+          result.validRows.length,
+          "| invalid:",
+          result.invalidRows.length,
+        );
+
+        navigate(ACTUAL_SALES_BULK_UPLOAD_ROUTE, {
+          state: {
+            validRows: result.validRows,
+            invalidRows: result.invalidRows,
+          },
+        });
+      } catch {
+        showToast({
+          type: "error",
+          title: "Upload Failed",
+          message: "Could not read the file. It may be corrupted or in an unsupported format.",
+          duration: 5000,
+        });
+      }
     },
-    [startUpload, navigate],
+    [navigate],
   );
 
   const handleBrowseClick = useCallback(() => {
@@ -158,15 +246,11 @@ export default function ActualSalesList() {
   // already-loaded `rows`, filtered to the currently applied month (if any).
   const handleDetailedSales = useCallback(
     (employeeCode: string) => {
-      const detail = buildActualSalesEmployeeDetail(
-        rows,
-        employeeCode,
-        appliedMonth || undefined,
-      );
+      const detail = buildActualSalesEmployeeDetail(rows, employeeCode);
       setSelectedDetail(detail);
       setDetailModalOpen(true);
     },
-    [rows, appliedMonth],
+    [rows],
   );
 
   const handleCloseDetailModal = useCallback(() => {
@@ -401,6 +485,17 @@ export default function ActualSalesList() {
         isOpen={detailModalOpen}
         onClose={handleCloseDetailModal}
         detail={selectedDetail}
+      />
+
+      <SampleDownloadModal
+        isOpen={showSampleModal}
+        onClose={() => setShowSampleModal(false)}
+        searchFields={searchFields}
+        sessionData={sessionData}
+        employeeTemplate={actualSalesTemplate}
+        onUserSelect={handleUserSelect}
+        searchDataSourceName="GetEmployeeDetailsForSalesEntryDetails"
+        downloadFileName="ActualSalesTemplate.xlsx"
       />
     </div>
   );

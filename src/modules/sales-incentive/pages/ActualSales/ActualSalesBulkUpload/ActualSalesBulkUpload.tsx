@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import type { RowValidationResult } from "../../../types/salesIncentive.types";
 import CustomButton from "../../../../../shared/components/ui/Button/CustomButton";
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
@@ -14,6 +15,12 @@ import { showToast } from "../../../../../shared/components/ui/CustomToast/UseTo
 import InvalidRecordsTable, {
   type InvalidRow,
 } from "../../../../../shared/components/ui/DataTable/InvalidRecordsTable";
+import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
+import { useAuthStore } from "../../../../../app/store/useAuthStore";
+import { handleBulkUpdateActualSales } from "../../../../../query/api";
+import encrypt from "../../../../../utils/security/encrypt";
+import decrypt from "../../../../../utils/security/decrypt";
+import { parseNestedJson } from "../../../../../utils/security/ParseData";
 
 interface BulkUploadLocationState {
   validRows: RowValidationResult<ActualSalesUploadRow>[];
@@ -27,6 +34,7 @@ const ACTUAL_SALES_LIST_ROUTE = "/actualSales";
 export default function ActualSalesBulkUpload() {
   const navigate = useNavigate();
   const location = useLocation();
+  const sessionData = useAuthStore((s) => s.sessionData);
   const state = location.state as BulkUploadLocationState | undefined;
 
   const [validRows, setValidRows] = useState(() =>
@@ -45,6 +53,86 @@ export default function ActualSalesBulkUpload() {
     validRows.length > 0 || invalidRows.length === 0 ? "valid" : "invalid",
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { mutate: submitActualSales } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleBulkUpdateActualSales(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      setIsSubmitting(false);
+      if (response?.status >= 200 && response?.status < 300) {
+        try {
+          const decryptedData = decrypt(
+            response?.data,
+            sessionData?.Key ?? "",
+            sessionData?.Vector ?? "",
+          );
+          const parsedData = parseNestedJson(JSON.parse(decryptedData));
+          if (parsedData?.Status) {
+            const results: any[] = parsedData?.Result ?? [];
+            const failed = results.filter(
+              (r: any) => r.Status === "Failed" && r.ErrorMessage,
+            );
+            if (failed.length > 0) {
+              const successCount = results.length - failed.length;
+              showToast({
+                type: "error",
+                title: "Partial Import",
+                message: `${successCount} record(s) imported. ${failed.length} record(s) failed: ${failed.map((f: any) => f.ErrorMessage).join("; ")}`,
+                duration: 5000,
+              });
+            } else {
+              showToast({
+                type: "success",
+                title: "Success!",
+                message:
+                  parsedData?.Message ??
+                  `${validRows.length} actual sales records added`,
+                duration: 3000,
+              });
+              navigate(ACTUAL_SALES_LIST_ROUTE, {
+                state: {
+                  bulkUploadSuccessCount: validRows.length,
+                  addedRows: validRows.map((r) => r.data),
+                },
+              });
+            }
+          } else {
+            showToast({
+              type: "error",
+              title: "Error!",
+              message: parsedData?.Message,
+              duration: 3000,
+            });
+          }
+        } catch {
+          showToast({
+            type: "error",
+            title: "Error",
+            message: "Failed to process server response. Please try again.",
+            duration: 3000,
+          });
+        }
+      } else {
+        showToast({
+          type: "error",
+          title: "Error",
+          message:
+            response?.data?.message ??
+            "Failed to add actual sales records. Please try again.",
+          duration: 3000,
+        });
+      }
+    },
+    onError: () => {
+      setIsSubmitting(false);
+      showToast({
+        type: "error",
+        title: "Error",
+        message: "Failed to add actual sales records. Please try again.",
+        duration: 3000,
+      });
+    },
+  });
 
   const validGroups = useMemo(
     () => groupActualSalesRows(validRows.map((r) => r.data)),
@@ -69,24 +157,38 @@ export default function ActualSalesBulkUpload() {
 
   const handleCancel = () => navigate(ACTUAL_SALES_LIST_ROUTE);
 
-  const handleAddRecords = async () => {
-    setIsSubmitting(true);
-    try {
+  const handleAddRecords = () => {
+    if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token) {
       showToast({
-        type: "success",
-        title: "Success!",
-        message: `${validRows.length} records has been added`,
+        type: "error",
+        title: "Session Error",
+        message: "Session data not available. Please log in again.",
         duration: 3000,
       });
-      navigate(ACTUAL_SALES_LIST_ROUTE, {
-        state: {
-          bulkUploadSuccessCount: validRows.length,
-          addedRows: validRows.map((r) => r.data),
-        },
-      });
-    } finally {
-      setIsSubmitting(false);
+      return;
     }
+
+    if (validRows.length === 0) return;
+
+    setIsSubmitting(true);
+
+    const payload = validRows.map((r) => ({
+      SalesEntryId: Number(r.data.SalesEntryId) || 0,
+      EmployeeCode: String(r.data["Employee Code"] ?? ""),
+      EmployeeName: String(r.data["Employee Name"] ?? ""),
+      DealerName: String(r.data["Dealer Name"] ?? ""),
+      ManagerName: String(r.data["Manager Name"] ?? ""),
+      IncentiveProduct: String(r.data.IncentiveProduct ?? ""),
+      OriginalQuantity: Number(r.data["Original Quantity"]) || 0,
+      ActualQuantity: Number(r.data["Actual Quantity"]) || 0,
+    }));
+
+    const encPayload = encrypt(
+      JSON.stringify(payload),
+      sessionData.Key,
+      sessionData.Vector,
+    );
+    submitActualSales({ payload: encPayload, token: sessionData.Token });
   };
 
   if (!state) {
@@ -243,6 +345,11 @@ export default function ActualSalesBulkUpload() {
           />
         </div>
       )}
+
+      <LoaderModal
+        isOpen={isSubmitting}
+        message="Adding actual sales records..."
+      />
     </div>
   );
 }

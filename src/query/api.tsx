@@ -69,6 +69,14 @@ export const handleImportIncentiveProduct = async (
   return await apiRequest(url, { data: payload }, httpMethod, token);
 };
 
+export const handleImportIncentiveRates = async (
+  payload: string,
+  token: string,
+) => {
+  const { url, httpMethod } = getApiUrl(undefined, "ImportIncentiveRates");
+  return await apiRequest(url, { data: payload }, httpMethod, token);
+};
+
 export const handleImportSalesIncentiveTarget = async (
   payload: string,
   token: string,
@@ -77,5 +85,13 @@ export const handleImportSalesIncentiveTarget = async (
     undefined,
     "importSalesIncentiveTarget",
   );
+  return await apiRequest(url, { data: payload }, httpMethod, token);
+};
+
+export const handleBulkUpdateActualSales = async (
+  payload: string,
+  token: string,
+) => {
+  const { url, httpMethod } = getApiUrl(undefined, "bulkUpdateActualSales");
   return await apiRequest(url, { data: payload }, httpMethod, token);
 };

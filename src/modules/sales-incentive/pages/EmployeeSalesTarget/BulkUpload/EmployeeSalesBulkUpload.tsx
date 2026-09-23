@@ -299,9 +299,11 @@ export default function EmployeeSalesTargetBulkUpload() {
       IncentiveProduct: r.data.IncentiveProduct ?? "",
       Month: monthToNumber(r.data.Month),
       Year: Number(r.data.Year) || 0,
-      BaseTargetQuantity: Number(r.data.BaseTargetQuantity) || 0,
+      IncentiveAgainstBaseTargetQuantity:
+        Number(r.data.BaseTargetQuantity) || 0,
       Incentive: Number(r.data.Incentive) || 0,
-      IncentiveEligibility: r.data.IncentiveEligibility ?? "",
+      IncentiveApplicableEligibilityPercentage:
+        r.data.IncentiveEligibility ?? "",
     }));
 
     const encPayload = encrypt(

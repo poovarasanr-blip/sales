@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import IconRenderer from "../../../../shared/components/ui/IconRender/IconRenderer";
 import { showToast } from "../CustomToast/UseToast";
 import type { BulkUploadColumnConfig } from "../../../../modules/sales-incentive/types/salesIncentive.types";
@@ -26,7 +26,8 @@ function validateField<T>(
   value: unknown,
   col: BulkUploadColumnConfig<T>,
 ): string | null {
-  const isEmpty = value === undefined || value === null || String(value).trim() === "";
+  const isEmpty =
+    value === undefined || value === null || String(value).trim() === "";
   if (col.required && isEmpty) {
     return `${col.header} is required`;
   }
@@ -49,6 +50,7 @@ export interface InvalidRow<T> {
   __id: string;
   data: T;
   errors?: Partial<Record<keyof T, string>>;
+  apiError?: string;
 }
 
 interface InvalidRecordsTableProps<T extends Record<string, any>> {
@@ -105,7 +107,9 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
     });
 
     setFieldErrors((prev) => {
-      const next: Record<string, Partial<Record<keyof T, string>>> = { ...prev };
+      const next: Record<string, Partial<Record<keyof T, string>>> = {
+        ...prev,
+      };
       rows.forEach((r) => {
         const errs: Partial<Record<keyof T, string>> = {};
         columns.forEach((col) => {
@@ -221,7 +225,12 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
       removeSelected: removeSelectedBulk,
       updateSelected: updateSelectedBulk,
     });
-  }, [selectedIds.size, removeSelectedBulk, updateSelectedBulk, onSelectionChange]);
+  }, [
+    selectedIds.size,
+    removeSelectedBulk,
+    updateSelectedBulk,
+    onSelectionChange,
+  ]);
 
   return (
     <div className="grouped-table__wrapper h-full flex flex-col">
@@ -244,7 +253,7 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
                   {col.header}
                 </th>
               ))}
-              <th className="text-12 font-semibold text-darkgray p-3 sticky top-0 z-10 bg-white">
+              <th className="text-12 font-semibold text-darkgray p-3 sticky top-0 z-10 bg-white w-[150px] min-w-[150px]">
                 Action
               </th>
             </tr>
@@ -267,88 +276,99 @@ export default function InvalidRecordsTable<T extends Record<string, any>>({
                 const rowErrors = fieldErrors[row.__id];
 
                 return (
-                  <tr
-                    key={row.__id}
-                    className={isSelected ? "bg-[#F5F7FF]" : undefined}
-                  >
-                    <td className="p-3 border-[1.5px] border-strokegray">
-                      <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() => toggleRow(row.__id)}
-                      />
-                    </td>
+                  <Fragment key={row.__id}>
+                    <tr className={isSelected ? "bg-[#F5F7FF]" : undefined}>
+                      <td className="p-3 border-[1.5px] border-strokegray">
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleRow(row.__id)}
+                        />
+                      </td>
 
-                    {columns.map((col) => {
-                      const hasError = !!rowErrors?.[col.key];
-                      const inputType =
-                        col.type === "number"
-                          ? "number"
-                          : col.type === "date"
-                            ? "date"
-                            : "text";
-                      const inputValue =
-                        col.type === "date"
-                          ? toInputDate(String(draft[col.key] ?? ""))
-                          : ((draft[col.key] as any) ?? "");
+                      {columns.map((col) => {
+                        const hasError = !!rowErrors?.[col.key];
+                        const inputType =
+                          col.type === "number"
+                            ? "number"
+                            : col.type === "date"
+                              ? "date"
+                              : "text";
+                        const inputValue =
+                          col.type === "date"
+                            ? toInputDate(String(draft[col.key] ?? ""))
+                            : ((draft[col.key] as any) ?? "");
 
-                      return (
-                        <td
-                          key={String(col.key)}
-                          className="p-3 h-[37px] border-[1.5px] border-strokegray"
-                        >
-                          <input
-                            type={inputType}
-                            value={inputValue}
-                            onChange={(e) => {
-                              const v =
-                                col.type === "date"
-                                  ? fromInputDate(e.target.value)
-                                  : e.target.value;
-                              updateValue(row.__id, col.key, v);
-                            }}
-                            className={`bg-white text-13 border rounded-6 px-3 py-2 w-full outline-none ${
-                              hasError ? "border-danger" : "border-strokegray"
+                        return (
+                          <td
+                            key={String(col.key)}
+                            className="p-3 h-[37px] border-[1.5px] border-strokegray"
+                          >
+                            <input
+                              type={inputType}
+                              value={inputValue}
+                              onChange={(e) => {
+                                const v =
+                                  col.type === "date"
+                                    ? fromInputDate(e.target.value)
+                                    : e.target.value;
+                                updateValue(row.__id, col.key, v);
+                              }}
+                              className={`bg-white text-13 border rounded-6 px-3 py-2 w-full outline-none ${
+                                hasError ? "border-danger" : "border-strokegray"
+                              }`}
+                            />
+                            {/* {hasError && (
+                              <p className="text-11 text-danger mt-1">
+                                {rowErrors![col.key]}
+                              </p>
+                            )} */}
+                          </td>
+                        );
+                      })}
+                      <td className="p-3 h-[37px] border-[1.5px] border-strokegray w-[150px] min-w-[150px]">
+                        <div className="flex items-center gap-8 flex-wrap">
+                          <button
+                            onClick={() => onRemove([row.__id])}
+                            disabled={hasSelection}
+                            className={`flex items-center gap-4 text-13 whitespace-nowrap ${
+                              hasSelection
+                                ? "text-litegray cursor-not-allowed"
+                                : "text-danger"
                             }`}
-                          />
-                          {/* {hasError && (
-                            <p className="text-11 text-danger mt-1">
-                              {rowErrors![col.key]}
-                            </p>
-                          )} */}
+                          >
+                            <IconRenderer icon="FaRegTimesCircle" size={14} />
+                            Remove
+                          </button>
+                          <button
+                            onClick={() => updateRow(row.__id)}
+                            disabled={hasSelection}
+                            className={`flex items-center gap-4 text-13 whitespace-nowrap ${
+                              hasSelection
+                                ? "text-litegray cursor-not-allowed"
+                                : "text-primary"
+                            }`}
+                          >
+                            <IconRenderer icon="FiCheckCircle" size={14} />
+                            Update
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    {row.apiError && (
+                      <tr>
+                        <td
+                          colSpan={columns.length + 2}
+                          className="px-6 py-2 bg-[#FFF5F5] border-[1.5px] border-t-0 border-strokegray"
+                        >
+                          <p className="text-12 text-danger flex items-center gap-4">
+                            <IconRenderer icon="MdErrorOutline" size={14} />
+                            {row.apiError}
+                          </p>
                         </td>
-                      );
-                    })}
-
-                    <td className="p-3 h-[37px] border-[1.5px] border-strokegray">
-                      <div className="flex items-center gap-12">
-                        <button
-                          onClick={() => onRemove([row.__id])}
-                          disabled={hasSelection}
-                          className={`flex items-center gap-4 text-13 ${
-                            hasSelection
-                              ? "text-litegray cursor-not-allowed"
-                              : "text-danger"
-                          }`}
-                        >
-                          <IconRenderer icon="FaRegTimesCircle" size={14} />
-                          Remove
-                        </button>
-                        <button
-                          onClick={() => updateRow(row.__id)}
-                          disabled={hasSelection}
-                          className={`flex items-center gap-4 text-13 ${
-                            hasSelection
-                              ? "text-litegray cursor-not-allowed"
-                              : "text-primary"
-                          }`}
-                        >
-                          <IconRenderer icon="FiCheckCircle" size={14} />
-                          Update
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                      </tr>
+                    )}
+                  </Fragment>
                 );
               })
             )}

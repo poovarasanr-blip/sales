@@ -3,6 +3,7 @@ import type {
   ProductActivityLogEntry,
   BulkUploadColumnConfig,
   CategoryGroup,
+  IncentiveRatesUploadRow,
 } from "../types/salesIncentive.types";
 
 /* ------------------------------------------------------------------ */
@@ -66,35 +67,108 @@ export const INCENTIVE_RATES_COLUMNS: GroupedTableColumn[] = [
 /* Bulk upload column config                                           */
 /* ------------------------------------------------------------------ */
 
-export const INCENTIVE_RATES_UPLOAD_COLUMNS: BulkUploadColumnConfig<
-  Record<string, any>
->[] = [
-  {
-    key: "Category",
-    header: "Category",
-    required: true,
-    type: "string",
-    groupLevel: 1,
-  },
-  {
-    key: "Sub Category",
-    header: "Sub Category",
-    required: true,
-    type: "string",
-  },
-  {
-    key: "Eligible Incentive",
-    header: "Eligible Incentive(₹)",
-    required: true,
-    type: "number",
-  },
-  {
-    key: "Effective Date",
-    header: "Effective Date",
-    required: true,
-    type: "date",
-  },
+export const INCENTIVE_RATES_UPLOAD_COLUMNS: BulkUploadColumnConfig<IncentiveRatesUploadRow>[] =
+  [
+    {
+      key: "IncentiveProductCategory",
+      header: "Category",
+      required: true,
+      type: "string",
+      groupLevel: 1,
+    },
+    {
+      key: "IncentiveProductSubCategory",
+      header: "Sub Category",
+      required: true,
+      type: "string",
+    },
+    {
+      key: "IncentiveProduct",
+      header: "Product",
+      required: true,
+      type: "string",
+    },
+    {
+      key: "EligibleIncentive",
+      header: "Eligible Incentive(₹)/Product",
+      required: true,
+      type: "number",
+    },
+    {
+      key: "Effective Date",
+      header: "Effective Date",
+      required: true,
+      type: "date",
+    },
+  ];
+
+const DISPLAY_MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
+
+function formatDMY(day: number, month: number, year: number): string | null {
+  if (month < 1 || month > 12 || day < 1 || day > 31 || year < 1900)
+    return null;
+  return `${String(day).padStart(2, "0")} ${DISPLAY_MONTH_NAMES[month - 1]} ${year}`;
+}
+
+export function formatDateForDisplay(raw: unknown): string | null {
+  if (raw == null) return null;
+
+  if (raw instanceof Date) {
+    if (isNaN(raw.getTime())) return null;
+    return formatDMY(raw.getDate(), raw.getMonth() + 1, raw.getFullYear());
+  }
+
+  if (typeof raw === "number") {
+    const ms = Math.round((raw - 25569) * 86400 * 1000);
+    const d = new Date(ms);
+    if (isNaN(d.getTime())) return null;
+    return formatDMY(d.getUTCDate(), d.getUTCMonth() + 1, d.getUTCFullYear());
+  }
+
+  const str = String(raw).trim();
+  if (!str) return null;
+
+  // DD-MM-YYYY or DD/MM/YYYY
+  const dmy = str.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+  if (dmy) return formatDMY(parseInt(dmy[1]), parseInt(dmy[2]), parseInt(dmy[3]));
+
+  // YYYY-MM-DD (ISO)
+  const iso = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (iso) return formatDMY(parseInt(iso[3]), parseInt(iso[2]), parseInt(iso[1]));
+
+  // Already in display format DD Mon YYYY
+  const display = str.match(
+    /^(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})$/i,
+  );
+  if (display) {
+    const mi = DISPLAY_MONTH_NAMES.findIndex(
+      (m) => m.toLowerCase() === display[2].toLowerCase(),
+    );
+    if (mi >= 0)
+      return formatDMY(parseInt(display[1]), mi + 1, parseInt(display[3]));
+  }
+
+  // Numeric string (e.g. serial passed as text)
+  if (/^\d+(\.\d+)?$/.test(str)) {
+    return formatDateForDisplay(parseFloat(str));
+  }
+
+  return null;
+}
+
 
 /* ------------------------------------------------------------------ */
 /* Mock data — 48 categories matching the screenshot pagination        */

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import type {
   RowValidationResult,
-  BulkUploadColumnConfig,
+  IncentiveRatesUploadRow,
 } from "../../../types/salesIncentive.types";
 import CustomButton from "../../../../../shared/components/ui/Button/CustomButton";
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
@@ -13,29 +13,32 @@ import InvalidRecordsTable, {
 } from "../../../../../shared/components/ui/DataTable/InvalidRecordsTable";
 import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
-import { handleImportIncentiveProduct } from "../../../../../query/api";
+import { handleImportIncentiveRates } from "../../../../../query/api";
 import encrypt from "../../../../../utils/security/encrypt";
 import decrypt from "../../../../../utils/security/decrypt";
 import { parseNestedJson } from "../../../../../utils/security/ParseData";
 import { INCENTIVE_RATES_UPLOAD_COLUMNS } from "../../../config/IncentiveRatesConfig";
+import {
+  ClientContractId,
+  ClientId,
+  CompanyId,
+} from "../../../../../config/env";
 
 /* ---- Grouping helpers ---- */
 
 const level1Cols = INCENTIVE_RATES_UPLOAD_COLUMNS.filter(
   (c) => c.groupLevel === 1,
 );
-const detailCols = INCENTIVE_RATES_UPLOAD_COLUMNS.filter(
-  (c) => !c.groupLevel,
-);
+const detailCols = INCENTIVE_RATES_UPLOAD_COLUMNS.filter((c) => !c.groupLevel);
 
 interface Level1Group {
   values: Record<string, any>;
-  rows: { data: Record<string, any>; __id: string }[];
+  rows: { data: IncentiveRatesUploadRow; __id: string }[];
   totalRows: number;
 }
 
 function buildGroups(
-  rows: { data: Record<string, any>; __id: string }[],
+  rows: { data: IncentiveRatesUploadRow; __id: string }[],
 ): Level1Group[] {
   const l1Map = new Map<string, Level1Group>();
 
@@ -62,8 +65,8 @@ function buildGroups(
 /* ---- Types ---- */
 
 interface BulkUploadLocationState {
-  validRows: RowValidationResult<Record<string, any>>[];
-  invalidRows: RowValidationResult<Record<string, any>>[];
+  validRows: RowValidationResult<IncentiveRatesUploadRow>[];
+  invalidRows: RowValidationResult<IncentiveRatesUploadRow>[];
 }
 
 type TabKey = "valid" | "invalid";
@@ -80,7 +83,7 @@ export default function IncentiveRatesBulkUpload() {
     (state?.validRows ?? []).map((r, i) => ({ ...r, __id: `val-${i}` })),
   );
   const [invalidRows, setInvalidRows] = useState<
-    InvalidRow<Record<string, any>>[]
+    InvalidRow<IncentiveRatesUploadRow>[]
   >(() =>
     (state?.invalidRows ?? []).map((r, i) => ({
       __id: `inv-${i}`,
@@ -93,36 +96,115 @@ export default function IncentiveRatesBulkUpload() {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { mutate: importProducts } = useMutation({
+  const { mutate: importIncentiveRates } = useMutation({
     mutationFn: (variables: { payload: string; token: string }) =>
-      handleImportIncentiveProduct(variables.payload, variables.token),
+      handleImportIncentiveRates(variables.payload, variables.token),
     onSuccess: (response: any) => {
       setIsSubmitting(false);
       if (response?.status >= 200 && response?.status < 300) {
-        const decryptedData = decrypt(
-          response?.data,
-          sessionData?.Key ?? "",
-          sessionData?.Vector ?? "",
-        );
-        const parsedData = parseNestedJson(JSON.parse(decryptedData));
-        if (parsedData?.Status) {
-          showToast({
-            type: "success",
-            title: "Success!",
-            message: `${validRows.length} records have been added`,
-            duration: 3000,
-          });
-          navigate("/incentiveRates", {
-            state: {
-              bulkUploadSuccessCount: validRows.length,
-              addedProducts: validRows.map((r) => r.data),
-            },
-          });
-        } else {
+        try {
+          const decryptedData = decrypt(
+            response?.data,
+            sessionData?.Key ?? "",
+            sessionData?.Vector ?? "",
+          );
+          const parsedData = parseNestedJson(JSON.parse(decryptedData));
+
+          const results: any[] = parsedData?.Result ?? [];
+          const failedResults = results.filter(
+            (r: any) => r.Status === "Failed",
+          );
+
+          if (parsedData?.Status && failedResults.length === 0) {
+            showToast({
+              type: "success",
+              title: "Success!",
+              message: `${validRows.length} records have been added`,
+              duration: 3000,
+            });
+            navigate("/incentiveRates", {
+              state: {
+                bulkUploadSuccessCount: validRows.length,
+                addedProducts: validRows.map((r) => r.data),
+              },
+            });
+            return;
+          }
+
+          if (failedResults.length > 0) {
+            const matchedFailedIds = new Set<string>();
+            const newInvalidRows: InvalidRow<IncentiveRatesUploadRow>[] = [];
+
+            failedResults.forEach((fr: any, idx: number) => {
+              const apiCat = String(
+                fr.IncentiveCategory ?? fr.Incentivecategory ?? "",
+              ).toLowerCase();
+              const apiSub = String(
+                fr.IncentiveSubCategory ?? fr.Incentivesubcategory ?? "",
+              ).toLowerCase();
+              const apiProd = String(
+                fr.IncentiveProduct ?? "",
+              ).toLowerCase();
+
+              const match = validRows.find(
+                (vr) =>
+                  !matchedFailedIds.has(vr.__id) &&
+                  String(vr.data.IncentiveProductCategory ?? "").toLowerCase() ===
+                    apiCat &&
+                  String(vr.data.IncentiveProductSubCategory ?? "").toLowerCase() ===
+                    apiSub &&
+                  String(vr.data.IncentiveProduct ?? "").toLowerCase() ===
+                    apiProd,
+              );
+
+              if (match) {
+                matchedFailedIds.add(match.__id);
+                newInvalidRows.push({
+                  __id: `api-fail-${Date.now()}-${idx}`,
+                  data: match.data,
+                  apiError: fr.ErrorMessage || "Import failed",
+                });
+              }
+            });
+
+            const successCount = validRows.length - matchedFailedIds.size;
+
+            setValidRows((prev) =>
+              prev.filter((r) => !matchedFailedIds.has(r.__id)),
+            );
+            setInvalidRows((prev) => [...prev, ...newInvalidRows]);
+
+            if (successCount > 0 && matchedFailedIds.size > 0) {
+              showToast({
+                type: "error",
+                title: "Partial Import",
+                message: `${successCount} record(s) imported successfully. ${matchedFailedIds.size} record(s) failed.`,
+                duration: 5000,
+              });
+            } else {
+              showToast({
+                type: "error",
+                title: "Import Failed",
+                message:
+                  parsedData?.Message ??
+                  `${matchedFailedIds.size} record(s) failed to import.`,
+                duration: 5000,
+              });
+            }
+            setActiveTab("invalid");
+          } else {
+            showToast({
+              type: "error",
+              title: "Error!",
+              message: parsedData?.Message ?? "Failed to add records.",
+              duration: 3000,
+            });
+          }
+        } catch {
           showToast({
             type: "error",
-            title: "Error!",
-            message: parsedData?.Message,
+            title: "Error",
+            message: "Failed to process server response. Please try again.",
             duration: 3000,
           });
         }
@@ -174,7 +256,7 @@ export default function IncentiveRatesBulkUpload() {
   const handleRemoveInvalid = (ids: string[]) =>
     setInvalidRows((prev) => prev.filter((r) => !ids.includes(r.__id)));
 
-  const handleRowValidated = (row: Record<string, any>, id: string) => {
+  const handleRowValidated = (row: IncentiveRatesUploadRow, id: string) => {
     setInvalidRows((prev) => prev.filter((r) => r.__id !== id));
     setValidRows((prev) => [
       ...prev,
@@ -199,17 +281,18 @@ export default function IncentiveRatesBulkUpload() {
       });
       return;
     }
-
     setIsSubmitting(true);
-
     const payload = validRows.map((r) => ({
-      Category: r.data.Category ?? r.data["Category"] ?? "",
-      SubCategory: r.data["Sub Category"] ?? "",
-      EligibleIncentive:
-        Number(r.data["Eligible Incentive"]) ||
-        Number(r.data["Eligible Incentive (₹)"]) ||
-        0,
-      EffectiveDate: r.data["Effective Date"] ?? "",
+      Incentivecategory: String(r.data.IncentiveProductCategory ?? ""),
+      Incentivesubcategory: String(r.data.IncentiveProductSubCategory ?? ""),
+      IncentiveProduct: String(r.data.IncentiveProduct ?? ""),
+      eligibleIncentive: Number(r.data.EligibleIncentive) || 0,
+      effectiveDate: String(r.data["Effective Date"] ?? ""),
+      CompanyId: CompanyId,
+      ClientId: ClientId,
+      ContractId: ClientContractId,
+      TeamId: 0,
+      EmployeeId: 0,
     }));
     const encPayload = encrypt(
       JSON.stringify(payload),
@@ -217,8 +300,7 @@ export default function IncentiveRatesBulkUpload() {
       sessionData.Vector,
     );
     const stdBase64 = encPayload.replace(/\*/g, "+").replace(/-/g, "/");
-
-    importProducts({ payload: stdBase64, token: sessionData.Token });
+    importIncentiveRates({ payload: stdBase64, token: sessionData.Token });
   };
 
   if (!state) {
@@ -312,7 +394,7 @@ export default function IncentiveRatesBulkUpload() {
                                 <td
                                   key={col.key as string}
                                   rowSpan={l1Group.totalRows}
-                                  className="px-16 py-[11px] text-13 text-[#59596C] align-top border-r border-[#eee]"
+                                  className="px-16 py-[11px] text-13 text-[#59596C] align-middle text-center border-r border-[#eee]"
                                 >
                                   {String(
                                     l1Group.values[col.key as string] ?? "",
