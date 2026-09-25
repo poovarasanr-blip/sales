@@ -29,11 +29,13 @@ import { parseNestedJson } from "../../../../utils/security/ParseData";
 import { downloadExcelFromBase64 } from "../../../../shared/utils/downloadExcel";
 import SampleDownloadModal from "./SampleDownloadModal";
 import type { SearchField } from "./SampleDownloadModal";
+import EmployeeSalesTargetUpdateModal from "./EmployeeSalesTargetUpdateModal";
 import type {
   CategoryGroup,
   GroupedTableColumn,
   SubCategoryGroup,
 } from "../../types/salesIncentive.types";
+import dummey from "../../../../../mock-api/employeeSalesTargets.mock.json";
 
 interface EmployeeTargetListLocationState {
   bulkUploadSuccessCount?: number;
@@ -50,9 +52,11 @@ export default function EmployeeSalesTarget() {
   const [employeeTemplate, setEmployeeTemplate] = useState<any>([]);
   const [showSampleModal, setShowSampleModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<Record<string, any>[]>([]);
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
-  const { uploadingFile, fileError, startUpload } =
-    useBulkUpload<Record<string, any>>(EMPLOYEE_TARGET_UPLOAD_COLUMNS);
+  const { uploadingFile, fileError, startUpload } = useBulkUpload<
+    Record<string, any>
+  >(EMPLOYEE_TARGET_UPLOAD_COLUMNS);
 
   const { mutate: fetchBulkTemplate } = useMutation({
     mutationFn: (variables: { payload: string; token: string }) =>
@@ -108,7 +112,9 @@ export default function EmployeeSalesTarget() {
     }
   }, []);
 
-  const [rows, setRows] = useState<Record<string, any>[]>([]);
+  const [rows, setRows] = useState<Record<string, any>[]>(
+    dummey?.list?.response?.data,
+  );
   const [showFilter, setShowFilter] = useState<boolean>(true);
   const processedNavKeyRef = useRef<string | null>(null);
   const [appliedMonth, setAppliedMonth] = useState<string>("");
@@ -159,7 +165,8 @@ export default function EmployeeSalesTarget() {
         if (yearStr && String(row.Year) !== yearStr) return false;
       }
       if (managerFilter !== "All") {
-        if (String(row.ManagerName ?? "").trim() !== managerFilter) return false;
+        if (String(row.ManagerName ?? "").trim() !== managerFilter)
+          return false;
       }
       if (searchTerm.trim()) {
         const q = searchTerm.trim().toLowerCase();
@@ -233,6 +240,7 @@ export default function EmployeeSalesTarget() {
             <button
               className="text-[#8E8EA9] hover:text-primary transition-colors"
               aria-label="Edit"
+              onClick={() => setEditModalOpen(true)}
             >
               <IconRenderer icon="FiEdit2" size={15} />
             </button>
@@ -560,6 +568,11 @@ export default function EmployeeSalesTarget() {
         sessionData={sessionData}
         employeeTemplate={employeeTemplate}
         onUserSelect={handleUserSelect}
+      />
+
+      <EmployeeSalesTargetUpdateModal
+        isOpen={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
       />
     </div>
   );

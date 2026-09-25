@@ -101,35 +101,30 @@ export function getSalesManagerOptions(): ManagerOption[] {
   ];
 }
 
-/** One CategoryGroup per Sales record; the 5 fixed categories live in
- * `subCategories`, mirroring groupIncentiveRows in Incentiveconfig.ts. */
 export function groupSalesRecords(
   records: SalesRecord[],
   status: SalesStatus,
 ): SalesCategoryGroupRow[] {
   return records.map((record) => {
-    const subCategories: SalesSubCategoryGroup[] = INCENTIVE_CATEGORY_ORDER.map(
-      (categoryName) => {
-        const line = record.SalesProducts.find(
-          (p) => p.SalesProductName === categoryName,
-        );
-        const pct = line ? parsePercentage(line.AchievementPercentage) : 0;
-        return {
-          subCategory: categoryName,
-          products: [
-            {
-              product: categoryName,
-              effectiveDate: record.Manager.SubmittedDate,
-            },
-          ],
-          actual: line?.ActualSales ?? 0,
-          regularized: line?.RegularizedSales ?? null,
-          target: line?.SalesTarget ?? 0,
-          incentive: line?.IncentiveAmount ?? null,
-          achievementPercentage: pct,
-        };
-      },
-    );
+    const subCategories: SalesSubCategoryGroup[] = (
+      record.SalesProducts || []
+    ).map((line) => {
+      const pct = parsePercentage(line.AchievementPercentage);
+      return {
+        subCategory: line.SalesProductName,
+        products: [
+          {
+            product: line.SalesProductName,
+            effectiveDate: record.Manager.SubmittedDate,
+          },
+        ],
+        actual: line.ActualSales ?? 0,
+        regularized: line.RegularizedSales ?? null,
+        target: line.SalesTarget ?? 0,
+        incentive: line.IncentiveAmount ?? null,
+        achievementPercentage: pct,
+      };
+    });
 
     const approvedDate =
       status === "approved" && record.Manager.SubmittedDate
@@ -187,13 +182,13 @@ const EMPLOYEE_MANAGER_CATEGORY_COLUMNS: GroupedTableColumn[] = [
   },
   {
     key: "category",
-    label: "Categories",
-    width: "105px",
+    label: "Sub Categories",
+    width: "140px",
     mergeRowSpan: false,
   },
   {
     key: "actual",
-    label: "Actual",
+    label: "Target",
     align: "center",
     mergeRowSpan: false,
     alineItem: "center",
@@ -201,24 +196,24 @@ const EMPLOYEE_MANAGER_CATEGORY_COLUMNS: GroupedTableColumn[] = [
   },
   {
     key: "regularized",
-    label: "Regularized",
+    label: "Achieved/Regularized",
     align: "center",
     mergeRowSpan: false,
-    width: "80px",
+    width: "134px",
   },
   {
     key: "target",
-    label: "Target",
+    label: "Approved",
     align: "center",
     mergeRowSpan: false,
-    width: "50px",
+    width: "81px",
   },
   {
     key: "incentive",
-    label: "Incentive",
+    label: "Incentive(₹)",
     align: "right",
     mergeRowSpan: false,
-    width: "70px",
+    width: "95px",
     alineItem: "right",
   },
   {
@@ -226,7 +221,7 @@ const EMPLOYEE_MANAGER_CATEGORY_COLUMNS: GroupedTableColumn[] = [
     label: "Actual(₹)",
     align: "right",
     mergeRowSpan: true,
-    width: "75px",
+    width: "78px",
     alineItem: "right",
   },
   {
@@ -235,6 +230,7 @@ const EMPLOYEE_MANAGER_CATEGORY_COLUMNS: GroupedTableColumn[] = [
     align: "right",
     mergeRowSpan: true,
     width: "90px",
+    alineItem: "right",
   },
   {
     key: "final",
@@ -267,6 +263,14 @@ export const SALES_PENDING_COLUMNS: GroupedTableColumn[] = [
 ];
 
 export const SALES_APPROVED_COLUMNS: GroupedTableColumn[] = [
+  {
+    key: "selection",
+    label: "",
+    width: "36px",
+    mergeRowSpan: true,
+    align: "center",
+    alineItem: "center",
+  },
   ...EMPLOYEE_MANAGER_CATEGORY_COLUMNS,
   {
     key: "status",
@@ -309,19 +313,25 @@ export const SALES_REGULARIZED_DETAIL_COLUMNS: GroupedTableColumn[] = [
     color: "#31314D",
     width: "150px",
   },
-  { key: "salesProducts", label: "Products" },
   {
-    key: "salesActual",
-    label: "Actual",
+    key: "salesTarget",
+    label: "Target",
     align: "center",
-    width: "90px",
+    width: "80px",
     alineItem: "center",
   },
   {
     key: "salesRegularized",
-    label: "Regularized",
+    label: "Achieved/Regularized",
     align: "center",
-    width: "100px",
+    width: "134px",
+    alineItem: "center",
+  },
+  {
+    key: "salesApproved",
+    label: "Approved",
+    align: "center",
+    width: "90px",
     alineItem: "center",
   },
   {
@@ -329,19 +339,6 @@ export const SALES_REGULARIZED_DETAIL_COLUMNS: GroupedTableColumn[] = [
     label: "Remarks",
     align: "center",
     width: "90px",
-    alineItem: "center",
-  },
-  {
-    key: "salesOverall",
-    label: "Overall Regularized",
-    align: "center",
-    width: "154px",
-  },
-  {
-    key: "salesTarget",
-    label: "Target",
-    align: "center",
-    width: "80px",
     alineItem: "center",
   },
   {

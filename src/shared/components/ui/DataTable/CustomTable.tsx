@@ -66,7 +66,6 @@ function applyFilters(
           return { ...sub, products };
         })
         .filter((sub) => sub.products.length > 0);
-
       return { ...cat, subCategories };
     })
     .filter((cat) => cat.subCategories.length > 0);
@@ -389,6 +388,7 @@ export default function GroupedIncentiveTable({
   paddingHorizontal = "px-3",
   paddingVertical = "py-3",
   hideSubRowBorders = false,
+  height = "h-[37px]",
 }: GroupedIncentiveTableProps) {
   const [openKey, setOpenKey] = useState<string | null>(null);
   const [textFilters, setTextFilters] = useState<Record<string, string>>({});
@@ -535,7 +535,7 @@ export default function GroupedIncentiveTable({
                           <td
                             key={column.key}
                             rowSpan={isCategoryLevel ? rowSpan : undefined}
-                            className={`${paddingHorizontal} ${paddingVertical} h-[37px] content-center ${
+                            className={`${paddingHorizontal} ${paddingVertical} ${height} content-center ${
                               !showVerticalLines
                                 ? "border-[1.5px] border-strokegray"
                                 : ""

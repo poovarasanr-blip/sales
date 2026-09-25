@@ -34,11 +34,13 @@ import { useAuthStore } from "../../../../../app/store/useAuthStore";
 import {
   handleGetProductBulkTemplate,
   handleGetExcelTemplate,
+  handleGetProductListing,
 } from "../../../../../query/api";
 import encrypt from "../../../../../utils/security/encrypt";
 import decrypt from "../../../../../utils/security/decrypt";
 import { parseNestedJson } from "../../../../../utils/security/ParseData";
 import { downloadExcelFromBase64 } from "../../../../../shared/utils/downloadExcel";
+import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
 
 /* ---- Bulk-upload column config (from Config.json) ---- */
 
@@ -522,6 +524,49 @@ export default function ProductList() {
     },
   });
 
+  const { mutate: fetchProductListing, isPending: isProductListPending } =
+    useMutation({
+      mutationFn: (variables: { payload: any; token: string }) =>
+        handleGetProductListing(variables.payload, variables.token),
+      onSuccess: (response: any) => {
+        if (response?.status === 200) {
+          const decryptedData = decrypt(
+            response?.data,
+            sessionData?.Key,
+            sessionData?.Vector,
+          );
+          const parsedData = parseNestedJson(JSON.parse(decryptedData));
+          console.log(parsedData, "Product Listing API Response");
+          const items: any[] =
+            parsedData?.dynamicObject ?? parsedData?.Result ?? [];
+          if (Array.isArray(items) && items.length > 0) {
+            const mapped: ProductFlatRow[] = items.map((item: any) => ({
+              category: item.Category ?? item.category ?? "",
+              subCategoryCount:
+                item.SubCategoryCount ?? item.subCategoryCount ?? 0,
+              effectiveDate: item.EffectiveDate ?? item.effectiveDate ?? "",
+              targetQuantity:
+                item.TargetQuantity ?? item.targetQuantity ?? 0,
+              eligibleIncentive:
+                item.EligibleIncentive ?? item.eligibleIncentive ?? 0,
+              productCount: item.ProductCount ?? item.productCount ?? 0,
+              status: item.Status ?? item.status ?? "Active",
+            }));
+            setProducts(mapped);
+          }
+        } else {
+          console.log(
+            "GetProductListing Failed - Status:",
+            response?.status,
+            response,
+          );
+        }
+      },
+      onError: (error: any) => {
+        console.log("GetProductListing Error:", error);
+      },
+    });
+
   useEffect(() => {
     if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
       const encPayload = encrypt(
@@ -534,12 +579,15 @@ export default function ProductList() {
         payload: stdBase64,
         token: sessionData.Token,
       });
+
+      fetchProductListing({
+        payload: undefined,
+        token: sessionData.Token,
+      });
     }
   }, []);
 
-  const [products, setProducts] = useState<ProductFlatRow[]>(
-    PRODUCT_MOCK_FLAT_DATA,
-  );
+  const [products, setProducts] = useState<ProductFlatRow[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<{
@@ -887,7 +935,7 @@ export default function ProductList() {
         </div>
       </div>
 
-      {!hasProducts ? (
+      {hasProducts ? (
         <div className="flex-1 min-h-0 border-1 border-strokegray rounded-6 bg-white mt-14 mb-14 flex flex-col">
           {/* Toolbar */}
           <div className="flex items-center justify-between px-16 mt-14">
@@ -1161,6 +1209,11 @@ export default function ProductList() {
         onClose={() => setActivityLog(null)}
         title={activityLog?.title ?? ""}
         entries={activityLog?.entries ?? []}
+      />
+
+      <LoaderModal
+        isOpen={isProductListPending}
+        message="Loading products..."
       />
     </div>
   );

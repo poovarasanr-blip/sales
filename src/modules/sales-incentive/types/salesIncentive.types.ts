@@ -234,6 +234,7 @@ export interface GroupedIncentiveTableProps {
   paddingHorizontal?: string;
   paddingVertical?: string;
   hideSubRowBorders?: boolean;
+  height?: string;
 }
 export interface TeamSalesProps {
   pageLayOutData?: SalesOverviewData;

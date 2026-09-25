@@ -37,16 +37,10 @@
         "route": "/actualSales"
       },
       {
-        "icon": "./src/assets/icons/SideBar/SalesIcon.svg",
-        "activeIcon": "./src/assets/icons/SideBar/SalesActiveIcon.svg",
-        "name": "Sales",
-        "route": "/Sales"
-      },
-      {
         "icon": "./src/assets/icons/SideBar/IncentiveIcon.svg",
         "activeIcon": "./src/assets/icons/SideBar/IncentiveActiveIcon.svg",
-        "name": "Incentive",
-        "route": "/incentive"
+        "name": "Sales Incentive",
+        "route": "/Sales"
       }
     ]
   },

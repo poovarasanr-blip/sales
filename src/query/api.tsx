@@ -95,3 +95,19 @@ export const handleBulkUpdateActualSales = async (
   const { url, httpMethod } = getApiUrl(undefined, "bulkUpdateActualSales");
   return await apiRequest(url, { data: payload }, httpMethod, token);
 };
+
+export const handleFetchSalesIncentiveData = async (
+  payload: any,
+  token: string,
+) => {
+  const { url, httpMethod } = getApiUrl(payload, "FetchSalesincentiveData");
+  return await apiRequest(url, null, httpMethod, token);
+};
+
+export const handleGetProductListing = async (
+  payload: any,
+  token: string,
+) => {
+  const { url, httpMethod } = getApiUrl(payload, "getProductListing");
+  return await apiRequest(url, null, httpMethod, token);
+};

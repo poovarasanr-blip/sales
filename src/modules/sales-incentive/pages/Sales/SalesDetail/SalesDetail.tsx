@@ -5,7 +5,6 @@ import GroupedIncentiveTable from "../../../../../shared/components/ui/DataTable
 import {
   SALES_MONTHLY_DETAIL_COLUMNS,
   SALES_REGULARIZED_DETAIL_COLUMNS,
-  achievementBadgeClass,
 } from "../../../config/Salesconfig";
 import UsersIcon from "../../../../../assets/icons/Sales/UsersIcon.svg";
 import IncentiveIcon from "../../../../../assets/icons/Sales/IncentiveIcon.svg";
@@ -19,10 +18,9 @@ import type {
 
 interface SalesRegularizedRowGroup extends CategoryGroup {
   salesCategory: string;
-  salesActual: (number | null)[];
   salesRegularized: (number | null)[];
+  salesApproved: number | null;
   salesRemarks: SalesDetailRemarks;
-  salesOverall: number;
   salesIncentive: number | null;
 }
 
@@ -98,17 +96,18 @@ export default function SalesDetail({
         subCategories: [
           {
             subCategory: "",
-            products: row.Products.map((p) => ({
-              product: p,
-              effectiveDate: "",
-            })),
+            products: (row as any).Products
+              ? (row as any).Products.map((p: string) => ({
+                  product: p,
+                  effectiveDate: "",
+                }))
+              : [{ product: row.SalesProductName, effectiveDate: "" }],
           },
         ],
         salesCategory: row.SalesProductName,
-        salesActual: row.ActualSales,
         salesRegularized: row.RegularizedSales,
+        salesApproved: (row as any).Approved ?? null,
         salesRemarks: row.Remarks,
-        salesOverall: row.OverallRegularizedSales,
         salesIncentive: row.IncentiveAmount,
       }),
     ) ?? [];
@@ -329,26 +328,8 @@ export default function SalesDetail({
                     switch (column.key) {
                       case "salesCategory":
                         return cat.salesCategory;
-                      case "salesProducts":
-                        return (
-                          <div className="grouped-table__stack">
-                            {cat.subCategories[0]?.products.map((p, i) => (
-                              <div key={`${p.product}-${i}`}>{p.product}</div>
-                            ))}
-                          </div>
-                        );
                       case "salesTarget":
                         return cat.targetQuantity;
-                      case "salesActual":
-                        return (
-                          <div className="flex flex-col items-center">
-                            {cat.salesActual.map((v, i) => (
-                              <div key={i} className="text-13 leading-20">
-                                {v == null ? "--" : v}
-                              </div>
-                            ))}
-                          </div>
-                        );
                       case "salesRegularized":
                         return (
                           <div className="flex flex-col items-center">
@@ -359,6 +340,10 @@ export default function SalesDetail({
                             ))}
                           </div>
                         );
+                      case "salesApproved":
+                        return cat.salesApproved != null
+                          ? cat.salesApproved
+                          : "--";
                       case "salesRemarks":
                         return cat.salesRemarks?.HasAttachment ? (
                           <div className="flex items-center justify-center gap-14">
@@ -378,23 +363,6 @@ export default function SalesDetail({
                         ) : (
                           "--"
                         );
-                      case "salesOverall": {
-                        const target = Number(cat.targetQuantity);
-                        const pct =
-                          target > 0 ? (cat.salesOverall / target) * 100 : 0;
-                        const badgeClass = achievementBadgeClass(pct);
-                        return (
-                          <div className="flex items-center justify-center">
-                            <span
-                              className={`inline-flex items-center justify-center w-[22px] h-[23px] px-6 rounded-2 text-12 ${
-                                badgeClass || "text-gray"
-                              }`}
-                            >
-                              {cat.salesOverall}
-                            </span>
-                          </div>
-                        );
-                      }
                       case "salesIncentive":
                         return cat.salesIncentive != null
                           ? `₹ ${cat.salesIncentive.toLocaleString("en-IN")}`
