@@ -29,7 +29,10 @@ import type {
 import { ACHIEVED_LABELS } from "../SalesUtils";
 import SalesConfirmModal from "../Modals/ApproveModal";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
-import { handleFetchSalesIncentiveData } from "../../../../../query/api";
+import {
+  handleFetchSalesIncentiveData,
+  handleUpdateSalesIncentiveAdjustment,
+} from "../../../../../query/api";
 import decrypt from "../../../../../utils/security/decrypt";
 import { parseNestedJson } from "../../../../../utils/security/ParseData";
 import encrypt from "../../../../../utils/security/encrypt";
@@ -205,6 +208,66 @@ export default function SalesList() {
     },
   });
 
+  const { mutate: submitUpdate, isPending: isUpdatePending } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleUpdateSalesIncentiveAdjustment(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const { type, ids } = confirmModal;
+        const names = ids
+          .map(
+            (id) =>
+              recordsByTab.PENDING.find((r) => r.Id === id)?.Employee
+                .EmployeeName,
+          )
+          .filter(Boolean);
+
+        if (type === "approve") {
+          showToast({
+            type: "success",
+            title: "Approved!",
+            message:
+              names.length === 1
+                ? `${names[0]}'s sales has been Approved`
+                : `${names.length} sales records have been Approved`,
+            duration: 3000,
+          });
+        } else {
+          showToast({
+            type: "success",
+            title: "Rejected!",
+            message:
+              names.length === 1
+                ? `${names[0]}'s sales has been Rejected`
+                : `${names.length} sales records have been Rejected`,
+            duration: 3000,
+          });
+        }
+
+        clearSelection("PENDING");
+        setConfirmModal({ open: false, type: "approve", ids: [] });
+        setDetail({ open: false, record: null });
+        fetchData(activeTab, apiMonth, apiYear);
+      } else {
+        showToast({
+          type: "error",
+          title: "Failed!",
+          message: "Failed to update sales submission. Please try again.",
+          duration: 3000,
+        });
+      }
+    },
+    onError: (error: any) => {
+      console.log("UpdateSalesSubmissionRequest Error:", error);
+      showToast({
+        type: "error",
+        title: "Error!",
+        message: "Something went wrong. Please try again.",
+        duration: 3000,
+      });
+    },
+  });
+
   const fetchData = useCallback(
     (tab: SalesTabIdLocal, month: number, year: number) => {
       if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token)
@@ -341,40 +404,6 @@ export default function SalesList() {
     setSelectedIds((prev) => ({ ...prev, [tab]: new Set() }));
   }, []);
 
-  const moveRecord = useCallback(
-    (id: number, toStatus: "approved" | "rejected") => {
-      setRecordsByTab((prev) => {
-        const record = prev.PENDING.find((r) => r.Id === id);
-        if (!record) return prev;
-
-        const destination = toStatus === "approved" ? "APPROVED" : "REJECTED";
-        const destList = prev[destination];
-        const nextId =
-          destList.length > 0 ? Math.max(...destList.map((r) => r.Id)) + 1 : 1;
-
-        const formattedDate = new Date().toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        });
-
-        const movedRecord: SalesRecord = {
-          ...record,
-          Id: nextId,
-          Status: toStatus,
-          ...(toStatus === "rejected" ? { RejectedDate: formattedDate } : {}),
-        };
-
-        return {
-          ...prev,
-          PENDING: prev.PENDING.filter((r) => r.Id !== id),
-          [destination]: [...destList, movedRecord],
-        };
-      });
-    },
-    [],
-  );
-
   const openConfirmModal = useCallback(
     (ids: number[], type: "approve" | "reject") => {
       setConfirmModal({ open: true, type, ids });
@@ -383,74 +412,66 @@ export default function SalesList() {
   );
 
   const handleConfirmed = useCallback(
-    (_remarks: string) => {
+    (remarks: string) => {
       const { type, ids } = confirmModal;
-      const names = ids
-        .map(
-          (id) =>
-            recordsByTab.PENDING.find((r) => r.Id === id)?.Employee
-              .EmployeeName,
-        )
-        .filter(Boolean);
 
-      if (type === "approve") {
-        ids.forEach((id) => moveRecord(id, "approved"));
-        clearSelection("PENDING");
-        showToast({
-          type: "success",
-          title: "Approved!",
-          message:
-            names.length === 1
-              ? `${names[0]}'s sales has been Approved`
-              : `${names.length} sales records have been Approved`,
-          duration: 3000,
-        });
-      } else {
-        ids.forEach((id) => moveRecord(id, "rejected"));
-        clearSelection("PENDING");
+      if (type === "reject" && !remarks.trim()) {
         showToast({
           type: "error",
-          title: "Rejeceted!",
-          message:
-            names.length === 1
-              ? `${names[0]}'s sales has been Rejected`
-              : `${names.length} sales records have been Rejected`,
+          title: "Remarks Required",
+          message: "Please provide remarks for rejection.",
           duration: 3000,
         });
+        return;
       }
 
-      setConfirmModal({ open: false, type: "approve", ids: [] });
-      setDetail({ open: false, record: null });
+      if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token)
+        return;
+
+      const statusValue =
+        type === "approve"
+          ? TAB_TO_SUBMISSION_STATUS.APPROVED
+          : TAB_TO_SUBMISSION_STATUS.REJECTED;
+
+      const payload = ids.map((id) => {
+        const record = recordsByTab.PENDING.find((r) => r.Id === id);
+        return {
+          SalesSubmissionId: id,
+          Adjustment: record?.AdjustmentAmount ?? 0,
+          Final: record?.FinalIncentiveAmount ?? 0,
+          Status: statusValue,
+          Remarks: remarks.trim() || null,
+        };
+      });
+      const encryptedPayload = encrypt(
+        JSON.stringify(payload),
+        sessionData.Key,
+        sessionData.Vector,
+      );
+
+      submitUpdate({
+        payload: encryptedPayload,
+        token: sessionData.Token,
+      });
     },
-    [confirmModal, recordsByTab, moveRecord, clearSelection],
+    [confirmModal, recordsByTab, sessionData, submitUpdate],
   );
 
   const closeConfirmModal = useCallback(() => {
     setConfirmModal({ open: false, type: "approve", ids: [] });
   }, []);
 
-  const handleRemoveRejected = useCallback(
-    (ids: number[]) => {
-      setRecordsByTab((prev) => ({
-        ...prev,
-        REJECTED: prev.REJECTED.filter((r) => !ids.includes(r.Id)),
-      }));
-      clearSelection("REJECTED");
-      showToast({
-        type: "success",
-        title: "Removed!",
-        message: `${ids.length} sales record${ids.length === 1 ? "" : "s"} removed`,
-        duration: 3000,
-      });
-    },
-    [clearSelection],
-  );
-  void handleRemoveRejected;
+  const [adjustmentDrafts, setAdjustmentDrafts] = useState<
+    Record<number, string>
+  >({});
 
   const handleAdjustmentChange = useCallback((id: number, value: string) => {
-    const parsed = Number(value);
-    const nextAdjustment =
-      value === "" ? 0 : Number.isFinite(parsed) ? parsed : 0;
+    if (value !== "" && !/^[+-]?\d*\.?\d*$/.test(value)) return;
+
+    setAdjustmentDrafts((prev) => ({ ...prev, [id]: value }));
+
+    const parsed = parseFloat(value);
+    const nextAdjustment = Number.isFinite(parsed) ? parsed : 0;
     setRecordsByTab((prev) => ({
       ...prev,
       PENDING: prev.PENDING.map((r) =>
@@ -833,7 +854,10 @@ export default function SalesList() {
                     case "adjustment":
                       return activeTab === "PENDING" ? (
                         <CustomInput
-                          value={String(cat.adjustment ?? 0)}
+                          value={
+                            adjustmentDrafts[cat.salesId] ??
+                            String(cat.adjustment ?? 0)
+                          }
                           onChange={(v: string) =>
                             handleAdjustmentChange(cat.salesId, v)
                           }
@@ -998,7 +1022,14 @@ export default function SalesList() {
             />
           );
         })()}
-      <LoaderModal isOpen={isPending} message="Loading sales data..." />
+      <LoaderModal
+        isOpen={isPending || isUpdatePending}
+        message={
+          isUpdatePending
+            ? "Updating sales submission..."
+            : "Loading sales data..."
+        }
+      />
     </div>
   );
 }

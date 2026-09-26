@@ -71,6 +71,11 @@ export const apiConfig: Record<string, ApiConfig> = {
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetIncentiveProductListing`,
     httpMethod: "GET",
   },
+  UpdateSalesSubmissionRequest: {
+    name: "UpdateSalesSubmissionRequest",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpdateSalesSubmissionRequest`,
+    httpMethod: "POST",
+  },
 };
 
 export const getApiUrl = (

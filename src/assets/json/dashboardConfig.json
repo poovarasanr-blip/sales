@@ -13,11 +13,11 @@
   "SalesOverview": {
     "Title": "Sales Overview",
     "Date": "May 2025",
-    "DescriptionText": "Target vs Sales vs Actual",
+    "DescriptionText": "Target vs Achieved vs Approved Sales",
     "Labels": [
-      { "label": "Target", "color": "#FFD2AD" },
-      { "label": "Achieved", "color": "#BCB1FF" },
-      { "label": "Actual", "color": "#A8EACF" }
+      { "label": "Target", "color": "#9988FF" },
+      { "label": "Achieved/Regularized", "color": "#FFBC84" },
+      { "label": "Approved", "color": "#209E70" }
     ],
     "Data": {
       "YLabel": [0, 25, 50, 75, 100, 125],
@@ -107,9 +107,9 @@
     "SelectedValue": "Vasanth & Co - Chennai",
     "DropdownData": ["Vasanth & Co - Chennai", "Vasanth & Co - Benglore"],
     "Labels": [
-      { "label": "Target", "color": "#FFD2AD" },
-      { "label": "Achieved", "color": "#BCB1FF" },
-      { "label": "Actual", "color": "#A8EACF" }
+      { "label": "Target", "color": "#9988FF" },
+      { "label": "Achieved/Regularized", "color": "#FFBC84" },
+      { "label": "Approved", "color": "#209E70" }
     ],
     "ChartData": {
       "XAxis": [0, 20, 40, 60],

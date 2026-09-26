@@ -20,9 +20,9 @@ interface HorizontalGroupedBarChartProps {
 }
 
 const DEFAULT_COLORS: [string, string, string] = [
-  "#FBC79A",
-  "#B7A6F0",
-  "#9CE8C4",
+  "#9988FF",
+  "#FFBC84",
+  "#209E70",
 ];
 
 const DEFAULTS = {

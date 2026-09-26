@@ -68,7 +68,7 @@ const defaultData: BarChartItem[] = [
   },
 ];
 
-const defaultColors = ["#FFD2AD", "#BCB1FF", "#A8EACF"];
+const defaultColors = ["#9988FF", "#FFBC84", "#209E70"];
 
 const splitLabel = (label: string): string[] => {
   const words = label.trim().split(/\s+/);

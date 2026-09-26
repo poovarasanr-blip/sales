@@ -30,7 +30,7 @@ export default function SalesDealer({
         {labels?.map((item) => (
           <div className="flex items-center">
             <div
-              className="w-10 h-10 rounded-1"
+              className="w-8 h-8 rounded-2"
               style={{ backgroundColor: item?.color }}
             />
             <p className="p-tiny-bold text-gray ml-[5px]">{item?.label}</p>

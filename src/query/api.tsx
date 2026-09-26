@@ -104,10 +104,18 @@ export const handleFetchSalesIncentiveData = async (
   return await apiRequest(url, null, httpMethod, token);
 };
 
-export const handleGetProductListing = async (
-  payload: any,
-  token: string,
-) => {
+export const handleGetProductListing = async (payload: any, token: string) => {
   const { url, httpMethod } = getApiUrl(payload, "getProductListing");
   return await apiRequest(url, null, httpMethod, token);
+};
+
+export const handleUpdateSalesIncentiveAdjustment = async (
+  payload: string,
+  token: string,
+) => {
+  const { url, httpMethod } = getApiUrl(
+    undefined,
+    "UpdateSalesSubmissionRequest",
+  );
+  return await apiRequest(url, { data: payload }, httpMethod, token);
 };
