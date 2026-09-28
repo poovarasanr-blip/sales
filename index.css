@@ -221,6 +221,11 @@
     opacity: 1;
   }
 }
+/* Override third-party component fonts */
+.react-datepicker {
+  font-family: var(--font-sans);
+}
+
 /* Custom Typography Utilities */
 @utility p {
   font-size: 14px;

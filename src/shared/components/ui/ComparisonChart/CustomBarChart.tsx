@@ -195,7 +195,7 @@ const CustomBarChart: React.FC<CustomBarChartProps> = ({
                     fill={yAxisColor}
                     fontWeight={400}
                     color="#59596C"
-                    fontFamily="Arial, sans-serif"
+                    fontFamily="'DM Sans', sans-serif"
                   >
                     {valueFormatter(Math.round(value))}
                   </text>
@@ -271,7 +271,7 @@ const CustomBarChart: React.FC<CustomBarChartProps> = ({
                       fontSize={fontSize}
                       fontWeight={400}
                       fill={xAxisColor}
-                      fontFamily="Arial, sans-serif"
+                      fontFamily="'DM Sans', sans-serif"
                     >
                       {lines.map((line, lineIndex) => (
                         <tspan

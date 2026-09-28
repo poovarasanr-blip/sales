@@ -133,7 +133,7 @@ const HorizontalGroupedBarChart: React.FC<HorizontalGroupedBarChartProps> = ({
               style={{
                 fontSize: labelFontSize,
                 color: labelColor,
-                fontFamily: "Arial, sans-serif",
+                fontFamily: "'DM Sans', sans-serif",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
@@ -192,7 +192,7 @@ const HorizontalGroupedBarChart: React.FC<HorizontalGroupedBarChartProps> = ({
                   y={plotHeight + axisHeight - 10}
                   fontSize={axisFontSize}
                   fill={axisColor}
-                  fontFamily="Arial, sans-serif"
+                  fontFamily="'DM Sans', sans-serif"
                   textAnchor={isFirst ? "start" : isLast ? "end" : "middle"}
                 >
                   {tickVal}
