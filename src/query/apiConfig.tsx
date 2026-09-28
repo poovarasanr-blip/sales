@@ -16,6 +16,16 @@ export const apiConfig: Record<string, ApiConfig> = {
     urlEndPoint: `${Config?.secureBaseUrlRoute}api/Security/UpdateRoleInSession`,
     httpMethod: "PUT",
   },
+  getUserMappedClientList: {
+    name: "getUserMappedClientList",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/Master/GetUserMappedClientList`,
+    httpMethod: "GET",
+  },
+  getUserMappedClientContractList: {
+    name: "getUserMappedClientContractList",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/Master/GetUserMappedClientContractList?`,
+    httpMethod: "GET",
+  },
   createCategory: {
     name: "createCategory",
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpsertIncentiveProductCategory`,
@@ -75,6 +85,11 @@ export const apiConfig: Record<string, ApiConfig> = {
     name: "UpdateSalesSubmissionRequest",
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpdateSalesSubmissionRequest`,
     httpMethod: "POST",
+  },
+  FetchDashboardData: {
+    name: "FetchDashboardData",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetSalesDashboardDetailsForWebApp`,
+    httpMethod: "GET",
   },
 };
 

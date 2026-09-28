@@ -37,6 +37,7 @@ import decrypt from "../../../../../utils/security/decrypt";
 import { parseNestedJson } from "../../../../../utils/security/ParseData";
 import encrypt from "../../../../../utils/security/encrypt";
 import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
+import { ClientContractId, ClientId } from "../../../../../config/env";
 
 const SALES_PAGE_SIZE = 10;
 
@@ -282,7 +283,7 @@ export default function SalesList() {
         ).replace(/=/gi, "%3D");
 
       const submissionStatus = TAB_TO_SUBMISSION_STATUS[tab];
-      const queryProps = `month=${enc(month)}&year=${enc(year)}&managerId=${enc(0)}&clientId=${enc(304)}&clientContractId=${enc(73)}&submissionStatus=${enc(submissionStatus)}`;
+      const queryProps = `month=${enc(month)}&year=${enc(year)}&managerId=${enc(0)}&clientId=${enc(ClientId)}&clientContractId=${enc(ClientContractId)}&submissionStatus=${enc(submissionStatus)}`;
       fetchSalesIncentive({
         payload: { queryProps },
         token: sessionData.Token,

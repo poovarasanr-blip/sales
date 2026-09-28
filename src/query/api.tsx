@@ -2,6 +2,92 @@ import axios from "axios";
 import { getApiUrl } from "./apiConfig";
 import apiRequest from "./apiRequest";
 import { checkStatus } from "./apiRequest";
+import encrypt from "../utils/security/encrypt";
+import decrypt from "../utils/security/decrypt";
+import { parseNestedJson } from "../utils/security/ParseData";
+
+export interface MappedClient {
+  Id: number;
+  ClientName: string;
+}
+
+export interface MappedClientContract {
+  Id: number;
+  Name: string;
+  ClientId: number;
+}
+
+function parseMasterList<T>(
+  response: unknown,
+  sessionKey: string,
+  vector: string,
+): T[] {
+  const responseRecord =
+    response && typeof response === "object"
+      ? (response as Record<string, unknown>)
+      : {};
+  const status = responseRecord.status;
+  if (typeof status !== "number" || status < 200 || status >= 300) {
+    throw new Error("Failed to load master list.");
+  }
+
+  let payload: unknown = responseRecord.data;
+  if (typeof payload === "string") {
+    const decrypted = decrypt(payload, sessionKey, vector);
+    try {
+      payload = JSON.parse(decrypted || payload);
+    } catch {
+      throw new Error("Invalid master list response.");
+    }
+  }
+
+  const parsed = parseNestedJson(payload);
+  const parsedRecord =
+    parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? (parsed as Record<string, unknown>)
+      : null;
+  const list: unknown = Array.isArray(parsed)
+    ? parsed
+    : (parsedRecord?.dynamicObject ??
+      parsedRecord?.Result ??
+      parsedRecord?.Data ??
+      parsedRecord?.data ??
+      parsedRecord?.result);
+
+  if (!Array.isArray(list)) {
+    throw new Error("Invalid master list response.");
+  }
+  return list as T[];
+}
+
+export async function handleGetUserMappedClientList(
+  key: string,
+  vector: string,
+  token: string,
+): Promise<MappedClient[]> {
+  const { url, httpMethod } = getApiUrl(undefined, "getUserMappedClientList");
+  const response = await apiRequest(url, null, httpMethod, token);
+  return parseMasterList<MappedClient>(response, key, vector);
+}
+
+export async function handleGetUserMappedClientContractList(
+  clientId: number,
+  key: string,
+  vector: string,
+  token: string,
+): Promise<MappedClientContract[]> {
+  const encryptedClientId = encrypt(
+    JSON.stringify(clientId),
+    key,
+    vector,
+  ).replace(/=/gi, "%3D");
+  const { url, httpMethod } = getApiUrl(
+    { queryProps: `clientId=${encryptedClientId}` },
+    "getUserMappedClientContractList",
+  );
+  const response = await apiRequest(url, null, httpMethod, token);
+  return parseMasterList<MappedClientContract>(response, key, vector);
+}
 
 export const handleUpdateRole = async (payload: string, token: string) => {
   const { url, httpMethod } = getApiUrl(undefined, "updateRoleApi");
@@ -118,4 +204,9 @@ export const handleUpdateSalesIncentiveAdjustment = async (
     "UpdateSalesSubmissionRequest",
   );
   return await apiRequest(url, { data: payload }, httpMethod, token);
+};
+
+export const handleGetDashboard = async (payload: any, token: string) => {
+  const { url, httpMethod } = getApiUrl(payload, "FetchDashboardData");
+  return await apiRequest(url, null, httpMethod, token);
 };

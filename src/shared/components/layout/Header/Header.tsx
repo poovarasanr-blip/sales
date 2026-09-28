@@ -12,16 +12,23 @@ import type { UIRole } from "../../../../app/store/useAuthStore";
 import { handleUpdateRole } from "../../../../query/api";
 import { useMutation } from "@tanstack/react-query";
 import { getSession, setSession } from "../../../utils/sessionStorage";
+import { useClientSessionStore } from "../../../../app/store/useClientSessionStore";
+import ProfileIcon from "../../../../assets/icons/header/ProfileIcon.svg";
 
-export default function Header() {
+export default function Header({
+  onClientContractClick,
+}: {
+  onClientContractClick: () => void;
+}) {
   const [searchValue, setSearchValue] = useState<string>("");
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
   const roleDropdownRef = useRef<HTMLDivElement>(null);
   const previousRoleCodeRef = useRef<string>("");
   const sessionData = useAuthStore((s) => s.sessionData);
+  const clientContractName = useClientSessionStore((s) => s.clientContractName);
   const uiRoles = (sessionData?.UIRoles ?? []) as UIRole[];
   const [selectedRoleCode, setSelectedRoleCode] = useState<string>(
-    sessionData?.UIRoles[0]?.Role?.Code ?? "",
+    sessionData?.UIRoles?.[0]?.Role?.Code ?? "",
   );
 
   useEffect(() => {
@@ -46,6 +53,7 @@ export default function Header() {
   const selectedRoleName =
     uiRoles.find((r) => r.Role.Code === selectedRoleCode)?.Role.Name ??
     selectedRoleCode;
+  const contractButtonTitle = clientContractName || "Client Contract";
 
   const { isPending: updateRoleLoading, mutate: updateRoleInSession } =
     useMutation({
@@ -117,6 +125,19 @@ export default function Header() {
         {PageLayOut?.Header?.Icon && (
           <IconRenderer imageUrl={PageLayOut?.Header?.Icon} />
         )}
+        <CustomButton
+          title={contractButtonTitle}
+          textColor="text-darkgray"
+          iconPosition="right"
+          backgroundColor="bg-white"
+          height="h-32"
+          padding="px-0"
+          icon={<IconRenderer icon="IoMdArrowDropdown" size={16} />}
+          gap="gap-[6px]"
+          fontWeight="font-normal"
+          onClick={onClientContractClick}
+          className="truncate"
+        />
         <div className="relative" ref={roleDropdownRef}>
           <CustomButton
             title={updateRoleLoading ? "Switching..." : selectedRoleName}
@@ -125,12 +146,7 @@ export default function Header() {
             backgroundColor="bg-[#DADADA59]"
             height="h-32"
             width="w-auto"
-            icon={
-              <IconRenderer
-                icon={isRoleDropdownOpen ? "FiChevronUp" : "FiChevronDown"}
-                size={16}
-              />
-            }
+            icon={<IconRenderer imageUrl={ProfileIcon} />}
             gap="gap-[10px]"
             onClick={() => setIsRoleDropdownOpen((prev) => !prev)}
             disabled={updateRoleLoading}

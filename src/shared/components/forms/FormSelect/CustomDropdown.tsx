@@ -91,7 +91,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
       </button>
 
       {isOpen && (
-        <ul className="absolute z-50 mt-1 min-h-60 w-full overflow-auto rounded-xl border border-gray-100 bg-white py-1 shadow-card-xl">
+        <ul className="absolute z-50 mt-1 max-h-[140px] w-full overflow-auto rounded-xl border-3 border-gray-100 bg-white py-1 shadow-card-xl">
           {options.length === 0 && (
             <li className="px-4 py-2 text-sm text-gray-400">No options</li>
           )}

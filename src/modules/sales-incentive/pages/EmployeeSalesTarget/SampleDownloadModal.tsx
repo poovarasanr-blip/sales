@@ -51,8 +51,8 @@ interface SampleDownloadModalProps {
 }
 
 const ENV_FIELD_VALUES: Record<string, number> = {
-  "@clientId": 304, // ClientId,
-  "@clientcontractId": 73, // ClientContractId,
+  "@clientId": ClientId, // 304,
+  "@clientcontractId": ClientContractId, // 73 ,
 };
 
 export default function SampleDownloadModal({

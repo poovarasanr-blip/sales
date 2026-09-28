@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { setSession, getSession, clearSession } from "../../shared/utils/sessionStorage";
+import {
+  setSession,
+  getSession,
+  clearSession,
+} from "../../shared/utils/sessionStorage";
 
 export interface UIRole {
   Role: {
@@ -61,13 +65,15 @@ export interface SessionData {
   ImplementationId: number;
   ImplementationCompanyId: number;
   ClientList: Array<{
+    Id?: number;
     Code: string;
     Name: string;
     CompanyId: number;
-    ClientId: number;
+    ClientId?: number;
     [key: string]: unknown;
   }>;
   ClientContractList: Array<{
+    Id: number;
     Code: string;
     Name: string;
     ClientId: number;

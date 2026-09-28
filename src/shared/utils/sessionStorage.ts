@@ -36,8 +36,25 @@ export function setSession(value: string): void {
   sessionStorage.setItem(SESSION_KEYS.LOGIN_RESPONSE, encrypted);
 }
 
+export function setClientSession(value: string): void {
+  const encrypted = encryptSession(value);
+  sessionStorage.setItem(SESSION_KEYS.CLIENT_DETAILS, encrypted);
+}
+
 export function getSession<T = unknown>(): T | null {
   const raw = sessionStorage.getItem(SESSION_KEYS.LOGIN_RESPONSE);
+  if (!raw) return null;
+  try {
+    const decrypted = decryptSession(raw);
+    return JSON.parse(decrypted) as T;
+  } catch (error) {
+    console.log(error, "session");
+    return null;
+  }
+}
+
+export function getClientSession<T = unknown>(): T | null {
+  const raw = sessionStorage.getItem(SESSION_KEYS.CLIENT_DETAILS);
   if (!raw) return null;
   try {
     const decrypted = decryptSession(raw);
