@@ -23,13 +23,40 @@ export const EMPLOYEE_TARGET_UPLOAD_COLUMNS: BulkUploadColumnConfig<
 /* ---- Table columns for the parent list page ---- */
 
 export const EMPLOYEE_TARGET_TABLE_COLUMNS: GroupedTableColumn[] = [
-  { key: "category", label: "Employee", filterable: "text", icon: "FiSearch", fontWeight: 500, color: "#31314D", width: "22%" },
-  { key: "manager", label: "Manager", icon: "FiSearch", mergeRowSpan: true, width: "15%" },
-  { key: "product", label: "Sub Category", filterable: "text", icon: "FiSearch", width: "18%" },
+  {
+    key: "category",
+    label: "Employee",
+    filterable: "text",
+    icon: "FiSearch",
+    fontWeight: 500,
+    color: "#31314D",
+    width: "22%",
+  },
+  {
+    key: "manager",
+    label: "Manager",
+    icon: "FiSearch",
+    mergeRowSpan: true,
+    width: "15%",
+  },
+  {
+    key: "product",
+    label: "Sub Category",
+    filterable: "text",
+    icon: "FiSearch",
+    width: "18%",
+  },
   { key: "locations", label: "Sales Target (nos)", width: "12%" },
   { key: "incentive", label: "Incentive (₹)", width: "11%" },
   { key: "eligibility", label: "Incentive Eligibility", width: "14%" },
-  { key: "action", label: "Action", align: "center", mergeRowSpan: true, width: "8%" },
+  {
+    key: "action",
+    label: "Action",
+    align: "center",
+    mergeRowSpan: true,
+    width: "8%",
+    alineItem: "center",
+  },
 ];
 
 /* ---- Grouping helper for the parent list page ---- */

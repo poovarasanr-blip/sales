@@ -545,8 +545,7 @@ export default function ProductList() {
               subCategoryCount:
                 item.SubCategoryCount ?? item.subCategoryCount ?? 0,
               effectiveDate: item.EffectiveDate ?? item.effectiveDate ?? "",
-              targetQuantity:
-                item.TargetQuantity ?? item.targetQuantity ?? 0,
+              targetQuantity: item.TargetQuantity ?? item.targetQuantity ?? 0,
               eligibleIncentive:
                 item.EligibleIncentive ?? item.eligibleIncentive ?? 0,
               productCount: item.ProductCount ?? item.productCount ?? 0,
@@ -917,7 +916,7 @@ export default function ProductList() {
               backgroundColor="bg-primary"
               height="h-37"
               width="w-[119px]"
-              gap="gap-[7px]"
+              gap="gap-[6px]"
               title={PageLayOut?.Products?.CustomButtons?.UploadButton?.Name}
               borderRadius="rounded-6"
               textColor="text-white"

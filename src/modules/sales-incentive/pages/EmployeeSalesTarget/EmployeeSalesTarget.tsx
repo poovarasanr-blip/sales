@@ -331,16 +331,16 @@ export default function EmployeeSalesTarget() {
         </p>
         {PageLayOut?.EmployeeSalesTarget?.IsBulkUploadRequired && (
           <CustomButton
-            backgroundColor="bg-white"
+            backgroundColor="bg-primary"
             height="h-37"
             width="w-[119px]"
-            gap="gap-[7px]"
+            gap="gap-[5px]"
             title={
               PageLayOut?.EmployeeSalesTarget?.CustomButtons?.UploadButton?.Name
             }
             borderRadius="rounded-6"
             borderColor={"border-primary"}
-            textColor={"text-primary"}
+            textColor={"text-white"}
             borderWidth="border-1"
             icon={
               <IconRenderer
@@ -349,7 +349,7 @@ export default function EmployeeSalesTarget() {
                     ?.Icon
                 }
                 size={16}
-                className="text-primary"
+                className="text-white"
               />
             }
             iconPosition="left"
@@ -476,15 +476,17 @@ export default function EmployeeSalesTarget() {
               </div>
               <CustomButton
                 title="Download Excel"
-                backgroundColor="bg-primary"
-                textColor="text-white"
+                backgroundColor="bg-white"
+                textColor="text-primary"
                 height="h-37"
+                borderColor="#130F40"
+                borderWidth="border-1"
                 gap="gap-[10px]"
                 icon={
                   <IconRenderer
                     icon="LuDownload"
                     size={15}
-                    className="text-white"
+                    className="text-primary"
                   />
                 }
                 iconPosition="left"

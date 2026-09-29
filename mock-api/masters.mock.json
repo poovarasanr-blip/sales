@@ -1,129 +1,1978 @@
-{
-  "managers": {
-    "status": "confirmed-from-ui",
-    "notes": "Reused identically by the Manager dropdown on Employee Sales Target, Actual Sales, Incentive, and Sales Approval filter cards. UI always prepends its own synthetic 'All' option on top of this list.",
-    "request": {
-      "search": ""
-    },
-    "response": {
-      "data": [
-        { "managerCode": "PS0987", "managerName": "Pawan Kumar" },
-        { "managerCode": "PS9546", "managerName": "Anandh Narayanan" }
-      ]
-    }
+[
+  {
+    "Label": "Client Spoc",
+    "FieldName": "ClientContactId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose client spoc",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
   },
-  "productCategories": {
-    "status": "confirmed-from-ui",
-    "notes": "Source: productsConfig.json. This is the one place in the app that already models a real relational hierarchy (Category > SubCategory > Product) with numeric IDs. Recommended as the single source of truth for 'category' everywhere else in the app instead of the free-text category strings currently typed into Employee Sales Target / Actual Sales / Incentive / Sales.",
-    "request": {
-      "search": ""
-    },
-    "response": {
-      "data": [
-        {
-          "categoryId": 1,
-          "categoryName": "Mixer Grinder",
-          "code": "CAT_MIXER",
-          "targetQuantity": 200,
-          "actualQuantity": 600,
-          "eligibleIncentive": 500,
-          "description": "All kitchen mixer grinders and juicer models",
-          "companyId": 1,
-          "clientId": 10,
-          "status": 1,
-          "subCategories": [
-            {
-              "subCategoryId": 11,
-              "subCategoryName": "Standard Mixer Grinder",
-              "code": "SUBCAT_STD_MIXER",
-              "description": "Standard 3 jar mixer grinders",
-              "products": [
-                {
-                  "productId": 301,
-                  "productCode": "PROD_MX-AC400",
-                  "productName": "Panasonic MX-AC400-H 550W Mixer Grinder",
-                  "description": "Panasonic 550W Mixer Grinder with 3 Stainless Steel Jars",
-                  "price": 6200,
-                  "effectiveDate": "2026-01-01",
-                  "eligibleIncentive": 500,
-                  "companyId": 1,
-                  "clientId": 10,
-                  "status": 1
-                },
-                {
-                  "productId": 302,
-                  "productCode": "PROD_MX-AC430",
-                  "productName": "Panasonic MX-AC430-H 550W Mixer Grinder",
-                  "description": "Panasonic 550W Mixer Grinder with 3 Stainless Steel Jars",
-                  "price": 6200,
-                  "effectiveDate": "2026-01-01",
-                  "eligibleIncentive": 500,
-                  "companyId": 1,
-                  "clientId": 10,
-                  "status": 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "categoryId": 2,
-          "categoryName": "Microwave Oven",
-          "code": "CAT_MICROWAVE",
-          "targetQuantity": 250,
-          "actualQuantity": 900,
-          "eligibleIncentive": 700,
-          "description": "All microwave oven models",
-          "companyId": 1,
-          "clientId": 10,
-          "status": 1,
-          "subCategories": [
-            {
-              "subCategoryId": 21,
-              "subCategoryName": "Solo Microwave Oven",
-              "code": "SUBCAT_SOLO_MICROWAVE",
-              "description": "Solo microwave oven models",
-              "products": [
-                {
-                  "productId": 201,
-                  "productCode": "PROD-NNST46JBG",
-                  "productName": "Panasonic NN-ST46JBG",
-                  "description": "Panasonic Solo Microwave Oven",
-                  "price": 9200,
-                  "effectiveDate": "2026-01-01",
-                  "eligibleIncentive": 700,
-                  "companyId": 1,
-                  "clientId": 10,
-                  "status": 1
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+  {
+    "Label": "Location",
+    "FieldName": "Location",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose location",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": "",
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "LocationName",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
   },
-  "dealers": {
-    "status": "confirmed-from-ui",
-    "notes": "Dropdown exists on the Dashboard 'Sales - Dealer' widget. Its onChange handler is currently an unimplemented stub in the frontend code, so selection behavior itself is not confirmed — only that the dropdown and its option list exist.",
-    "request": {},
-    "response": {
-      "data": [
-        { "dealerId": "D001", "dealerName": "Vasanth & Co - Chennai" },
-        { "dealerId": "D002", "dealerName": "Vasanth & Co - Benglore" }
-      ]
-    }
+  {
+    "Label": "Industry",
+    "FieldName": "IndustryId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose industry",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
   },
-  "currentUser": {
-    "status": "needs-backend-confirmation",
-    "notes": "No login screen exists anywhere in this app (a prior session-handling implementation was built and then fully reverted). The header nonetheless renders a 'Manager' role badge and an avatar defaulting to initials 'SJ', implying a session exists. Confirm with the client whether auth is in scope for this phase before building this.",
-    "request": {},
-    "response": {
-      "userId": "U001",
-      "name": "S. Jayakumar",
-      "initials": "SJ",
-      "role": "Manager",
-      "avatarUrl": null
-    }
+  {
+    "Label": "Skill Category",
+    "FieldName": "SkillCategory",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose skill category",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Zone",
+    "FieldName": "Zone",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose zone",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Designation",
+    "FieldName": "Designation",
+    "InputControlType": 1,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter designation...",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Minlength",
+        "Description": "Must be at least the minimum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 0,
+        "Value": ""
+      },
+      {
+        "Label": "Max",
+        "Key": "Maxlength",
+        "Description": "Must not exceed the maximum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 50,
+        "Value": ""
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified pattern",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Department",
+    "FieldName": "Department",
+    "InputControlType": 1,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter deparment...",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Minlength",
+        "Description": "Must be at least the minimum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 0,
+        "Value": ""
+      },
+      {
+        "Label": "Max",
+        "Key": "Maxlength",
+        "Description": "Must not exceed the maximum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 50,
+        "Value": ""
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified pattern",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Salary Type",
+    "FieldName": "SalaryType",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose salary type",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [
+      {
+        "Label": "CTC",
+        "Value": 1
+      },
+      {
+        "Label": "Gross",
+        "Value": 2
+      },
+      {
+        "Label": "NetPay",
+        "Value": 3
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Label",
+    "ValueKey": "Value",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Pay Structure",
+    "FieldName": "PaygroupId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose pay structure",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "PayGroupId",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Do you want to specify Monthly Salary ?",
+    "FieldName": "IsMonthlySalary",
+    "InputControlType": 7,
+    "DisplayOrder": 0,
+    "PlaceHolder": "",
+    "DefaultValue": "0",
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [
+      {
+        "Label": "Yes",
+        "Value": 1
+      },
+      {
+        "Label": "No",
+        "Value": 0
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Annual Salary",
+    "FieldName": "AnnualSalary",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter annual salary...",
+    "DefaultValue": "0",
+    "RequiredField": true,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "IsAllowedToPaste": false,
+    "DisplayConditions": [
+      {
+        "FieldName": "IsMonthlySalary",
+        "Operator": "==",
+        "Value": 0
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Monthly Salary",
+    "FieldName": "MonthlySalary",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter monthly salary.",
+    "DefaultValue": "0",
+    "RequiredField": true,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "IsAllowedToPaste": false,
+    "DisplayConditions": [
+      {
+        "FieldName": "IsMonthlySalary",
+        "Operator": "==",
+        "Value": 1
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Tenure Type",
+    "FieldName": "TenureType",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose tenure",
+    "DefaultValue": "0",
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [
+      {
+        "Label": "Open",
+        "Value": 0
+      },
+      {
+        "Label": "Custom",
+        "Value": 1
+      },
+      {
+        "Label": "Month",
+        "Value": 2
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Label",
+    "ValueKey": "Value",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Tenure End-date",
+    "FieldName": "EndDate",
+    "InputControlType": 9,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Pick a date",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "DisplayConditions": [
+      {
+        "FieldName": "TenureType",
+        "Operator": "==",
+        "Value": 1
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": null,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "MaxDate": null,
+    "MinDate": null,
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Tenure Month",
+    "FieldName": "TenureInterval",
+    "InputControlType": 1,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": "0",
+    "RequiredField": true,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": 1,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": 2,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "Please enter a valid month between 1 and 12",
+        "DefaultValue": "",
+        "Value": "^(0?[1-9]|1[0-2])$"
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [
+      {
+        "FieldName": "TenureType",
+        "Operator": "==",
+        "Value": 2
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Insurance Plan",
+    "FieldName": "InsuranceplanId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose insurance plan",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Oncost - Insurance Amt ",
+    "FieldName": "OnCostInsurance",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": true,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Fixed Deduction - Insurance Amt",
+    "FieldName": "FixedInsuranceDeduction",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "GMC",
+    "FieldName": "GMCAmount",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": true,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "GPA",
+    "FieldName": "GPAAmount",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": true,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "WCP Insurance Plan",
+    "FieldName": "WorkmenCompensationPlanId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose WCP",
+    "DefaultValue": "0",
+    "RequiredField": false,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "WCP - Insurance Amt",
+    "FieldName": "WorkmenCompensationAmount",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": "0",
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Notice Period",
+    "FieldName": "NoticePeriodDays",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose notice period",
+    "DefaultValue": "0",
+    "RequiredField": false,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Description",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Actual DOJ",
+    "FieldName": "ActualDateOfJoining",
+    "InputControlType": 9,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Pick a date",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 2
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": null,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "MaxDate": 7,
+    "MinDate": -45,
+    "MinUnit": "days",
+    "MaxUnit": "days",
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Team Name",
+    "FieldName": "TeamId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose team",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "code",
+    "ValueKey": "Id",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 2
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Effective Pay Period",
+    "FieldName": "EffectivePayPeriodId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose effective pay period",
+    "DefaultValue": "0",
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "PayCyclePeriodName",
+    "ValueKey": "Id",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 2
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Reporting Manager",
+    "FieldName": "ManagerId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose reporting manager",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "ManagerName",
+    "ValueKey": "ManagerId",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": "2"
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Leave Group",
+    "FieldName": "LeaveGroupId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose leave group",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": "2"
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Business Cost Code",
+    "FieldName": "CostCodeId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose business cost code",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "CostCodeName",
+    "ValueKey": "CostCodeId",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": "2"
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Letter Template",
+    "FieldName": "LetterTemplateId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose letter template",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "TemplateId",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": "1"
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": []
+  },
+  {
+    "Label": "Appointment Letter Template",
+    "FieldName": "AppointmentLetterTemplateId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose letter template",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "TemplateId",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": "2"
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": []
+  },
+  {
+    "Label": "Expected DOJ",
+    "FieldName": "DateOfJoining",
+    "InputControlType": 9,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Pick a date",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 1
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": null,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "MaxDate": 1,
+    "MinDate": 0,
+    "MinUnit": "year",
+    "MaxUnit": "Year",
+    "Type": "date",
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Employment Type",
+    "FieldName": "EmploymentType",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose employment type",
+    "DefaultValue": "0",
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 2
+      }
+    ],
+    "VisibleToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "PayrollOps"
+    ],
+    "EditableToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "PayrollOps"
+    ]
+  },
+  {
+    "Label": "CC E-mails",
+    "FieldName": "OLCCMailIdCC",
+    "InputControlType": 5,
+    "DisplayOrder": 0,
+    "PlaceHolder": "abc@gmail.com",
+    "DefaultValue": "",
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Minlength",
+        "Description": "Must be at least the minimum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 0,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Maxlength",
+        "Description": "Must not exceed the maximum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 100,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified pattern",
+        "ErrorMsg": "Please enter a valid email address or multiple email addresses separated by commas (example: user@example.com, user2@example.com)",
+        "DefaultValue": null,
+        "Value": "^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})(\\s*,\\s*[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})*$"
+      }
+    ],
+    "Options": [],
+    "Tooltip": "(Please separate email ids using comma)",
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 1
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "CC E-mails",
+    "FieldName": "ALCCMailIdCC",
+    "InputControlType": 5,
+    "DisplayOrder": 0,
+    "PlaceHolder": "abc@gmail.com",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Minlength",
+        "Description": "Must be at least the minimum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 0,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Maxlength",
+        "Description": "Must not exceed the maximum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 100,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified pattern",
+        "ErrorMsg": "Please enter a valid email address or multiple email addresses separated by commas (example: user@example.com, user2@example.com)",
+        "DefaultValue": null,
+        "Value": "^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})(\\s*,\\s*[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})*$"
+      }
+    ],
+    "Options": [],
+    "Tooltip": "(Please separate email ids using comma)",
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 2
+      }
+    ],
+    "VisibleToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "PayrollOps"
+    ],
+    "EditableToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"]
+  },
+  {
+    "Label": "Is Candidate Acceptance Required For OL",
+    "FieldName": "IsCandidateAcceptanceRequiredForOL",
+    "InputControlType": 7,
+    "DisplayOrder": 13,
+    "PlaceHolder": "....",
+    "DefaultValue": 0,
+    "RequiredField": 0,
+    "Validations": [],
+    "Options": [
+      {
+        "Label": "Yes",
+        "Value": 1
+      },
+      {
+        "Label": "No",
+        "Value": 0
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": 1
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "Candidate", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "Candidate", "PayrollOps"]
+  },
+  {
+    "Label": "Is Candidate Acceptance Required For AL",
+    "FieldName": "IsCandidateAcceptanceRequiredForAL",
+    "InputControlType": 7,
+    "DisplayOrder": 13,
+    "PlaceHolder": "....",
+    "DefaultValue": 0,
+    "RequiredField": false,
+    "Validations": [],
+    "Options": [
+      {
+        "Label": "Yes",
+        "Value": 1
+      },
+      {
+        "Label": "No",
+        "Value": 0
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [
+      {
+        "FieldName": "RequestType",
+        "Operator": "==",
+        "Value": "2"
+      }
+    ],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "Candidate", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "Candidate", "PayrollOps"]
+  },
+  {
+    "Label": "Request For",
+    "FieldName": "RequestType",
+    "InputControlType": 7,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter Radio....",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [
+      {
+        "Label": "Offer Letter",
+        "Value": 1
+      },
+      {
+        "Label": "Appointment Letter",
+        "Value": 2
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"]
+  },
+  {
+    "Label": "Onboarding Type",
+    "FieldName": "OnBoardingType",
+    "InputControlType": 7,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter Radio....",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [
+      {
+        "Label": "Flash",
+        "Value": 1
+      },
+      {
+        "Label": "Detailed",
+        "Value": 2
+      }
+    ],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"]
+  },
+  {
+    "Label": "Client Name",
+    "FieldName": "ClientId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose client name",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"]
+  },
+  {
+    "Label": "Contract Name",
+    "FieldName": "ClientContractId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Choose contract name",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": null,
+    "DataSourceName": null,
+    "ParentFields": [],
+    "LabelKey": "Name",
+    "ValueKey": "Id",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"]
+  },
+  {
+    "Label": "Id",
+    "FieldName": "Id",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Id",
+    "DefaultValue": "0",
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps",
+      "FinanceAdmin",
+      "Employee",
+      "Manager"
+    ],
+    "EditableToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps"
+    ]
+  },
+  {
+    "Label": "Candidate Id",
+    "FieldName": "CandidateId",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Candidate id",
+    "DefaultValue": "0",
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps"
+    ],
+    "EditableToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps"
+    ]
+  },
+  {
+    "Label": "Requested By",
+    "FieldName": "RequestedBy",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Requested by",
+    "DefaultValue": "0",
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps"
+    ],
+    "EditableToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps"
+    ]
+  },
+  {
+    "Label": "ModuleTransactionId",
+    "FieldName": "ModuleTransactionId",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Id",
+    "DefaultValue": "0",
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps",
+      "FinanceAdmin",
+      "Employee",
+      "Manager"
+    ],
+    "EditableToRoles": [
+      "Recruiter",
+      "OpsMember",
+      "QcMember",
+      "Candidate",
+      "Client",
+      "PayrollAdmin",
+      "ComplianceMember",
+      "PayrollOps"
+    ]
+  },
+  {
+    "Label": "State",
+    "FieldName": "State",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"]
+  },
+  {
+    "Label": "City",
+    "FieldName": "CityId",
+    "InputControlType": 3,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter number...",
+    "DefaultValue": null,
+    "RequiredField": true,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Min",
+        "Description": "Must be greater than or equal to the minimum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Max",
+        "Key": "Max",
+        "Description": "Must be less than or equal to the maximum value",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Step",
+        "Key": "Step",
+        "Description": "Value increment/decrement step (e.g., 0.1, 1)",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified numeric format",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "QcMember", "PayrollOps"]
+  },
+  {
+    "Label": "Aadhaar",
+    "FieldName": "Aadhaar",
+    "InputControlType": 1,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Enter aadhaar number...",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Minlength",
+        "Description": "Must be at least the minimum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 0,
+        "Value": ""
+      },
+      {
+        "Label": "Max",
+        "Key": "Maxlength",
+        "Description": "Must not exceed the maximum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 0,
+        "Value": ""
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified pattern",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": false,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "PSR ID",
+    "FieldName": "PSRID",
+    "InputControlType": 1,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Fill PSR ID",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [
+      {
+        "Label": "Min",
+        "Key": "Minlength",
+        "Description": "Must be at least the minimum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 6,
+        "Value": ""
+      },
+      {
+        "Label": "Max",
+        "Key": "Maxlength",
+        "Description": "Must not exceed the maximum number of characters",
+        "ErrorMsg": "",
+        "DefaultValue": 50,
+        "Value": ""
+      },
+      {
+        "Label": "Pattern",
+        "Key": "Pattern",
+        "Description": "Must match the specified pattern",
+        "ErrorMsg": "",
+        "DefaultValue": null,
+        "Value": null
+      }
+    ],
+    "ColumnType": "2",
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "District Code",
+    "FieldName": "DistrictId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Select an option",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [],
+    "ColumnType": "2",
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": 2,
+    "DataSourceName": "GetDistrictDetails",
+    "ParentFields": ["ClientId"],
+    "LabelKey": "DistrictName",
+    "ValueKey": "DistrictId",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Branch",
+    "FieldName": "BranchId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Select an option",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [],
+    "ColumnType": "2",
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": 2,
+    "DataSourceName": "GetBranchDetails",
+    "ParentFields": ["DistrictId"],
+    "LabelKey": "BranchName",
+    "ValueKey": "BranchId",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Primary Distributor",
+    "FieldName": "PrimaryDistributorId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Select an option",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [],
+    "ColumnType": "2",
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": 2,
+    "DataSourceName": "GetDistributorDetails",
+    "ParentFields": ["BranchId"],
+    "LabelKey": "DistributorName",
+    "ValueKey": "DistributorId",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
+  },
+  {
+    "Label": "Secondary Distributor",
+    "FieldName": "SecondaryDistributorId",
+    "InputControlType": 6,
+    "DisplayOrder": 0,
+    "PlaceHolder": "Select an option",
+    "DefaultValue": null,
+    "RequiredField": false,
+    "Validations": [],
+    "ColumnType": "2",
+    "Options": [],
+    "Tooltip": null,
+    "Readonly": false,
+    "IsVisible": true,
+    "IsAllowedToChangeInEditMode": true,
+    "DataSourceType": 2,
+    "DataSourceName": "GetSecondaryDistributorDetails",
+    "ParentFields": ["BranchId", "PrimaryDistributorId"],
+    "LabelKey": "DistributorName",
+    "ValueKey": "DistributorId",
+    "DisplayConditions": [],
+    "VisibleToRoles": ["Recruiter", "OpsMember", "PayrollOps"],
+    "EditableToRoles": ["Recruiter", "OpsMember", "PayrollOps"]
   }
-}
+]
