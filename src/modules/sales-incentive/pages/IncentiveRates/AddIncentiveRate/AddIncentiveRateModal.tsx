@@ -4,20 +4,36 @@ import CustomButton from "../../../../../shared/components/ui/Button/CustomButto
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
 import CustomDropdown from "../../../../../shared/components/forms/FormSelect/CustomDropdown";
 import CustomDatePicker from "../../../../../shared/components/forms/FormDatePicker/FormDatePicker";
-import type { IncentiveRateCategory } from "../../../config/IncentiveRatesConfig";
+import { useAuthStore } from "../../../../../app/store/useAuthStore";
+import { useClientSessionStore } from "../../../../../app/store/useClientSessionStore";
 
 export interface AddIncentiveRateValues {
-  category: string;
-  subCategory: string;
-  eligibleIncentive: number;
-  effectiveDate: Date;
+  Id: number;
+  CompanyId: number;
+  ClientId: number;
+  ClientContractId: number;
+  TeamId: number;
+  EmployeeId: number;
+  IncentiveProductId: number;
+  IncentiveProductSubCategoryId: number;
+  IncentiveProductCategoryId: number;
+  DealerId: number;
+  EligibleIncentiveAmount: number;
+  EffectiveFrom: string;
+  EffectiveTo: string;
+  Status: number;
 }
 
 interface AddIncentiveRateModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (values: AddIncentiveRateValues) => void;
-  categories: IncentiveRateCategory[];
+}
+
+function getLookupValue(record: unknown, keys: string[]): unknown {
+  if (!record || typeof record !== "object") return undefined;
+  const values = record as Record<string, unknown>;
+  return keys.map((key) => values[key]).find((value) => value != null);
 }
 
 const TOMORROW = (() => {
@@ -31,8 +47,15 @@ export default function AddIncentiveRateModal({
   isOpen,
   onClose,
   onSubmit,
-  categories,
 }: AddIncentiveRateModalProps) {
+  const categories = useAuthStore((state) => state.IncentiveProductCategories);
+  const subCategories = useAuthStore(
+    (state) => state.IncentiveProductSubCategories,
+  );
+  const clientId = useClientSessionStore((state) => state.clientId);
+  const clientContractId = useClientSessionStore(
+    (state) => state.clientContractId,
+  );
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [amount, setAmount] = useState("");
@@ -45,29 +68,65 @@ export default function AddIncentiveRateModal({
     setAmount("");
     setEffectiveDate(null);
   }, [isOpen]);
-
   const categoryOptions = useMemo(
-    () => categories.map((c) => ({ label: c.category, value: c.category })),
+    () =>
+      categories.flatMap((record) => {
+        return {
+          label: String(record?.Name),
+          value: record?.Id,
+          ...record,
+        };
+      }),
     [categories],
   );
 
-  const subCategoryOptions = useMemo(() => {
-    const cat = categories.find((c) => c.category === category);
-    return (cat?.items ?? []).map((i) => ({
-      label: i.subCategory,
-      value: i.subCategory,
+  const subCategoryOptions = subCategories
+    ?.filter((item) => item?.IncentiveProductCategoryId == category)
+    .map((item) => ({
+      label: String(item?.Name),
+      value: item?.Id,
+      ...item,
     }));
-  }, [categories, category]);
 
   function handleSubmit() {
     const value = Number(amount);
-    if (!category || !subCategory || !amount || isNaN(value) || !effectiveDate)
+    if (
+      !category ||
+      !subCategory ||
+      !amount ||
+      isNaN(value) ||
+      !effectiveDate ||
+      clientId === null ||
+      clientContractId === null
+    )
       return;
+    const formattedDate = new Date(
+      effectiveDate?.getTime() - effectiveDate?.getTimezoneOffset() * 60000,
+    )
+      .toISOString()
+      .split("T")[0];
+    const formateToDate = effectiveDate
+      ? (() => {
+          const date = new Date(effectiveDate);
+          date.setFullYear(date.getFullYear() + 2);
+          return date.toISOString().split("T")[0];
+        })()
+      : "";
     onSubmit({
-      category,
-      subCategory,
-      eligibleIncentive: value,
-      effectiveDate,
+      Id: 0,
+      CompanyId: 5,
+      ClientId: clientId,
+      ClientContractId: clientContractId,
+      TeamId: 0,
+      EmployeeId: 0,
+      IncentiveProductId: 0,
+      IncentiveProductSubCategoryId: Number(subCategory),
+      IncentiveProductCategoryId: Number(category),
+      DealerId: 0,
+      EligibleIncentiveAmount: value,
+      EffectiveFrom: formattedDate,
+      EffectiveTo: formateToDate,
+      Status: 1,
     });
   }
 

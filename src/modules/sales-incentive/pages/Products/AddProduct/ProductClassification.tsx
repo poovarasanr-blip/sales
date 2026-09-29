@@ -13,13 +13,11 @@ import {
 } from "../../../../../query/api";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
-import {
-  ClientContractId,
-  ClientId,
-  CompanyId,
-  teamId,
-} from "../../../../../config/env";
 import encrypt from "../../../../../utils/security/encrypt";
+import decrypt from "../../../../../utils/security/decrypt";
+import { parseNestedJson } from "../../../../../utils/security/ParseData";
+import { showToast } from "../../../../../shared/components/ui/CustomToast/UseToast";
+import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
 
 interface ProductClassificationProps {
   steps: AddProductStep[];
@@ -28,8 +26,8 @@ interface ProductClassificationProps {
   onAddOption: (stepId: string, option: AddProductOption) => void;
   title: string;
   subtitle: string;
-  icon: string;
   productCount?: number;
+  onRefreshCategories: () => Promise<AddProductOption[]>;
 }
 
 export default function ProductClassification({
@@ -39,23 +37,106 @@ export default function ProductClassification({
   onAddOption,
   title,
   subtitle,
-  icon,
   productCount = 0,
+  onRefreshCategories,
 }: ProductClassificationProps) {
   const [addModalStepId, setAddModalStepId] = useState<string | null>(null);
   const sessionData = useAuthStore((s) => s.sessionData);
-  const pendingAddRef = useRef<{ name: string; stepId: string } | null>(null);
+  const pendingAddRef = useRef<{
+    name: string;
+    description: string;
+    stepId: string;
+  } | null>(null);
+  const codeSequenceRef = useRef(0);
 
-  const handleMutationResult = (response: any) => {
-    const isSuccess = response?.status >= 200 && response?.status < 300;
-    if (isSuccess && pendingAddRef.current) {
-      const { name, stepId } = pendingAddRef.current;
-      onAddOption(stepId, { label: name, value: name });
-      onChange(stepId, name);
-      pendingAddRef.current = null;
+  const handleMutationResult = async (response: unknown) => {
+    const pendingAdd = pendingAddRef.current;
+    pendingAddRef.current = null;
+    if (!pendingAdd) return;
+
+    try {
+      const responseRecord = response as {
+        status?: number;
+        data?: unknown;
+      };
+      if (
+        typeof responseRecord.status !== "number" ||
+        responseRecord.status < 200 ||
+        responseRecord.status >= 300
+      ) {
+        const errorData =
+          responseRecord.data && typeof responseRecord.data === "object"
+            ? (responseRecord.data as Record<string, unknown>)
+            : {};
+        throw new Error(
+          typeof errorData.message === "string"
+            ? errorData.message
+            : "Unable to create this classification.",
+        );
+      }
+      const responseBody = responseRecord.data;
+      const responseData =
+        typeof responseBody === "string"
+          ? responseBody
+          : responseBody && typeof responseBody === "object"
+            ? (responseBody as Record<string, unknown>).data
+            : undefined;
+      const parsedResponse = responseData
+        ? parseNestedJson(
+            JSON.parse(
+              decrypt(
+                String(responseData),
+                sessionData?.Key ?? "",
+                sessionData?.Vector ?? "",
+              ),
+            ),
+          )
+        : parseNestedJson(responseBody);
+      if (parsedResponse?.Status === false) {
+        throw new Error(
+          parsedResponse?.Message ?? "Unable to create this classification.",
+        );
+      }
+
+      let categoryRefreshFailed = false;
+      if (pendingAdd.stepId === "category") {
+        try {
+          const refreshedOptions = await onRefreshCategories();
+          const createdOption = refreshedOptions.find(
+            (option) =>
+              option.label.toLowerCase() === pendingAdd.name.toLowerCase(),
+          );
+          if (createdOption) onChange(pendingAdd.stepId, createdOption.value);
+        } catch {
+          categoryRefreshFailed = true;
+        }
+      } else {
+        onAddOption(pendingAdd.stepId, {
+          label: pendingAdd.name,
+          value: pendingAdd.name,
+        });
+        onChange(pendingAdd.stepId, pendingAdd.name);
+      }
+
+      showToast({
+        type: categoryRefreshFailed ? "error" : "success",
+        title: categoryRefreshFailed ? "Created, refresh failed" : "Success",
+        message: categoryRefreshFailed
+          ? "Category created, but the category list could not be refreshed."
+          : (parsedResponse?.Message ?? "Classification created successfully."),
+        duration: 3000,
+      });
       setAddModalStepId(null);
-    } else {
-      pendingAddRef.current = null;
+    } catch (error) {
+      showToast({
+        type: "error",
+        title: "Error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unable to create this classification.",
+        duration: 3000,
+      });
     }
   };
 
@@ -67,6 +148,12 @@ export default function ProductClassification({
       onError: (error) => {
         console.log("Create category error:", error);
         pendingAddRef.current = null;
+        showToast({
+          type: "error",
+          title: "Error",
+          message: "Unable to create category. Please try again.",
+          duration: 3000,
+        });
       },
     });
 
@@ -78,25 +165,46 @@ export default function ProductClassification({
       onError: (error) => {
         console.log("Create subcategory error:", error);
         pendingAddRef.current = null;
+        showToast({
+          type: "error",
+          title: "Error",
+          message: "Unable to create sub category. Please try again.",
+          duration: 3000,
+        });
       },
     });
 
-  const handleCreate = (item: string) => {
+  const handleCreate = (name: string, description: string) => {
     if (!modalStep) return;
-    if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token)
+    if (!name || !description) {
+      showToast({
+        type: "error",
+        title: "Validation Error",
+        message: "Name and Description are required.",
+        duration: 3000,
+      });
       return;
-    pendingAddRef.current = { name: item, stepId: modalStep.id };
+    }
+    if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token) {
+      showToast({
+        type: "error",
+        title: "Session Error",
+        message: "Session data not available. Please log in again.",
+        duration: 3000,
+      });
+      return;
+    }
+    const codePrefix = name.slice(0, 3).toUpperCase();
+    codeSequenceRef.current = (codeSequenceRef.current % 999) + 1;
+    const codeSuffix = String(codeSequenceRef.current).padStart(3, "0");
+    pendingAddRef.current = { name, description, stepId: modalStep.id };
     if (modalStep.id === "category") {
       const params = {
-        id: 0,
-        companyId: CompanyId,
-        clientId: ClientId,
-        clientContractId: ClientContractId,
-        teamId: teamId,
-        code: item,
-        name: item,
-        description: item,
-        status: 0,
+        Id: 0,
+        Code: `${codePrefix}${codeSuffix}`,
+        Name: name,
+        Description: description,
+        Status: 1,
       };
       const encParams = encrypt(
         JSON.stringify(params),
@@ -108,17 +216,24 @@ export default function ProductClassification({
         token: sessionData?.Token ?? "",
       });
     } else {
+      const categoryId = Number(values[modalStep.dependsOn ?? ""]);
+      if (!Number.isInteger(categoryId) || categoryId <= 0) {
+        pendingAddRef.current = null;
+        showToast({
+          type: "error",
+          title: "Validation Error",
+          message: "Select a valid Category before adding a Sub Category.",
+          duration: 3000,
+        });
+        return;
+      }
       const params = {
-        id: 0,
-        companyId: CompanyId,
-        clientId: ClientId,
-        clientContractId: ClientContractId,
-        teamId: teamId,
-        code: item,
-        name: item,
-        description: item,
-        status: 0,
-        incentiveProductCategoryId: 0,
+        Id: 0,
+        Code: `${codePrefix}${codeSuffix}`,
+        Name: name,
+        Description: description,
+        IncentiveProductCategoryId: categoryId,
+        Status: 1,
       };
       const encParams = encrypt(
         JSON.stringify(params),
@@ -184,7 +299,6 @@ export default function ProductClassification({
       <div className="flex items-stretch gap-[12px] px-[20px] py-[18px]">
         {sorted.map((step, idx) => {
           const stepNum = String(step.order).padStart(2, "0");
-          const selected = isSelected(step);
           const disabled = isDisabled(step);
           const isNext = idx === nextStepIdx;
 
@@ -272,11 +386,18 @@ export default function ProductClassification({
           label={`New ${modalStep.label}`}
           placeholder={`Enter ${modalStep.label} Name`}
           onCancel={() => setAddModalStepId(null)}
-          onSave={(name) => {
-            handleCreate(name);
-          }}
+          onSave={handleCreate}
+          isSaving={isSaving}
         />
       )}
+      <LoaderModal
+        isOpen={isSaving}
+        message={
+          modalStep?.id === "subCategory"
+            ? "Adding sub category..."
+            : "Adding category..."
+        }
+      />
     </div>
   );
 }

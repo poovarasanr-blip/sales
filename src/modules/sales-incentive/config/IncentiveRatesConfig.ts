@@ -143,11 +143,13 @@ export function formatDateForDisplay(raw: unknown): string | null {
 
   // DD-MM-YYYY or DD/MM/YYYY
   const dmy = str.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
-  if (dmy) return formatDMY(parseInt(dmy[1]), parseInt(dmy[2]), parseInt(dmy[3]));
+  if (dmy)
+    return formatDMY(parseInt(dmy[1]), parseInt(dmy[2]), parseInt(dmy[3]));
 
   // YYYY-MM-DD (ISO)
   const iso = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-  if (iso) return formatDMY(parseInt(iso[3]), parseInt(iso[2]), parseInt(iso[1]));
+  if (iso)
+    return formatDMY(parseInt(iso[3]), parseInt(iso[2]), parseInt(iso[1]));
 
   // Already in display format DD Mon YYYY
   const display = str.match(
@@ -168,7 +170,6 @@ export function formatDateForDisplay(raw: unknown): string | null {
 
   return null;
 }
-
 
 /* ------------------------------------------------------------------ */
 /* Mock data — 48 categories matching the screenshot pagination        */
@@ -378,6 +379,7 @@ export function toIncentiveRatesTableData(
         },
       ],
       incentive: item.eligibleIncentive,
+      ...cat,
     })),
   }));
 }

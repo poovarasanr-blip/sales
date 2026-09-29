@@ -10,6 +10,7 @@ import { setSession, getSession } from "../shared/utils/sessionStorage";
 import { useAuthStore, type SessionData } from "./store/useAuthStore";
 import { useClientSessionStore } from "./store/useClientSessionStore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import GlobalSalesIncentiveLookupLoader from "./GlobalSalesIncentiveLookupLoader";
 import {
   handleGetUserMappedClientContractList,
   handleGetUserMappedClientList,
@@ -168,18 +169,27 @@ export default function App() {
     void loadContracts(selectedClientId);
   };
 
-  const handleClientSave = (selectedClientId: number, selectedContractId: number) => {
+  const handleClientSave = (
+    selectedClientId: number,
+    selectedContractId: number,
+  ) => {
     const clientName =
       clients.find((c) => c.Id === selectedClientId)?.ClientName ?? "";
     const contractName =
       contracts.find((c) => c.Id === selectedContractId)?.Name ?? "";
-    saveClientSelection(selectedClientId, selectedContractId, clientName, contractName);
+    saveClientSelection(
+      selectedClientId,
+      selectedContractId,
+      clientName,
+      contractName,
+    );
     setIsClientSelectionOpen(false);
   };
 
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <GlobalSalesIncentiveLookupLoader />
         <div className="flex h-screen overflow-scroll scrollbar-hide">
           <Sidebar />
           <main className="flex flex-1 flex-col overflow-hidden bg-bgcolor">

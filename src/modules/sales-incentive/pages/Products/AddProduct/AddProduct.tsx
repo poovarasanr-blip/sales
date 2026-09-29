@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import addProductConfig from "../../../../../assets/json/addProductConfig.json";
 import CustomButton from "../../../../../shared/components/ui/Button/CustomButton";
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
@@ -12,9 +13,10 @@ import ProductClassification from "./ProductClassification";
 import ProductHierarchy from "./ProductHierarchy";
 import ProductRows from "./ProductRows";
 import SectionFields from "./SectionFields";
-import { useMutation } from "@tanstack/react-query";
 import { handleGetcategory } from "../../../../../query/api";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
+import decrypt from "../../../../../utils/security/decrypt";
+import { parseNestedJson } from "../../../../../utils/security/ParseData";
 
 const config = addProductConfig as unknown as AddProductConfig;
 
@@ -43,28 +45,86 @@ export default function AddProduct() {
   const [dynamicOptions, setDynamicOptions] = useState<
     Record<string, AddProductOption[]>
   >({});
-
-  const {
-    isPending: handlefetchCategoryLoader,
-    mutate: handlefetchCategoryData,
-  } = useMutation({
-    mutationFn: (variables: { payload: string; token: string }) =>
-      handleGetcategory(variables?.payload, sessionData?.Token),
-    onSuccess: (response) => {
-      console.log(response, "response");
-      if (response?.data?.Status) {
-        console.log(response, "response");
+  const loadCategories = useCallback(async (): Promise<AddProductOption[]> => {
+    if (!sessionData?.Token || !sessionData?.Key || !sessionData?.Vector) {
+      return [];
+    }
+    try {
+      const response: unknown = await handleGetcategory(sessionData.Token);
+      const responseRecord = response as {
+        status?: number;
+        data?: unknown;
+      };
+      if (
+        typeof responseRecord.status !== "number" ||
+        responseRecord.status < 200 ||
+        responseRecord.status >= 300
+      ) {
+        throw new Error("Failed to load categories.");
       }
-    },
-    onError: (error) => {
-      console.log("fetch category api:", error);
-    },
+      const responseData =
+        typeof responseRecord.data === "string"
+          ? responseRecord.data
+          : responseRecord.data && typeof responseRecord.data === "object"
+            ? (responseRecord.data as Record<string, unknown>).data
+            : undefined;
+      const parsed = responseData
+        ? parseNestedJson(
+            JSON.parse(
+              decrypt(
+                String(responseData),
+                sessionData.Key,
+                sessionData.Vector,
+              ),
+            ),
+          )
+        : parseNestedJson(responseRecord.data);
+      const parsedRecord =
+        parsed && typeof parsed === "object" && !Array.isArray(parsed)
+          ? (parsed as Record<string, unknown>)
+          : null;
+      const records: unknown = Array.isArray(parsed)
+        ? parsed
+        : (parsedRecord?.Result ??
+          parsedRecord?.Data ??
+          parsedRecord?.dynamicObject ??
+          parsedRecord?.data ??
+          parsedRecord?.result ??
+          []);
+      if (!Array.isArray(records)) return [];
+      return records.flatMap((record): AddProductOption[] => {
+        if (!record || typeof record !== "object") return [];
+        const category = record as Record<string, unknown>;
+        const id = category.Id ?? category.ID ?? category.id;
+        const name = category.Name ?? category.name;
+        return id != null && name
+          ? [{ label: String(name), value: String(id) }]
+          : [];
+      });
+    } catch (error) {
+      console.error("Fetch categories error:", error);
+      throw error;
+    }
+  }, [sessionData]);
+
+  const { data: loadedCategoryOptions, refetch: refetchCategories } = useQuery({
+    queryKey: ["product-classification-categories"],
+    queryFn: loadCategories,
+    enabled: Boolean(
+      sessionData?.Token && sessionData?.Key && sessionData?.Vector,
+    ),
   });
-  useEffect(() => {
-    handlefetchCategoryData();
-  }, []);
+  const categoryOptions = loadedCategoryOptions ?? null;
+  const refreshCategories = useCallback(async () => {
+    const result = await refetchCategories();
+    if (result.isError) throw result.error;
+    return result.data ?? [];
+  }, [refetchCategories]);
 
   const mergedSteps = config.classification.steps.map((step) => {
+    if (step.id === "category" && categoryOptions !== null) {
+      return { ...step, options: categoryOptions };
+    }
     const extra = dynamicOptions[step.id];
     if (!extra?.length) return step;
     if (step.options) {
@@ -217,8 +277,8 @@ export default function AddProduct() {
             onAddOption={handleAddOption}
             title={config.classification.title}
             subtitle={config.classification.subtitle}
-            icon={config.classification.icon}
             productCount={productRows.length}
+            onRefreshCategories={refreshCategories}
           />
 
           {/* Dynamic Sections */}

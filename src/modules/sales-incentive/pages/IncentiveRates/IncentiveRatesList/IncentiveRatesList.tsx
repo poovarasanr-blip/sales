@@ -17,6 +17,8 @@ import { useAuthStore } from "../../../../../app/store/useAuthStore";
 import {
   handleGetProductBulkTemplate,
   handleGetExcelTemplate,
+  handleUpsertIncentiveRates,
+  handleGetIncentiveRates,
 } from "../../../../../query/api";
 import encrypt from "../../../../../utils/security/encrypt";
 import decrypt from "../../../../../utils/security/decrypt";
@@ -113,9 +115,7 @@ export default function IncentiveRatesList() {
     null,
   );
   const [fileError, setFileError] = useState<string | null>(null);
-
-  /* ---- Template Download (API-based) ---- */
-
+  const [categories, setCategories] = useState<IncentiveRateCategory[]>([]);
   const { mutate: fetchBulkTemplate } = useMutation({
     mutationFn: (variables: { payload: string; token: string }) =>
       handleGetProductBulkTemplate(variables.payload, variables.token),
@@ -128,6 +128,36 @@ export default function IncentiveRatesList() {
         );
         const parsedData = parseNestedJson(JSON.parse(decryptedData));
         setProductTemplate(parsedData?.dynamicObject[0]);
+      }
+    },
+  });
+  const { mutate: handleUpsertIncentiveProductMapping } = useMutation({
+    mutationFn: (variables: { payload: string; token: string }) =>
+      handleUpsertIncentiveRates(variables.payload, variables.token),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key,
+          sessionData?.Vector,
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        if (parsedData?.Status) {
+          setIsAddOpen(false);
+          showToast({
+            type: "success",
+            title: "Success!",
+            message: parsedData?.Message,
+            duration: 2000,
+          });
+        } else {
+          showToast({
+            type: "error",
+            title: "Error!",
+            message: parsedData?.Message,
+            duration: 2000,
+          });
+        }
       }
     },
   });
@@ -168,6 +198,60 @@ export default function IncentiveRatesList() {
       }
     },
   });
+  const { mutate: handleFetchIncentiveData } = useMutation({
+    mutationFn: (variables: { token: string }) =>
+      handleGetIncentiveRates(
+        sessionData?.Key,
+        sessionData?.Vector,
+        sessionData?.Token,
+      ),
+    onSuccess: (response: any) => {
+      if (response?.status === 200) {
+        const decryptedData = decrypt(
+          response?.data,
+          sessionData?.Key,
+          sessionData?.Vector,
+        );
+        const parsedData = parseNestedJson(JSON.parse(decryptedData));
+        const tableData: IncentiveRateCategory[] = parsedData?.Result?.reduce(
+          (acc: IncentiveRateCategory[], item: any) => {
+            const category = item?.IncentiveProductCategory ?? "";
+            const newItem = {
+              id: item?.Id,
+              subCategory: item?.IncentiveProductSubCategory ?? "",
+              product: item?.IncentiveProduct ?? "",
+              eligibleIncentive: item?.EligibleIncentiveAmount ?? 0,
+              effectiveDate: item?.EffectiveDate ?? "",
+              effectiveFrom: item?.EffectiveFrom ?? "",
+              effectiveTo: item?.EffectiveTo ?? "",
+              categoryId: item?.IncentiveProductCategoryId,
+              subCategoryId: item?.IncentiveProductSubCategoryId,
+              productId: item?.IncentiveProductId,
+            };
+            const existingCategory = acc.find(
+              (item) => item.category === category,
+            );
+            if (existingCategory) {
+              existingCategory.items.push(newItem);
+            } else {
+              acc.push({
+                category,
+                items: [newItem],
+              });
+            }
+            return acc;
+          },
+          [],
+        );
+        console.log(tableData, "tableData");
+        setCategories(tableData);
+      }
+    },
+  });
+
+  useEffect(() => {
+    handleFetchIncentiveData();
+  }, []);
 
   useEffect(() => {
     if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
@@ -183,53 +267,24 @@ export default function IncentiveRatesList() {
       });
     }
   }, []);
-
-  /* ---- Data state ---- */
-
-  const [categories, setCategories] = useState<IncentiveRateCategory[]>(
-    INCENTIVE_RATES_MOCK_DATA,
-  );
   const [searchTerm, setSearchTerm] = useState("");
-
-  /* ---- Editing state ---- */
-
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [editValues, setEditValues] = useState<{
     eligibleIncentive?: number;
     effectiveDate?: string;
   }>({});
-
-  /* ---- Add incentive rate drawer ---- */
-
   const [isAddOpen, setIsAddOpen] = useState(false);
 
   function handleAddIncentiveRate(values: AddIncentiveRateValues) {
-    const d = values.effectiveDate;
-    const effectiveDate = `${String(d.getDate()).padStart(2, "0")} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
-    setCategories((prev) =>
-      prev.map((c) =>
-        c.category === values.category
-          ? {
-              ...c,
-              items: c.items.map((item) =>
-                item.subCategory === values.subCategory
-                  ? {
-                      ...item,
-                      eligibleIncentive: values.eligibleIncentive,
-                      effectiveDate,
-                    }
-                  : item,
-              ),
-            }
-          : c,
-      ),
+    const encPayload = encrypt(
+      JSON.stringify(values),
+      sessionData.Key,
+      sessionData.Vector,
     );
-    setIsAddOpen(false);
-    showToast({
-      type: "success",
-      title: "Success!",
-      message: "Incentive rate added successfully",
-      duration: 2000,
+    const stdBase64 = encPayload.replace(/\*/g, "+").replace(/-/g, "/");
+    handleUpsertIncentiveProductMapping({
+      payload: stdBase64,
+      token: sessionData?.Token,
     });
   }
 
@@ -511,7 +566,7 @@ export default function IncentiveRatesList() {
     input.click();
   }, [handleFilesReceived]);
 
-  const hasData = categories.length == 0;
+  const hasData = categories.length > 0;
 
   return (
     <div
@@ -774,7 +829,6 @@ export default function IncentiveRatesList() {
         isOpen={isAddOpen}
         onClose={() => setIsAddOpen(false)}
         onSubmit={handleAddIncentiveRate}
-        categories={categories}
       />
 
       {/* Activity Log */}

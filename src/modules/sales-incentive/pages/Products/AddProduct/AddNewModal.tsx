@@ -5,8 +5,9 @@ interface AddNewModalProps {
   title: string;
   label: string;
   placeholder: string;
-  onSave: (value: string) => void;
+  onSave: (name: string, description: string) => void;
   onCancel: () => void;
+  isSaving: boolean;
 }
 
 export default function AddNewModal({
@@ -15,8 +16,10 @@ export default function AddNewModal({
   placeholder,
   onSave,
   onCancel,
+  isSaving,
 }: AddNewModalProps) {
   const [inputValue, setInputValue] = useState("");
+  const [description, setDescription] = useState("");
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center">
@@ -49,6 +52,15 @@ export default function AddNewModal({
             placeholder={placeholder}
             className="w-full h-[42px] px-[14px] border border-[#E5E7EB] rounded-[8px] bg-white text-14 text-darkgray outline-none placeholder:text-[#9CA3AF] focus:border-[#707AFD]"
           />
+          <label className="text-13 font-medium text-darkgray mb-[8px] mt-[16px] block">
+            Description
+          </label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter Description"
+            className="w-full min-h-[84px] px-[14px] py-[10px] border border-[#E5E7EB] rounded-[8px] bg-white text-14 text-darkgray outline-none placeholder:text-[#9CA3AF] focus:border-[#707AFD] resize-y"
+          />
         </div>
 
         {/* Footer */}
@@ -76,10 +88,10 @@ export default function AddNewModal({
           </button> */}
           <div
             onClick={() => {
-              const trimmed = inputValue.trim();
-              if (trimmed) onSave(trimmed);
+              if (isSaving) return;
+              onSave(inputValue.trim(), description.trim());
             }}
-            className="h-[34px] w-[76px] rounded-[6px]  cursor-pointer bg-primary flex items-center gap-4 justify-center"
+            className={`h-[34px] w-[76px] rounded-[6px] cursor-pointer bg-primary flex items-center gap-4 justify-center ${isSaving ? "opacity-60" : ""}`}
           >
             <IconRenderer icon="FiCheckCircle" size={16} color="#FFFFFF" />
             <p className="text-13 font-medium text-white">Save</p>

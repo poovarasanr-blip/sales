@@ -33,7 +33,7 @@ export const apiConfig: Record<string, ApiConfig> = {
   },
   getCategory: {
     name: "getCategory",
-    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetIncentiveProductCategories`,
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetSaleCategory`,
     httpMethod: "GET",
   },
   createSubCategory: {
@@ -81,6 +81,11 @@ export const apiConfig: Record<string, ApiConfig> = {
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetIncentiveProductListing`,
     httpMethod: "GET",
   },
+  getSalesIncentiveLookupDetails: {
+    name: "getSalesIncentiveLookupDetails",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetSalesIncentiveLookupDetails?`,
+    httpMethod: "GET",
+  },
   UpdateSalesSubmissionRequest: {
     name: "UpdateSalesSubmissionRequest",
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpdateSalesSubmissionRequest`,
@@ -95,6 +100,16 @@ export const apiConfig: Record<string, ApiConfig> = {
     name: "UpsertIncentiveProductCategory",
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpsertIncentiveProductCategory`,
     httpMethod: "POST",
+  },
+  UpsertIncentiveProductMapping: {
+    name: "UpsertIncentiveProductMapping",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpsertIncentiveProductMapping`,
+    httpMethod: "POST",
+  },
+  GetIncentiveProductMappingDetails: {
+    name: "GetIncentiveProductMappingDetails",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetIncentiveProductMappingDetails?`,
+    httpMethod: "GET",
   },
 };
 

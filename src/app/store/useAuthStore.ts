@@ -4,6 +4,7 @@ import {
   getSession,
   clearSession,
 } from "../../shared/utils/sessionStorage";
+import type { SalesIncentiveLookups } from "../../query/api";
 
 export interface UIRole {
   Role: {
@@ -88,14 +89,29 @@ export interface SessionData {
 interface AuthState {
   sessionData: SessionData | null;
   isAuthenticated: boolean;
+  IncentiveProductCategories: unknown[];
+  IncentiveProductSubCategories: unknown[];
+  Managers: unknown[];
+  Dealers: unknown[];
+  isLookupLoading: boolean;
+  lookupError: string | null;
   hydrate: () => void;
   setSessionData: (data: SessionData) => void;
+  setSalesIncentiveLookups: (lookups: SalesIncentiveLookups) => void;
+  setLookupLoading: (isLoading: boolean) => void;
+  setLookupError: (error: string | null) => void;
   logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   sessionData: null,
   isAuthenticated: false,
+  IncentiveProductCategories: [],
+  IncentiveProductSubCategories: [],
+  Managers: [],
+  Dealers: [],
+  isLookupLoading: false,
+  lookupError: null,
 
   hydrate: () => {
     const data = getSession<SessionData>();
@@ -108,6 +124,16 @@ export const useAuthStore = create<AuthState>((set) => ({
     setSession(JSON.stringify(data));
     set({ sessionData: data, isAuthenticated: true });
   },
+
+  setSalesIncentiveLookups: (lookups) =>
+    set({
+      ...lookups,
+      lookupError: null,
+    }),
+
+  setLookupLoading: (isLookupLoading) => set({ isLookupLoading }),
+
+  setLookupError: (lookupError) => set({ lookupError }),
 
   logout: () => {
     clearSession();
