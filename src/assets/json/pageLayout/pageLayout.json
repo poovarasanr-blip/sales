@@ -33,7 +33,7 @@
       {
         "icon": "./src/assets/icons/SideBar/ActualSalseIcon.svg",
         "activeIcon": "./src/assets/icons/SideBar/ActualSalesActiveIcon.svg",
-        "name": "Actual Sales",
+        "name": "Approved Sales",
         "route": "/actualSales"
       },
       {

@@ -22,6 +22,7 @@ interface CustomDatePickerProps {
   textWeight?: string;
   textColor?: string;
   iconSize?: number;
+  placeholderColor?: string;
 }
 
 interface CustomInputProps {
@@ -40,6 +41,7 @@ interface CustomInputProps {
   textWeight?: string;
   textColor?: string;
   iconSize?: number;
+  placeholderColor?: string;
 }
 
 const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
@@ -60,6 +62,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
       textWeight,
       textColor,
       iconSize,
+      placeholderColor = "placeholder:text-[#353550]",
     },
     ref,
   ) => {
@@ -103,7 +106,7 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
            ${textWeight}
             ${textColor}
             outline-none
-            placeholder:text-[#353550]
+            ${placeholderColor}
             disabled:cursor-not-allowed
             `}
         />
@@ -136,6 +139,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   textWeight = "font-normal",
   textColor = "text-black",
   iconSize = 18,
+  placeholderColor,
 }) => {
   const [startDate, setStartDate] = useState<Date | null>(value ?? null);
 
@@ -170,8 +174,10 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
             textColor={textColor}
             textWeight={textWeight}
             iconSize={iconSize}
+            placeholderColor={placeholderColor}
           />
         }
+        placeholderText={placeholder}
         dateFormat="dd/MM/yyyy"
         minDate={minDate}
         maxDate={maxDate}

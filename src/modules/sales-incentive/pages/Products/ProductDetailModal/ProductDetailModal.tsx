@@ -17,8 +17,18 @@ import type {
 import ProductActivityLog from "../ActivityLog/ProductActivityLog";
 
 const MONTHS = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 function displayToISO(display: string): string {
@@ -133,7 +143,9 @@ export default function ProductDetailModal({
   detailData,
 }: ProductDetailModalProps) {
   const [detailFilterKey, setDetailFilterKey] = useState<string | null>(null);
-  const [detailFilters, setDetailFilters] = useState<Record<string, string>>({});
+  const [detailFilters, setDetailFilters] = useState<Record<string, string>>(
+    {},
+  );
   const [activityLog, setActivityLog] = useState<ActivityLogState | null>(null);
 
   useEffect(() => {
@@ -218,7 +230,10 @@ export default function ProductDetailModal({
                         }
                         filterValue={detailFilters[col.key] ?? ""}
                         onFilterChange={(v) =>
-                          setDetailFilters((prev) => ({ ...prev, [col.key]: v }))
+                          setDetailFilters((prev) => ({
+                            ...prev,
+                            [col.key]: v,
+                          }))
                         }
                         subCategoryCount={detailData.subCategories.length}
                       />
@@ -253,7 +268,7 @@ export default function ProductDetailModal({
                             {pi === 0 && (
                               <td
                                 rowSpan={sc.products.length}
-                                className="px-[14px] py-[8px] text-13 text-gray align-top"
+                                className="px-[14px] py-[8px] text-13 text-gray align-middle"
                               >
                                 {sc.subCategory}
                               </td>
@@ -275,24 +290,47 @@ export default function ProductDetailModal({
                                 {prod.status}
                               </span>
                             </td>
-                            <td className="px-[14px] py-[8px] text-13 text-center">
-                              <button
-                                aria-label="History"
-                                className="cursor-pointer"
-                                onClick={() =>
-                                  openProductLog(prod.product, sc.subCategory)
-                                }
+                            {pi === 0 && (
+                              <td
+                                rowSpan={sc.products.length}
+                                className="px-[14px] py-[8px] text-13 text-center align-middle"
                               >
-                                <IconRenderer
-                                  icon={
-                                    PageLayOut?.Products?.HistoryIcon ??
-                                    "GoHistory"
-                                  }
-                                  size={15}
-                                  className="text-gray"
-                                />
-                              </button>
-                            </td>
+                                <div className="flex items-center justify-center w-full gap-[10px] ">
+                                  <button
+                                    aria-label="History"
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                      openProductLog(
+                                        prod.product,
+                                        sc.subCategory,
+                                      )
+                                    }
+                                  >
+                                    <IconRenderer
+                                      icon={"GoPlusCircle"}
+                                      size={15}
+                                      className="text-gray"
+                                    />
+                                  </button>
+                                  <button
+                                    aria-label="History"
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                      openProductLog(
+                                        prod.product,
+                                        sc.subCategory,
+                                      )
+                                    }
+                                  >
+                                    <IconRenderer
+                                      icon={"GoPencil"}
+                                      size={15}
+                                      className="text-gray"
+                                    />
+                                  </button>
+                                </div>
+                              </td>
+                            )}
                           </tr>
                         );
                       }),

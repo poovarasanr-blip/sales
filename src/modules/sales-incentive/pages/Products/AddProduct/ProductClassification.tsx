@@ -83,7 +83,8 @@ export default function ProductClassification({
 
   const handleCreate = (item: string) => {
     if (!modalStep) return;
-    if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token) return;
+    if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token)
+      return;
     pendingAddRef.current = { name: item, stepId: modalStep.id };
     if (modalStep.id === "category") {
       const params = {

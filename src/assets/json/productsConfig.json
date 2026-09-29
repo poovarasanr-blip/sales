@@ -157,22 +157,6 @@
           "CreatedOn": "2026-01-01T00:00:00Z",
           "Products": [
             {
-              "ProductId": 306,
-              "ProductCode": "PROD_MX-JW265",
-              "ProductName": "Panasonic MX-JW265",
-              "Description": "Panasonic Heavy Duty Mixer Grinder",
-              "IncentiveProductCategoryId": 101,
-              "IncentiveProductSubCategoryId": 13,
-              "Price": 7200,
-              "EffectiveDate": "2026-01-01",
-              "EligibleIncentive": 600,
-              "CompanyId": 1,
-              "ClientId": 10,
-              "Status": 1,
-              "CreatedBy": 1,
-              "CreatedOn": "2026-01-01T00:00:00Z"
-            },
-            {
               "ProductId": 307,
               "ProductCode": "PROD-WM155",
               "ProductName": "Panasonic Super Mix WM-155",

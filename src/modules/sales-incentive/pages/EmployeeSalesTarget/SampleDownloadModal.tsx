@@ -85,7 +85,6 @@ export default function SampleDownloadModal({
     () => searchFields.filter((f) => !(f.FieldName in ENV_FIELD_VALUES)),
     [searchFields],
   );
-
   if (isOpen && !prevIsOpenRef.current) {
     setFieldValues({});
     setFieldOptions({});
@@ -245,7 +244,7 @@ export default function SampleDownloadModal({
 
   const selectedUsers = useMemo(
     () =>
-      users.filter((u, i) => selectedUserIds.has(String(u.Id ?? u.id ?? i))),
+      users?.filter((u, i) => selectedUserIds?.has(String(u.Id ?? u.id ?? i))),
     [users, selectedUserIds],
   );
 

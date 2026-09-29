@@ -328,10 +328,10 @@ export const PRODUCT_DETAIL_COLUMNS: GroupedTableColumn[] = [
     label: "Location",
     icon: "FiSearch",
     filterable: "text",
-    width: "230px",
+    width: "200px",
   },
-  { key: "status", label: "Status", width: "95px" },
-  { key: "action", label: "Action", width: "6%", align: "right" },
+  { key: "status", label: "Status", width: "105px" },
+  { key: "action", label: "Action", width: "77px", align: "right" },
 ];
 
 const DETAIL_PRODUCT_MODELS = [

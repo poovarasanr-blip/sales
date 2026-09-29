@@ -9,6 +9,8 @@ import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRen
 import NoDataFound from "../../../../../shared/components/ui/NoDataFound/NoDataFound";
 import BulkUploadCard from "../../../../../shared/components/ui/BulkUpload/BulkUploadCard";
 import ProductActivityLog from "../../Products/ActivityLog/ProductActivityLog";
+import AddIncentiveRateModal from "../AddIncentiveRate/AddIncentiveRateModal";
+import type { AddIncentiveRateValues } from "../AddIncentiveRate/AddIncentiveRateModal";
 import CustomInput from "../../../../../shared/components/forms/FormInput/CustomTextInput";
 import GroupedIncentiveTable from "../../../../../shared/components/ui/DataTable/CustomTable";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
@@ -196,6 +198,40 @@ export default function IncentiveRatesList() {
     eligibleIncentive?: number;
     effectiveDate?: string;
   }>({});
+
+  /* ---- Add incentive rate drawer ---- */
+
+  const [isAddOpen, setIsAddOpen] = useState(false);
+
+  function handleAddIncentiveRate(values: AddIncentiveRateValues) {
+    const d = values.effectiveDate;
+    const effectiveDate = `${String(d.getDate()).padStart(2, "0")} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+    setCategories((prev) =>
+      prev.map((c) =>
+        c.category === values.category
+          ? {
+              ...c,
+              items: c.items.map((item) =>
+                item.subCategory === values.subCategory
+                  ? {
+                      ...item,
+                      eligibleIncentive: values.eligibleIncentive,
+                      effectiveDate,
+                    }
+                  : item,
+              ),
+            }
+          : c,
+      ),
+    );
+    setIsAddOpen(false);
+    showToast({
+      type: "success",
+      title: "Success!",
+      message: "Incentive rate added successfully",
+      duration: 2000,
+    });
+  }
 
   /* ---- Activity log state ---- */
 
@@ -498,14 +534,14 @@ export default function IncentiveRatesList() {
             borderColor="border-primary"
             textColor="text-primary"
             borderWidth="border-1"
-            onClick={() => navigate("/product/add")}
+            onClick={() => setIsAddOpen(true)}
           />
           {(layout?.IsBulkUploadRequired ?? true) && (
             <CustomButton
               backgroundColor="bg-primary"
               height="h-37"
               width="w-[119px]"
-              gap="gap-[7px]"
+              gap="gap-[6px]"
               title={layout?.CustomButtons?.UploadButton?.Name ?? "Bulk Upload"}
               borderRadius="rounded-6"
               textColor="text-white"
@@ -732,6 +768,14 @@ export default function IncentiveRatesList() {
           )}
         </div>
       )}
+
+      {/* Add Incentive Rate */}
+      <AddIncentiveRateModal
+        isOpen={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        onSubmit={handleAddIncentiveRate}
+        categories={categories}
+      />
 
       {/* Activity Log */}
       <ProductActivityLog
