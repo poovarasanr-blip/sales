@@ -191,7 +191,6 @@ export default function EmployeeSalesTargetBulkUpload() {
               navigate("/employeeSales", {
                 state: {
                   bulkUploadSuccessCount: validRows.length,
-                  addedRows: validRows.map((r) => r.data),
                 },
               });
             }

@@ -84,7 +84,12 @@ export function groupEmployeeTargetRows(
 
     const group = employees.get(key)!;
     group.subCategories[0].products.push({
-      product: String(row.IncentiveProduct ?? row.IncentiveSubCategory ?? ""),
+      product: String(
+        row.IncentiveProductSubCategory ??
+          row.IncentiveSubCategory ??
+          row.IncentiveProduct ??
+          "",
+      ),
       effectiveDate: `${row.Month ?? ""} ${row.Year ?? ""}`,
       location: String(row.BaseTargetQuantity ?? ""),
       configCode: String(row.SalesIncentiveConfigurationCode ?? ""),

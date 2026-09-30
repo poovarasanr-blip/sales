@@ -13,6 +13,7 @@ import AddIncentiveRateModal from "../AddIncentiveRate/AddIncentiveRateModal";
 import type { AddIncentiveRateValues } from "../AddIncentiveRate/AddIncentiveRateModal";
 import CustomInput from "../../../../../shared/components/forms/FormInput/CustomTextInput";
 import GroupedIncentiveTable from "../../../../../shared/components/ui/DataTable/CustomTable";
+import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
 import {
   handleGetProductBulkTemplate,
@@ -116,6 +117,7 @@ export default function IncentiveRatesList() {
   );
   const [fileError, setFileError] = useState<string | null>(null);
   const [categories, setCategories] = useState<IncentiveRateCategory[]>([]);
+  const [listingRefreshVersion, setListingRefreshVersion] = useState(0);
   const { mutate: fetchBulkTemplate } = useMutation({
     mutationFn: (variables: { payload: string; token: string }) =>
       handleGetProductBulkTemplate(variables.payload, variables.token),
@@ -131,7 +133,10 @@ export default function IncentiveRatesList() {
       }
     },
   });
-  const { mutate: handleUpsertIncentiveProductMapping } = useMutation({
+  const {
+    mutate: handleUpsertIncentiveProductMapping,
+    isPending: isAddSubmitting,
+  } = useMutation({
     mutationFn: (variables: { payload: string; token: string }) =>
       handleUpsertIncentiveRates(variables.payload, variables.token),
     onSuccess: (response: any) => {
@@ -144,6 +149,7 @@ export default function IncentiveRatesList() {
         const parsedData = parseNestedJson(JSON.parse(decryptedData));
         if (parsedData?.Status) {
           setIsAddOpen(false);
+          setListingRefreshVersion((version) => version + 1);
           showToast({
             type: "success",
             title: "Success!",
@@ -198,60 +204,61 @@ export default function IncentiveRatesList() {
       }
     },
   });
-  const { mutate: handleFetchIncentiveData } = useMutation({
-    mutationFn: (variables: { token: string }) =>
-      handleGetIncentiveRates(
-        sessionData?.Key,
-        sessionData?.Vector,
-        sessionData?.Token,
-      ),
-    onSuccess: (response: any) => {
-      if (response?.status === 200) {
-        const decryptedData = decrypt(
-          response?.data,
+  const { mutate: handleFetchIncentiveData, isPending: isListingLoading } =
+    useMutation({
+      mutationFn: () =>
+        handleGetIncentiveRates(
           sessionData?.Key,
           sessionData?.Vector,
-        );
-        const parsedData = parseNestedJson(JSON.parse(decryptedData));
-        const tableData: IncentiveRateCategory[] = parsedData?.Result?.reduce(
-          (acc: IncentiveRateCategory[], item: any) => {
-            const category = item?.IncentiveProductCategory ?? "";
-            const newItem = {
-              id: item?.Id,
-              subCategory: item?.IncentiveProductSubCategory ?? "",
-              product: item?.IncentiveProduct ?? "",
-              eligibleIncentive: item?.EligibleIncentiveAmount ?? 0,
-              effectiveDate: item?.EffectiveDate ?? "",
-              effectiveFrom: item?.EffectiveFrom ?? "",
-              effectiveTo: item?.EffectiveTo ?? "",
-              categoryId: item?.IncentiveProductCategoryId,
-              subCategoryId: item?.IncentiveProductSubCategoryId,
-              productId: item?.IncentiveProductId,
-            };
-            const existingCategory = acc.find(
-              (item) => item.category === category,
-            );
-            if (existingCategory) {
-              existingCategory.items.push(newItem);
-            } else {
-              acc.push({
-                category,
-                items: [newItem],
-              });
-            }
-            return acc;
-          },
-          [],
-        );
-        console.log(tableData, "tableData");
-        setCategories(tableData);
-      }
-    },
-  });
+          sessionData?.Token,
+        ),
+      onSuccess: (response: any) => {
+        if (response?.status === 200) {
+          const decryptedData = decrypt(
+            response?.data,
+            sessionData?.Key,
+            sessionData?.Vector,
+          );
+          const parsedData = parseNestedJson(JSON.parse(decryptedData));
+          const tableData: IncentiveRateCategory[] = parsedData?.Result?.reduce(
+            (acc: IncentiveRateCategory[], item: any) => {
+              const category = item?.IncentiveProductCategory ?? "";
+              const newItem = {
+                id: item?.Id,
+                subCategory: item?.IncentiveProductSubCategory ?? "",
+                product: item?.IncentiveProduct ?? "",
+                eligibleIncentive: item?.EligibleIncentiveAmount ?? 0,
+                effectiveDate: item?.EffectiveDate ?? "",
+                effectiveFrom: item?.EffectiveFrom ?? "",
+                effectiveTo: item?.EffectiveTo ?? "",
+                categoryId: item?.IncentiveProductCategoryId,
+                subCategoryId: item?.IncentiveProductSubCategoryId,
+                productId: item?.IncentiveProductId,
+              };
+              const existingCategory = acc.find(
+                (item) => item.category === category,
+              );
+              if (existingCategory) {
+                existingCategory.items.push(newItem);
+              } else {
+                acc.push({
+                  category,
+                  items: [newItem],
+                });
+              }
+              return acc;
+            },
+            [],
+          );
+          console.log(tableData, "tableData");
+          setCategories(tableData);
+        }
+      },
+    });
 
   useEffect(() => {
     handleFetchIncentiveData();
-  }, []);
+  }, [handleFetchIncentiveData, listingRefreshVersion]);
 
   useEffect(() => {
     if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
@@ -657,6 +664,9 @@ export default function IncentiveRatesList() {
               .incentive-rates-table .grouped-table td[rowspan] {
                 border-right: 1.5px solid #eee;
               }
+              .incentive-rates-table .grouped-table__scroll-wrapper {
+                scrollbar-gutter: stable;
+              }
             `}</style>
             <GroupedIncentiveTable
               columns={INCENTIVE_RATES_COLUMNS}
@@ -829,6 +839,7 @@ export default function IncentiveRatesList() {
         isOpen={isAddOpen}
         onClose={() => setIsAddOpen(false)}
         onSubmit={handleAddIncentiveRate}
+        isSubmitting={isAddSubmitting}
       />
 
       {/* Activity Log */}
@@ -837,6 +848,10 @@ export default function IncentiveRatesList() {
         onClose={() => setActivityLog(null)}
         title={activityLog?.title ?? ""}
         entries={activityLog?.entries ?? []}
+      />
+      <LoaderModal
+        isOpen={isListingLoading}
+        message="Loading incentive rates..."
       />
     </div>
   );

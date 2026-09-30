@@ -96,6 +96,11 @@ export const apiConfig: Record<string, ApiConfig> = {
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetSalesDashboardDetailsForWebApp`,
     httpMethod: "GET",
   },
+  GetSalesIncentiveTargetConfigurationDetails: {
+    name: "GetSalesIncentiveTargetConfigurationDetails",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetSalesIncentiveTargetConfigurationDetails?`,
+    httpMethod: "GET",
+  },
   UpsertIncentiveProductCategory: {
     name: "UpsertIncentiveProductCategory",
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/UpsertIncentiveProductCategory`,

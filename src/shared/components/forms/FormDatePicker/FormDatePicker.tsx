@@ -23,6 +23,7 @@ interface CustomDatePickerProps {
   textColor?: string;
   iconSize?: number;
   placeholderColor?: string;
+  monthYearOnly?: boolean;
 }
 
 interface CustomInputProps {
@@ -140,8 +141,10 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   textColor = "text-black",
   iconSize = 18,
   placeholderColor,
+  monthYearOnly = false,
 }) => {
   const [startDate, setStartDate] = useState<Date | null>(value ?? null);
+  const selectedDate = value !== undefined ? value : startDate;
 
   const handleChange = (date: Date | null) => {
     setStartDate(date);
@@ -156,7 +159,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       )}
 
       <DatePicker
-        selected={startDate}
+        selected={selectedDate}
         onChange={handleChange}
         disabled={disabled}
         customInput={
@@ -178,8 +181,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           />
         }
         placeholderText={placeholder}
-        dateFormat="dd/MM/yyyy"
-        minDate={minDate}
+        dateFormat={monthYearOnly ? "MMMM yyyy" : "dd/MM/yyyy"}
+        showMonthYearPicker={monthYearOnly}
+        minDate={monthYearOnly ? undefined : minDate}
         maxDate={maxDate}
         showMonthDropdown
         showYearDropdown

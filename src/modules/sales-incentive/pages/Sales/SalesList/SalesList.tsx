@@ -29,6 +29,7 @@ import type {
 import { ACHIEVED_LABELS } from "../SalesUtils";
 import SalesConfirmModal from "../Modals/ApproveModal";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
+import { useClientSessionStore } from "../../../../../app/store/useClientSessionStore";
 import {
   handleFetchSalesIncentiveData,
   handleUpdateSalesIncentiveAdjustment,
@@ -37,7 +38,6 @@ import decrypt from "../../../../../utils/security/decrypt";
 import { parseNestedJson } from "../../../../../utils/security/ParseData";
 import encrypt from "../../../../../utils/security/encrypt";
 import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
-import { ClientContractId, ClientId } from "../../../../../config/env";
 
 const SALES_PAGE_SIZE = 10;
 
@@ -145,6 +145,9 @@ function mapApiEmployeesToRecords(
 
 export default function SalesList() {
   const sessionData = useAuthStore((s) => s.sessionData);
+  const managers = useAuthStore((s) => s.Managers);
+  const clientId = useClientSessionStore((s) => s.clientId);
+  const clientContractId = useClientSessionStore((s) => s.clientContractId);
   const [activeTab, setActiveTab] = useState<SalesTabIdLocal>("PENDING");
 
   const [recordsByTab, setRecordsByTab] = useState<RecordsByTab>(() => ({
@@ -165,10 +168,11 @@ export default function SalesList() {
 
   const [showFilter, setShowFilter] = useState<boolean>(true);
   const [appliedManager, setAppliedManager] = useState<string>("");
-  const [monthDraft, setMonthDraft] = useState<Date | null>(null);
-  const [managerDraft, setManagerDraft] = useState<string>("");
+  const [monthDraft, setMonthDraft] = useState<Date | null>(now);
+  const [managerDraft, setManagerDraft] = useState<string>("0");
   const [searchTerm, setSearchTerm] = useState("");
   void setSearchTerm;
+  const initialLoadHandledRef = useRef(false);
 
   const { mutate: fetchSalesIncentive, isPending } = useMutation({
     mutationFn: (variables: { payload: any; token: string }) =>
@@ -248,7 +252,7 @@ export default function SalesList() {
         clearSelection("PENDING");
         setConfirmModal({ open: false, type: "approve", ids: [] });
         setDetail({ open: false, record: null });
-        fetchData(activeTab, apiMonth, apiYear);
+        fetchData(activeTab, apiMonth, apiYear, Number(appliedManager) || 0);
       } else {
         showToast({
           type: "error",
@@ -270,8 +274,14 @@ export default function SalesList() {
   });
 
   const fetchData = useCallback(
-    (tab: SalesTabIdLocal, month: number, year: number) => {
-      if (!sessionData?.Key || !sessionData?.Vector || !sessionData?.Token)
+    (tab: SalesTabIdLocal, month: number, year: number, managerId: number) => {
+      if (
+        clientId === null ||
+        clientContractId === null ||
+        !sessionData?.Key ||
+        !sessionData?.Vector ||
+        !sessionData?.Token
+      )
         return;
       fetchTabRef.current = tab;
 
@@ -283,20 +293,40 @@ export default function SalesList() {
         ).replace(/=/gi, "%3D");
 
       const submissionStatus = TAB_TO_SUBMISSION_STATUS[tab];
-      const queryProps = `month=${enc(month)}&year=${enc(year)}&managerId=${enc(0)}&clientId=${enc(ClientId)}&clientContractId=${enc(ClientContractId)}&submissionStatus=${enc(submissionStatus)}`;
+      const queryProps = `month=${enc(month)}&year=${enc(year)}&managerId=${enc(managerId)}&clientId=${enc(clientId)}&clientContractId=${enc(clientContractId)}&submissionStatus=${enc(submissionStatus)}`;
       fetchSalesIncentive({
         payload: { queryProps },
         token: sessionData.Token,
       });
     },
-    [sessionData, fetchSalesIncentive],
+    [clientId, clientContractId, sessionData, fetchSalesIncentive],
   );
 
   useEffect(() => {
-    if (sessionData?.Key && sessionData?.Vector && sessionData?.Token) {
-      fetchData("PENDING", apiMonth, apiYear);
-    }
-  }, []);
+    if (initialLoadHandledRef.current) return;
+    if (
+      clientId === null ||
+      clientContractId === null ||
+      !sessionData?.Key ||
+      !sessionData.Vector ||
+      !sessionData.Token
+    )
+      return;
+    initialLoadHandledRef.current = true;
+    const current = new Date();
+    const month = current.getMonth() + 1;
+    const year = current.getFullYear();
+    setApiMonth(month);
+    setApiYear(year);
+    fetchData("PENDING", month, year, 0);
+  }, [
+    clientId,
+    clientContractId,
+    fetchData,
+    sessionData?.Key,
+    sessionData?.Token,
+    sessionData?.Vector,
+  ]);
 
   const [selectedIds, setSelectedIds] = useState<
     Record<SalesTabIdLocal, Set<number>>
@@ -314,21 +344,20 @@ export default function SalesList() {
   }>({ open: false, type: "approve", ids: [] });
 
   const managerOptions = useMemo(() => {
-    const seen = new Map<string, string>();
-    (["PENDING", "APPROVED", "REJECTED"] as SalesTabIdLocal[]).forEach(
-      (tab) => {
-        recordsByTab[tab].forEach((r) => {
-          if (!seen.has(r.Manager.ManagerId)) {
-            seen.set(r.Manager.ManagerId, r.Manager.ManagerName);
-          }
-        });
-      },
-    );
-    return [
-      { label: "All", value: "" },
-      ...Array.from(seen.entries()).map(([value, label]) => ({ label, value })),
-    ];
-  }, [recordsByTab]);
+    const lookupOptions = managers.flatMap((manager) => {
+      if (!manager || typeof manager !== "object") return [];
+      const record = manager as Record<string, unknown>;
+      if (record.ManagerId === null || record.ManagerId === undefined)
+        return [];
+      return [
+        {
+          value: String(record.ManagerId),
+          label: String(record.ManagerName ?? ""),
+        },
+      ];
+    });
+    return [{ label: "All", value: "0" }, ...lookupOptions];
+  }, [managers]);
 
   const activeRecords = recordsByTab[activeTab];
   const filteredRecords = useMemo(() => {
@@ -359,20 +388,20 @@ export default function SalesList() {
       : new Date().getFullYear();
     setApiMonth(month);
     setApiYear(year);
-    setAppliedManager(managerDraft);
-    fetchData(activeTab, month, year);
+    setAppliedManager(managerDraft === "0" ? "" : managerDraft);
+    fetchData(activeTab, month, year, Number(managerDraft) || 0);
   }, [monthDraft, managerDraft, activeTab, fetchData]);
 
   const handleClearFilters = useCallback(() => {
     const current = new Date();
     const month = current.getMonth() + 1;
     const year = current.getFullYear();
-    setMonthDraft(null);
-    setManagerDraft("");
+    setMonthDraft(current);
+    setManagerDraft("0");
     setAppliedManager("");
     setApiMonth(month);
     setApiYear(year);
-    fetchData(activeTab, month, year);
+    fetchData(activeTab, month, year, 0);
   }, [activeTab, fetchData]);
 
   const activeSelection = selectedIds[activeTab];
@@ -601,6 +630,7 @@ export default function SalesList() {
                     title="Month"
                     value={monthDraft}
                     onChange={(date: Date | null) => setMonthDraft(date)}
+                    monthYearOnly
                   />
                   <div className="w-[288px]">
                     <CustomDropdown
@@ -660,7 +690,7 @@ export default function SalesList() {
             active={activeTab}
             onChange={(tab) => {
               setActiveTab(tab);
-              fetchData(tab, apiMonth, apiYear);
+              fetchData(tab, apiMonth, apiYear, Number(appliedManager) || 0);
             }}
             counts={apiCounts}
           />

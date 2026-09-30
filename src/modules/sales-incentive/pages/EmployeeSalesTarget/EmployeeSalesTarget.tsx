@@ -6,6 +6,7 @@ import Config from "../../../../assets/json/Config.json";
 import CustomButton from "../../../../shared/components/ui/Button/CustomButton";
 import IconRenderer from "../../../../shared/components/ui/IconRender/IconRenderer";
 import CustomDatePicker from "../../../../shared/components/forms/FormDatePicker/FormDatePicker";
+import CustomDropdown from "../../../../shared/components/forms/FormSelect/CustomDropdown";
 import CustomInput from "../../../../shared/components/forms/FormInput/CustomTextInput";
 import NoDataFound from "../../../../shared/components/ui/NoDataFound/NoDataFound";
 import BulkUploadCard from "../../../../shared/components/ui/BulkUpload/BulkUploadCard";
@@ -19,9 +20,11 @@ import {
   groupEmployeeTargetRows,
 } from "../../config/EmployeeSalesTargetBulkUpload";
 import { useAuthStore } from "../../../../app/store/useAuthStore";
+import { useClientSessionStore } from "../../../../app/store/useClientSessionStore";
 import {
   handleGetProductBulkTemplate,
   handleGetExcelTemplate,
+  handleGetSalesIncentiveTargetConfigurationDetails,
 } from "../../../../query/api";
 import encrypt from "../../../../utils/security/encrypt";
 import decrypt from "../../../../utils/security/decrypt";
@@ -30,16 +33,15 @@ import { downloadExcelFromBase64 } from "../../../../shared/utils/downloadExcel"
 import SampleDownloadModal from "./SampleDownloadModal";
 import type { SearchField } from "./SampleDownloadModal";
 import EmployeeSalesTargetUpdateModal from "./EmployeeSalesTargetUpdateModal";
+import LoaderModal from "../../../../shared/components/ui/LoaderModal/LoaderModal";
 import type {
   CategoryGroup,
   GroupedTableColumn,
   SubCategoryGroup,
 } from "../../types/salesIncentive.types";
-import dummey from "../../../../../mock-api/employeeSalesTargets.mock.json";
 
 interface EmployeeTargetListLocationState {
   bulkUploadSuccessCount?: number;
-  addedRows?: Record<string, any>[];
 }
 
 const EMPLOYEE_TARGET_BULK_UPLOAD_ROUTE = "/employeeSalesTarget/bulkUpload";
@@ -49,10 +51,27 @@ export default function EmployeeSalesTarget() {
   const navigate = useNavigate();
   const location = useLocation();
   const sessionData = useAuthStore((s) => s.sessionData);
+  const managers = useAuthStore((s) => s.Managers);
+  const clientId = useClientSessionStore((s) => s.clientId);
+  const clientContractId = useClientSessionStore((s) => s.clientContractId);
   const [employeeTemplate, setEmployeeTemplate] = useState<any>([]);
   const [showSampleModal, setShowSampleModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<Record<string, any>[]>([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const currentDate = new Date();
+  const [apiMonth, setApiMonth] = useState(currentDate.getMonth() + 1);
+  const [apiYear, setApiYear] = useState(currentDate.getFullYear());
+  const [appliedMonth, setAppliedMonth] = useState(() =>
+    currentDate.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+  );
+  const [monthDraft, setMonthDraft] = useState<Date | null>(currentDate);
+  const [managerDraft, setManagerDraft] = useState<string | number>(0);
+  const [appliedManager, setAppliedManager] = useState<string>("");
+  const [rows, setRows] = useState<Record<string, any>[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showFilter, setShowFilter] = useState<boolean>(true);
+  const processedNavKeyRef = useRef<string | null>(null);
+  const initialLoadHandledRef = useRef(false);
 
   const { uploadingFile, fileError, startUpload } = useBulkUpload<
     Record<string, any>
@@ -112,71 +131,143 @@ export default function EmployeeSalesTarget() {
     }
   }, []);
 
-  const [rows, setRows] = useState<Record<string, any>[]>(
-    dummey?.list?.response?.data,
-  );
-  const [showFilter, setShowFilter] = useState<boolean>(true);
-  const processedNavKeyRef = useRef<string | null>(null);
-  const [appliedMonth, setAppliedMonth] = useState<string>("");
-  const [monthDraft, setMonthDraft] = useState<Date | null>(null);
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [managerFilter, setManagerFilter] = useState<string>("All");
-
-  useEffect(() => {
-    const incoming = location.state as
-      | EmployeeTargetListLocationState
-      | undefined;
-    if (!incoming?.addedRows?.length) return;
-    if (processedNavKeyRef.current === location.key) return;
-    processedNavKeyRef.current = location.key;
-
-    setRows((prev) => [...prev, ...incoming.addedRows!]);
-    showToast({
-      type: "success",
-      title: "Success!",
-      message: `${incoming.bulkUploadSuccessCount ?? incoming.addedRows.length} records has been added`,
-      duration: 3000,
-    });
-    navigate(location.pathname, { replace: true, state: null });
-  }, [location.state, location.key, navigate]);
-
   const monthLabel = useCallback((d: Date | null) => {
     if (!d) return "";
     return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
   }, []);
 
-  const uniqueManagers = useMemo(() => {
-    const managers = new Set<string>();
-    rows.forEach((row) => {
-      const name = String(row.ManagerName ?? "").trim();
-      if (name) managers.add(name);
+  const managerOptions = useMemo(() => {
+    return managers.flatMap((manager) => {
+      if (!manager || typeof manager !== "object") return [];
+      const record = manager as Record<string, unknown>;
+      if (record.ManagerId === null || record.ManagerId === undefined)
+        return [];
+      return [
+        {
+          value: String(record.ManagerId),
+          label: String(record.ManagerName ?? ""),
+        },
+      ];
     });
-    return Array.from(managers).sort();
-  }, [rows]);
+  }, [managers]);
+
+  const { mutate: fetchEmployeeTargets, isPending } = useMutation({
+    mutationFn: (variables: {
+      month: number;
+      year: number;
+      managerId: number;
+      clientId: number;
+      clientContractId: number;
+      key: string;
+      vector: string;
+      token: string;
+    }) =>
+      handleGetSalesIncentiveTargetConfigurationDetails(
+        variables.month,
+        variables.year,
+        variables.clientId,
+        variables.clientContractId,
+        variables.managerId,
+        variables.key,
+        variables.vector,
+        variables.token,
+      ),
+    onSuccess: (data) => setRows(data),
+    onError: (error) => {
+      showToast({
+        type: "error",
+        title: "Unable to load employee sales targets",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+        duration: 3000,
+      });
+    },
+  });
+
+  const fetchTargets = useCallback(
+    (month: number, year: number, managerId: number) => {
+      if (
+        clientId === null ||
+        clientContractId === null ||
+        !sessionData?.Key ||
+        !sessionData.Vector ||
+        !sessionData.Token
+      ) {
+        return;
+      }
+      fetchEmployeeTargets({
+        month,
+        year,
+        managerId,
+        clientId,
+        clientContractId,
+        key: sessionData.Key,
+        vector: sessionData.Vector,
+        token: sessionData.Token,
+      });
+    },
+    [clientId, clientContractId, fetchEmployeeTargets, sessionData],
+  );
+
+  useEffect(() => {
+    if (location.state) {
+      initialLoadHandledRef.current = true;
+      return;
+    }
+    if (initialLoadHandledRef.current) return;
+    if (clientId === null || clientContractId === null || !sessionData?.Token)
+      return;
+    initialLoadHandledRef.current = true;
+    const now = new Date();
+    fetchTargets(now.getMonth() + 1, now.getFullYear(), 0);
+  }, [
+    clientId,
+    clientContractId,
+    fetchTargets,
+    location.state,
+    sessionData?.Token,
+  ]);
+
+  useEffect(() => {
+    const incoming = location.state as
+      | EmployeeTargetListLocationState
+      | undefined;
+    if (incoming?.bulkUploadSuccessCount === undefined) return;
+    if (processedNavKeyRef.current === location.key) return;
+    processedNavKeyRef.current = location.key;
+
+    showToast({
+      type: "success",
+      title: "Success!",
+      message: `${incoming.bulkUploadSuccessCount} records has been added`,
+      duration: 3000,
+    });
+    fetchTargets(apiMonth, apiYear, Number(appliedManager) || 0);
+    navigate(location.pathname, { replace: true, state: null });
+  }, [
+    apiMonth,
+    apiYear,
+    appliedManager,
+    fetchTargets,
+    location.key,
+    location.pathname,
+    location.state,
+    navigate,
+  ]);
 
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
-      if (appliedMonth) {
-        const parts = appliedMonth.split(" ");
-        const monthName = parts[0];
-        const yearStr = parts[1];
-        if (String(row.Month) !== monthName) return false;
-        if (yearStr && String(row.Year) !== yearStr) return false;
-      }
-      if (managerFilter !== "All") {
-        if (String(row.ManagerName ?? "").trim() !== managerFilter)
-          return false;
-      }
       if (searchTerm.trim()) {
         const q = searchTerm.trim().toLowerCase();
         const haystack =
-          `${row.EmployeeName} ${row.EmployeeCode} ${row.ManagerName ?? ""} ${row.IncentiveSubCategory} ${row.IncentiveProduct} ${row.IncentiveEligibility}`.toLowerCase();
+          `${row.EmployeeName} ${row.EmployeeCode} ${row.ManagerName ?? ""} ${row.IncentiveProductSubCategory ?? row.IncentiveSubCategory ?? ""} ${row.IncentiveProduct ?? ""} ${row.IncentiveEligibility ?? ""}`.toLowerCase();
         if (!haystack.includes(q)) return false;
       }
       return true;
     });
-  }, [rows, appliedMonth, searchTerm, managerFilter]);
+  }, [rows, searchTerm]);
 
   const employeeGroups = useMemo(
     () => groupEmployeeTargetRows(filteredRows),
@@ -184,14 +275,46 @@ export default function EmployeeSalesTarget() {
   );
 
   const handleGetResults = useCallback(() => {
-    setAppliedMonth(monthLabel(monthDraft));
-  }, [monthDraft, monthLabel]);
+    const selectedDate = monthDraft ?? new Date();
+    const month = selectedDate.getMonth() + 1;
+    const year = selectedDate.getFullYear();
+    setApiMonth(month);
+    setApiYear(year);
+    setAppliedMonth(monthLabel(selectedDate));
+    setAppliedManager(managerDraft);
+    fetchTargets(month, year, Number(managerDraft) || 0);
+  }, [
+    fetchTargets,
+    managerDraft,
+    monthDraft,
+    monthLabel,
+    setApiMonth,
+    setApiYear,
+    setAppliedManager,
+    setAppliedMonth,
+  ]);
 
   const handleClearFilters = useCallback(() => {
-    setMonthDraft(null);
-    setAppliedMonth("");
-    setManagerFilter("All");
-  }, []);
+    const current = new Date();
+    const month = current.getMonth() + 1;
+    const year = current.getFullYear();
+    setMonthDraft(current);
+    setAppliedMonth(monthLabel(current));
+    setManagerDraft("0");
+    setAppliedManager("");
+    setApiMonth(month);
+    setApiYear(year);
+    fetchTargets(month, year, 0);
+  }, [
+    fetchTargets,
+    monthLabel,
+    setApiMonth,
+    setApiYear,
+    setAppliedManager,
+    setAppliedMonth,
+    setManagerDraft,
+    setMonthDraft,
+  ]);
 
   const renderCustomCell = useCallback(
     (
@@ -395,23 +518,19 @@ export default function EmployeeSalesTarget() {
                   title="Month"
                   value={monthDraft}
                   onChange={(date: Date | null) => setMonthDraft(date)}
+                  monthYearOnly
                 />
-                <div className="flex flex-col">
-                  <label className="text-12 font-medium text-darkgray mb-4">
-                    Managers
-                  </label>
-                  <select
-                    value={managerFilter}
-                    onChange={(e) => setManagerFilter(e.target.value)}
-                    className="h-[37px] w-[288px] rounded-4 border border-strokegray text-13 text-darkgray px-12 bg-white outline-none cursor-pointer appearance-none"
-                  >
-                    <option value="All">All</option>
-                    {uniqueManagers.map((m) => (
-                      <option key={m} value={m}>
-                        {m}
-                      </option>
-                    ))}
-                  </select>
+                <div className="w-[288px]">
+                  <CustomDropdown
+                    borderColor="text-strokegray"
+                    options={[{ label: "All", value: "0" }, ...managerOptions]}
+                    value={String(managerDraft)}
+                    onChange={setManagerDraft}
+                    borderRadius="rounded-4"
+                    borderWidth="border-1"
+                    label="Managers"
+                    titleTextColor="text-darkgray"
+                  />
                 </div>
               </div>
               <div className="flex gap-10">
@@ -575,6 +694,10 @@ export default function EmployeeSalesTarget() {
       <EmployeeSalesTargetUpdateModal
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}
+      />
+      <LoaderModal
+        isOpen={isPending}
+        message="Loading employee sales targets..."
       />
     </div>
   );

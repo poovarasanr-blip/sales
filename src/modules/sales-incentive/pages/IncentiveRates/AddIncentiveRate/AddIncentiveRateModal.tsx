@@ -26,6 +26,7 @@ export interface AddIncentiveRateValues {
 
 interface AddIncentiveRateModalProps {
   isOpen: boolean;
+  isSubmitting: boolean;
   onClose: () => void;
   onSubmit: (values: AddIncentiveRateValues) => void;
 }
@@ -45,6 +46,7 @@ const TOMORROW = (() => {
 
 export default function AddIncentiveRateModal({
   isOpen,
+  isSubmitting,
   onClose,
   onSubmit,
 }: AddIncentiveRateModalProps) {
@@ -240,12 +242,17 @@ export default function AddIncentiveRateModal({
             padding="px-20"
             gap="gap-[6px]"
             borderRadius="rounded-6"
+            disabled={isSubmitting}
             icon={
-              <IconRenderer
-                icon="LuCircleCheckBig"
-                size={14}
-                className="text-white"
-              />
+              isSubmitting ? (
+                <span className="h-14 w-14 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              ) : (
+                <IconRenderer
+                  icon="LuCircleCheckBig"
+                  size={14}
+                  className="text-white"
+                />
+              )
             }
             iconPosition="left"
             onClick={handleSubmit}
