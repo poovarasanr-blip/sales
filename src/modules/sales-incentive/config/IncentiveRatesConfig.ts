@@ -379,7 +379,7 @@ export function toIncentiveRatesTableData(
         },
       ],
       incentive: item.eligibleIncentive,
-      ...cat,
+      item,
     })),
   }));
 }

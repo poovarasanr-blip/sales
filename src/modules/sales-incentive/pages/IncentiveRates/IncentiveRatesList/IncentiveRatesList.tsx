@@ -44,6 +44,7 @@ import type {
   ProductActivityLogEntry,
   IncentiveRatesUploadRow,
 } from "../../../types/salesIncentive.types";
+import { ClientContractId, ClientId } from "../../../../../config/env";
 
 /* ---- Bulk-upload column config (from Config.json) ---- */
 
@@ -150,6 +151,8 @@ export default function IncentiveRatesList() {
         if (parsedData?.Status) {
           setIsAddOpen(false);
           setListingRefreshVersion((version) => version + 1);
+          setEditingKey(null);
+          setEditValues({});
           showToast({
             type: "success",
             title: "Success!",
@@ -234,6 +237,7 @@ export default function IncentiveRatesList() {
                 categoryId: item?.IncentiveProductCategoryId,
                 subCategoryId: item?.IncentiveProductSubCategoryId,
                 productId: item?.IncentiveProductId,
+                ...item,
               };
               const existingCategory = acc.find(
                 (item) => item.category === category,
@@ -355,36 +359,45 @@ export default function IncentiveRatesList() {
     setEditValues({});
   }
 
-  function confirmEdit() {
+  function confirmEdit(value: any) {
     if (!editingKey) return;
-    const [cat, subCat] = editingKey.split("||");
-    setCategories((prev) =>
-      prev.map((c) =>
-        c.category === cat
-          ? {
-              ...c,
-              items: c.items.map((item) =>
-                item.subCategory === subCat
-                  ? {
-                      ...item,
-                      eligibleIncentive:
-                        editValues.eligibleIncentive ?? item.eligibleIncentive,
-                      effectiveDate:
-                        editValues.effectiveDate ?? item.effectiveDate,
-                    }
-                  : item,
-              ),
-            }
-          : c,
+    const effectiveDateFrom = editValues.effectiveDate ?? value?.effectiveDate;
+    if (!effectiveDateFrom) return;
+    const date = new Date(effectiveDateFrom);
+    const formattedDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000,
+    )
+      .toISOString()
+      .split("T")[0];
+
+    console.log(value, "value");
+
+    const formateToDate = effectiveDateFrom
+      ? (() => {
+          const date = new Date(effectiveDateFrom);
+          date.setFullYear(date.getFullYear() + 2);
+          return date.toISOString().split("T")[0];
+        })()
+      : "";
+
+    handleAddIncentiveRate({
+      Id: value?.Id,
+      CompanyId: 5,
+      ClientId: ClientId,
+      ClientContractId: ClientContractId,
+      TeamId: 0,
+      EmployeeId: 0,
+      IncentiveProductId: 0,
+      IncentiveProductSubCategoryId: Number(
+        value?.IncentiveProductSubCategoryId,
       ),
-    );
-    setEditingKey(null);
-    setEditValues({});
-    showToast({
-      type: "success",
-      title: "Updated",
-      message: "Incentive rate updated successfully",
-      duration: 2000,
+      IncentiveProductCategoryId: Number(value?.IncentiveProductCategoryId),
+      DealerId: 0,
+      EligibleIncentiveAmount:
+        editValues.eligibleIncentive ?? value?.EligibleIncentiveAmount,
+      EffectiveFrom: formattedDate,
+      EffectiveTo: formateToDate,
+      Status: 1,
     });
   }
 
@@ -574,7 +587,6 @@ export default function IncentiveRatesList() {
   }, [handleFilesReceived]);
 
   const hasData = categories.length > 0;
-
   return (
     <div
       className={`px-h pt-12 bg-bgcolor flex flex-col ${hasData ? "h-full overflow-hidden" : "min-h-[100%] overflow-scroll scrollbar-hide"}`}
@@ -749,7 +761,7 @@ export default function IncentiveRatesList() {
                           <button
                             aria-label="Confirm"
                             className="cursor-pointer"
-                            onClick={confirmEdit}
+                            onClick={() => confirmEdit(subCategory?.item)}
                           >
                             <IconRenderer
                               icon="LuCircleCheckBig"

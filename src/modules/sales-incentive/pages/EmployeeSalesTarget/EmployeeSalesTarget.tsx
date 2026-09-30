@@ -172,7 +172,9 @@ export default function EmployeeSalesTarget() {
         variables.vector,
         variables.token,
       ),
-    onSuccess: (data) => setRows(data),
+    onSuccess: (data) => {
+      setRows(data);
+    },
     onError: (error) => {
       showToast({
         type: "error",
@@ -320,7 +322,7 @@ export default function EmployeeSalesTarget() {
     (
       column: GroupedTableColumn,
       category: CategoryGroup,
-      _subCategory: SubCategoryGroup,
+      subCategory: SubCategoryGroup,
     ): React.ReactNode => {
       if (column.key === "category") {
         return (
@@ -357,6 +359,9 @@ export default function EmployeeSalesTarget() {
             <button
               className="text-[#8E8EA9] hover:text-[#EF4444] transition-colors"
               aria-label="Delete"
+              onClick={() => {
+                console.log(category, subCategory, "category");
+              }}
             >
               <IconRenderer icon="FiTrash2" size={15} />
             </button>

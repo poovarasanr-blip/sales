@@ -378,3 +378,13 @@ export const handleGetIncentiveRates = async (
   );
   return await apiRequest(url, null, httpMethod, token);
 };
+export const handleDeleteSalesIncentiveTargetConfiguration = async (
+  payload: string,
+  token: string,
+) => {
+  const { url, httpMethod } = getApiUrl(
+    undefined,
+    "DeleteSalesIncentiveTargetConfiguration",
+  );
+  return await apiRequest(url, { data: payload }, httpMethod, token);
+};

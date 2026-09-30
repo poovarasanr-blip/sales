@@ -168,11 +168,12 @@ export default function SampleDownloadModal({
     setIsSearching(true);
     setUsers([]);
     setSelectedUserIds(new Set());
-
     const searchElements = searchFields.map((field) => {
       let value: any;
-      if (field.FieldName in ENV_FIELD_VALUES) {
-        value = ENV_FIELD_VALUES[field.FieldName];
+      if (field.FieldName == "@clientId") {
+        value = ClientId;
+      } else if (field.FieldName == "@clientcontractId") {
+        value = ClientContractId;
       } else {
         const raw = fieldValues[field.FieldName];
         if (raw != null && raw !== "") {
@@ -188,7 +189,6 @@ export default function SampleDownloadModal({
         DefaultValue: String(field.DefaultValue ?? "0"),
       };
     });
-
     const payload = {
       SearchElementList: searchElements,
       DataSource: {
@@ -244,7 +244,9 @@ export default function SampleDownloadModal({
 
   const selectedUsers = useMemo(
     () =>
-      users?.filter((u, i) => selectedUserIds?.has(String(u.Id ?? u.id ?? i))),
+      (Array.isArray(users) ? users : []).filter((u, i) =>
+        selectedUserIds.has(String(u.Id ?? u.id ?? i)),
+      ),
     [users, selectedUserIds],
   );
 

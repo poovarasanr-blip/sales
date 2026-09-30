@@ -78,6 +78,7 @@ export function groupEmployeeTargetRows(
         storeName: String(row.StoreName ?? ""),
         targetQuantity: 0,
         eligibleIncentive: 0,
+        employeeId: row?.EmployeeId ?? "",
         subCategories: [{ subCategory: "", products: [] }],
       } as CategoryGroup);
     }
