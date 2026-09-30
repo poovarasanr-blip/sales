@@ -57,7 +57,8 @@ export default function ActualSalesDetailModal({
                     {detail.employeeName}
                   </p>
                   <p className="text-white font-normal text-12">
-                    ({detail.employeeCode})
+                    ({detail.employeeCode}
+                    {detail.employeeId ? ` • ID ${detail.employeeId}` : ""})
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -75,6 +76,7 @@ export default function ActualSalesDetailModal({
                   <div className="w-4 h-4 rounded-full bg-strokegray" />
                   <p className="text-12 font-normal text-strokegray">
                     Manager: {detail.managerName}
+                    {detail.managerCode ? ` (${detail.managerCode})` : ""}
                   </p>
                 </div>
               </div>

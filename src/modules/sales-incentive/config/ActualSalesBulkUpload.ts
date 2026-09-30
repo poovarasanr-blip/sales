@@ -67,62 +67,27 @@ export const ACTUAL_SALES_UPLOAD_COLUMNS: BulkUploadColumnConfig<ActualSalesUplo
     },
   ];
 
-export const ACTUAL_SALES_SAMPLE_ROWS: ActualSalesUploadRow[] = [
-  {
-    SalesEntryId: 1,
-    "Employee Code": "76077",
-    "Employee Name": "Test update Shalini",
-    "Dealer Name": "Bangalore",
-    "Manager Name": "rajesh magaji",
-    IncentiveSubCategory: "Standard Mixer Grinder",
-    IncentiveProduct: "Panasonic MX-AC300-H 550W Mixer Grinder",
-    SubmittedOn: "2026-09-15",
-    "Original Quantity": 10,
-    "Actual Quantity": 2,
-  },
-  {
-    SalesEntryId: 2,
-    "Employee Code": "76077",
-    "Employee Name": "Test update Shalini",
-    "Dealer Name": "Bangalore",
-    "Manager Name": "rajesh magaji",
-    IncentiveSubCategory: "Standard Mixer Grinder",
-    IncentiveProduct: "Panasonic Monster Mixer Grinder 750 Watts",
-    SubmittedOn: "2026-09-15",
-    "Original Quantity": 15,
-    "Actual Quantity": 5,
-  },
-  {
-    SalesEntryId: 3,
-    "Employee Code": "76078",
-    "Employee Name": "Ravi Kumar",
-    "Dealer Name": "Chennai",
-    "Manager Name": "rajesh magaji",
-    IncentiveSubCategory: "Premium Mixer Grinder",
-    IncentiveProduct: "Panasonic Warmer Series 1.8 Litre Rice Cooker",
-    SubmittedOn: "2026-09-15",
-    "Original Quantity": 20,
-    "Actual Quantity": 8,
-  },
-];
-
 export function groupActualSalesRows(
   rows: ActualSalesUploadRow[],
-): (CategoryGroup & { employeeCode: string })[] {
+): (CategoryGroup & { employeeCode: string; employeeId?: string })[] {
   const employees = new Map<
     string,
-    CategoryGroup & { employeeCode: string }
+    CategoryGroup & { employeeCode: string; employeeId?: string }
   >();
 
   rows.forEach((row) => {
-    const key = String(row["Employee Code"]);
+    const employeeId = row.EmployeeId == null ? "" : String(row.EmployeeId);
+    const employeeCode = String(row["Employee Code"]);
+    const key = employeeId || employeeCode;
 
     if (!employees.has(key)) {
       employees.set(key, {
         category: String(row["Employee Name"]),
         employeeName: String(row["Employee Name"]),
-        employeeCode: key,
+        employeeCode,
+        employeeId,
         managerName: String(row["Manager Name"] ?? ""),
+        managerCode: String(row.ManagerCode ?? ""),
         storeName: String(row["Dealer Name"] ?? ""),
         targetQuantity: 0,
         eligibleIncentive: 0,
@@ -145,6 +110,8 @@ export function groupActualSalesRows(
       product: String(row.IncentiveProduct ?? ""),
       effectiveDate: String(row["Actual Quantity"] ?? 0),
     });
+    subCat.actual =
+      (Number(subCat.actual) || 0) + (Number(row["Actual Quantity"]) || 0);
   });
 
   return Array.from(employees.values());
@@ -152,11 +119,14 @@ export function groupActualSalesRows(
 
 export function buildActualSalesEmployeeDetail(
   rows: ActualSalesUploadRow[],
-  employeeCode: string,
+  employeeIdentifier: string,
 ): ActualSalesEmployeeDetail | null {
-  const employeeRows = rows.filter(
-    (r) => String(r["Employee Code"]) === employeeCode,
+  const rowsForEmployeeId = rows.filter(
+    (r) => String(r.EmployeeId ?? "") === employeeIdentifier,
   );
+  const employeeRows = rowsForEmployeeId.length
+    ? rowsForEmployeeId
+    : rows.filter((r) => String(r["Employee Code"]) === employeeIdentifier);
   if (employeeRows.length === 0) return null;
 
   const first = employeeRows[0];
@@ -184,6 +154,8 @@ export function buildActualSalesEmployeeDetail(
     ([subCat, { products, total }]) => ({
       category: subCat,
       employeeCode: String(first["Employee Code"]),
+      employeeId:
+        first.EmployeeId == null ? undefined : String(first.EmployeeId),
       employeeName: String(first["Employee Name"]),
       targetQuantity: total,
       eligibleIncentive: 0,
@@ -203,11 +175,13 @@ export function buildActualSalesEmployeeDetail(
   }));
 
   return {
+    employeeId: first.EmployeeId == null ? undefined : String(first.EmployeeId),
     employeeCode: String(first["Employee Code"]),
     employeeName: String(first["Employee Name"]),
     company: String(first["Dealer Name"] ?? ""),
     location: "",
     managerName: String(first["Manager Name"] ?? ""),
+    managerCode: String(first.ManagerCode ?? ""),
     month: "",
     categories,
     groups,
@@ -215,6 +189,34 @@ export function buildActualSalesEmployeeDetail(
 }
 
 export const ACTUAL_SALES_TABLE_COLUMNS: GroupedTableColumn[] = [
+  {
+    key: "category",
+    label: "Employee",
+    fontWeight: 500,
+    color: "#31314D",
+    mergeRowSpan: true,
+  },
+  {
+    key: "manager",
+    label: "Manager",
+    mergeRowSpan: true,
+  },
+  {
+    key: "subCategory",
+    label: "Sub Category",
+    filterable: "text",
+    icon: "FiSearch",
+  },
+  { key: "effectiveDate", label: "Actual Sales", sortable: true },
+  {
+    key: "action",
+    label: "Action",
+    width: "137px",
+    mergeRowSpan: true,
+  },
+];
+
+export const ACTUAL_SALES_BULK_UPLOAD_PREVIEW_COLUMNS: GroupedTableColumn[] = [
   { key: "category", label: "Employee", fontWeight: 500, color: "#31314D" },
   {
     key: "subCategory",

@@ -448,7 +448,7 @@ export default function EmployeeSalesTarget() {
     input.click();
   }, [handleFilesReceived]);
 
-  const hasData = rows.length > 0;
+  const hasData = rows.length == 0;
 
   return (
     <div className="px-h pt-12 overflow-scroll scrollbar-hide bg-bgcolor flex flex-col h-[100%] relative">

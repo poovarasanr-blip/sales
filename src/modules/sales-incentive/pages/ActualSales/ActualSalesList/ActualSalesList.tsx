@@ -11,6 +11,7 @@ import CustomInput from "../../../../../shared/components/forms/FormInput/Custom
 import NoDataFound from "../../../../../shared/components/ui/NoDataFound/NoDataFound";
 import BulkUploadCard from "../../../../../shared/components/ui/BulkUpload/BulkUploadCard";
 import GroupedIncentiveTable from "../../../../../shared/components/ui/DataTable/CustomTable";
+import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
 import { showToast } from "../../../../../shared/components/ui/CustomToast/UseToast";
 import { generateSampleFile } from "../../../../../shared/utils/BulkuploadUtils";
 import { useBulkUpload } from "../../../hooks/Usebulkupload";
@@ -19,14 +20,17 @@ import {
   ACTUAL_SALES_TABLE_COLUMNS,
   groupActualSalesRows,
   buildActualSalesEmployeeDetail,
-  getManagerOptions,
 } from "../../../config/ActualSalesBulkUpload";
 import {
   parseWorkbook,
   readFileAsArrayBuffer,
 } from "../../../../../shared/utils/BulkuploadUtils";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
-import { handleGetProductBulkTemplate } from "../../../../../query/api";
+import { useClientSessionStore } from "../../../../../app/store/useClientSessionStore";
+import {
+  handleGetProductBulkTemplate,
+  handleGetApprovedSalesDetails,
+} from "../../../../../query/api";
 import encrypt from "../../../../../utils/security/encrypt";
 import decrypt from "../../../../../utils/security/decrypt";
 import { parseNestedJson } from "../../../../../utils/security/ParseData";
@@ -40,19 +44,104 @@ import ActualSalesDetailModal from "../ActualSalesDetail/ActualSalesDetail";
 
 interface ActualSalesListLocationState {
   bulkUploadSuccessCount?: number;
-  addedRows?: ActualSalesUploadRow[];
 }
 
 const ACTUAL_SALES_BULK_UPLOAD_ROUTE = "/actualSales/bulkUpload";
 const ACTUAL_SALES_PAGE_SIZE = 10;
 
+function mapApprovedSalesRows(
+  records: Record<string, unknown>[],
+): ActualSalesUploadRow[] {
+  return records.map((record) => ({
+    SalesEntryId: (record.Id ?? record.SalesEntryDetailsId) as number | string,
+    EmployeeId: record.EmployeeId as number | string,
+    "Employee Code": (record.EmployeeCode ?? "") as number | string,
+    "Employee Name": String(record.EmployeeName ?? ""),
+    "Dealer Name": String(record.DealerName ?? ""),
+    ManagerCode: String(record.ManagerCode ?? ""),
+    "Manager Name": String(record.ManagerName ?? ""),
+    IncentiveSubCategory: String(record.IncentiveProductSubCategory ?? ""),
+    IncentiveProduct: String(record.IncentiveProduct ?? ""),
+    "Actual Quantity": Number(record.ApprovedQuantity) || 0,
+  }));
+}
+
 export default function ActualSalesList() {
   const navigate = useNavigate();
   const location = useLocation();
   const sessionData = useAuthStore((s) => s.sessionData);
+  const managers = useAuthStore((s) => s.Managers);
+  const clientId = useClientSessionStore((s) => s.clientId);
+  const clientContractId = useClientSessionStore((s) => s.clientContractId);
   const [actualSalesTemplate, setActualSalesTemplate] = useState<any>(null);
   const [showSampleModal, setShowSampleModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<Record<string, any>[]>([]);
+  const now = new Date();
+  const [apiMonth, setApiMonth] = useState(now.getMonth() + 1);
+  const [apiYear, setApiYear] = useState(now.getFullYear());
+  const [rows, setRows] = useState<ActualSalesUploadRow[]>([]);
+  const [showFilter, setShowFilter] = useState<boolean>(true);
+  const processedNavKeyRef = useRef<string | null>(null);
+  const initialRequestKeyRef = useRef<string | null>(null);
+  const [appliedMonth, setAppliedMonth] = useState(() =>
+    now.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+  );
+  const [appliedManager, setAppliedManager] = useState<string>("0");
+  const [monthDraft, setMonthDraft] = useState<Date | null>(now);
+  const [managerDraft, setManagerDraft] = useState<string>("0");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { mutate: fetchApprovedSales, isPending: isLoadingApprovedSales } =
+    useMutation({
+      mutationFn: (variables: {
+        month: number;
+        year: number;
+        managerId: number;
+      }) => {
+        if (
+          clientId === null ||
+          clientContractId === null ||
+          !sessionData?.Key ||
+          !sessionData.Vector ||
+          !sessionData.Token
+        ) {
+          throw new Error("Sales session is not ready.");
+        }
+        return handleGetApprovedSalesDetails(
+          variables.month,
+          variables.year,
+          clientId,
+          clientContractId,
+          variables.managerId,
+          sessionData.Key,
+          sessionData.Vector,
+          sessionData.Token,
+        );
+      },
+      onSuccess: (records) => setRows(mapApprovedSalesRows(records)),
+      onError: () => {
+        setRows([]);
+        showToast({
+          type: "error",
+          title: "Unable to load actual sales",
+          message: "Something went wrong. Please try again.",
+          duration: 3000,
+        });
+      },
+    });
+
+  const fetchSales = useCallback(
+    (month: number, year: number, managerId: number) => {
+      if (clientId === null || clientContractId === null) return;
+      fetchApprovedSales({ month, year, managerId });
+    },
+    [clientId, clientContractId, fetchApprovedSales],
+  );
+
+  const monthLabel = useCallback((date: Date | null) => {
+    if (!date) return "";
+    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  }, []);
 
   const { uploadingFile, fileError, startUpload } =
     useBulkUpload<ActualSalesUploadRow>(ACTUAL_SALES_UPLOAD_COLUMNS);
@@ -89,47 +178,80 @@ export default function ActualSalesList() {
     }
   }, []);
 
-  const [rows, setRows] = useState<ActualSalesUploadRow[]>([]);
-  const [showFilter, setShowFilter] = useState<boolean>(true);
-  const processedNavKeyRef = useRef<string | null>(null);
-  const [appliedMonth, setAppliedMonth] = useState<string>("");
-  const [appliedManager, setAppliedManager] = useState<string>("");
-  const [monthDraft, setMonthDraft] = useState<Date | null>(null);
-  const [managerDraft, setManagerDraft] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState("");
-
   // Detail drawer state
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] =
     useState<ActualSalesEmployeeDetail | null>(null);
 
+  const managerOptions = useMemo(
+    () => [
+      { label: "All", value: "0" },
+      ...managers.flatMap((manager) => {
+        if (!manager || typeof manager !== "object") return [];
+        const record = manager as Record<string, unknown>;
+        if (record.ManagerId === null || record.ManagerId === undefined)
+          return [];
+        return [
+          {
+            value: String(record.ManagerId),
+            label: String(record.ManagerName ?? ""),
+          },
+        ];
+      }),
+    ],
+    [managers],
+  );
+
+  useEffect(() => {
+    if (
+      clientId === null ||
+      clientContractId === null ||
+      !sessionData?.Key ||
+      !sessionData.Vector ||
+      !sessionData.Token
+    )
+      return;
+    const requestKey = `${clientId}:${clientContractId}:${sessionData.Token}`;
+    if (initialRequestKeyRef.current === requestKey) return;
+    initialRequestKeyRef.current = requestKey;
+    fetchSales(apiMonth, apiYear, 0);
+  }, [
+    apiMonth,
+    apiYear,
+    clientId,
+    clientContractId,
+    fetchSales,
+    sessionData?.Key,
+    sessionData?.Token,
+    sessionData?.Vector,
+  ]);
+
   useEffect(() => {
     const incoming = location.state as ActualSalesListLocationState | undefined;
-    if (!incoming?.addedRows?.length) return;
+    if (incoming?.bulkUploadSuccessCount === undefined) return;
     if (processedNavKeyRef.current === location.key) return;
     processedNavKeyRef.current = location.key;
-
-    setRows((prev) => [...prev, ...incoming.addedRows!]);
     showToast({
       type: "success",
       title: "Success!",
-      message: `${incoming.bulkUploadSuccessCount ?? incoming.addedRows.length} records has been added`,
+      message: `${incoming.bulkUploadSuccessCount} actual sales records added`,
       duration: 3000,
     });
+    fetchSales(apiMonth, apiYear, Number(appliedManager) || 0);
     navigate(location.pathname, { replace: true, state: null });
-  }, [location.state, location.key, navigate]);
-
-  const managerOptions = useMemo(() => getManagerOptions(rows), [rows]);
-
-  const monthLabel = useCallback((d: Date | null) => {
-    if (!d) return "";
-    return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
-  }, []);
+  }, [
+    apiMonth,
+    apiYear,
+    appliedManager,
+    fetchSales,
+    location.key,
+    location.pathname,
+    location.state,
+    navigate,
+  ]);
 
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
-      if (appliedManager && String(row["Manager Name"]) !== appliedManager)
-        return false;
       if (searchTerm.trim()) {
         const q = searchTerm.trim().toLowerCase();
         const haystack =
@@ -138,7 +260,7 @@ export default function ActualSalesList() {
       }
       return true;
     });
-  }, [rows, appliedManager, searchTerm]);
+  }, [rows, searchTerm]);
 
   const employeeGroups = useMemo(
     () => groupActualSalesRows(filteredRows),
@@ -146,16 +268,30 @@ export default function ActualSalesList() {
   );
 
   const handleGetResults = useCallback(() => {
-    setAppliedMonth(monthLabel(monthDraft));
+    const selectedDate = monthDraft ?? new Date();
+    const month = selectedDate.getMonth() + 1;
+    const year = selectedDate.getFullYear();
+    setApiMonth(month);
+    setApiYear(year);
+    setAppliedMonth(monthLabel(selectedDate));
     setAppliedManager(managerDraft);
-  }, [monthDraft, managerDraft, monthLabel]);
+    fetchSales(month, year, Number(managerDraft) || 0);
+  }, [
+    fetchSales,
+    managerDraft,
+    monthDraft,
+    monthLabel,
+    setApiMonth,
+    setApiYear,
+    setAppliedManager,
+    setAppliedMonth,
+  ]);
 
   const handleClearFilters = useCallback(() => {
-    setMonthDraft(null);
-    setManagerDraft("");
-    setAppliedMonth("");
-    setAppliedManager("");
-  }, []);
+    const current = new Date();
+    setMonthDraft(current);
+    setManagerDraft("0");
+  }, [setManagerDraft, setMonthDraft]);
 
   const searchFields: SearchField[] = useMemo(
     () =>
@@ -194,7 +330,10 @@ export default function ActualSalesList() {
         );
 
         if (result.headerErrors.length > 0) {
-          console.log("[ActualSales] Header validation errors:", result.headerErrors);
+          console.log(
+            "[ActualSales] Header validation errors:",
+            result.headerErrors,
+          );
           showToast({
             type: "error",
             title: "Invalid Template",
@@ -205,7 +344,10 @@ export default function ActualSalesList() {
         }
 
         console.log("[ActualSales] Extracted valid rows:", result.validRows);
-        console.log("[ActualSales] Extracted invalid rows:", result.invalidRows);
+        console.log(
+          "[ActualSales] Extracted invalid rows:",
+          result.invalidRows,
+        );
         console.log(
           "[ActualSales] Summary — valid:",
           result.validRows.length,
@@ -223,7 +365,8 @@ export default function ActualSalesList() {
         showToast({
           type: "error",
           title: "Upload Failed",
-          message: "Could not read the file. It may be corrupted or in an unsupported format.",
+          message:
+            "Could not read the file. It may be corrupted or in an unsupported format.",
           duration: 5000,
         });
       }
@@ -330,13 +473,14 @@ export default function ActualSalesList() {
                   title="Month"
                   value={monthDraft}
                   onChange={(date: Date | null) => setMonthDraft(date)}
+                  monthYearOnly
                 />
                 <div className="w-[288px]">
                   <CustomDropdown
                     borderColor="text-strokegray"
                     options={managerOptions}
                     value={managerDraft}
-                    onChange={(value: string) => setManagerDraft(value)}
+                    onChange={setManagerDraft}
                     borderRadius="rounded-4"
                     borderWidth="border-1"
                     label="Managers"
@@ -430,19 +574,46 @@ export default function ActualSalesList() {
               emptyMessage="No records found."
               pagination
               showVerticalLines={true}
+              hideSubRowBorders={true}
               pageSize={ACTUAL_SALES_PAGE_SIZE}
-              renderCustomCell={(column, row) => {
-                if (column.key !== "action") return undefined;
-                return (
-                  <button
-                    type="button"
-                    className="text-secondary text-13 font-normal flex items-center gap-4"
-                    onClick={() => handleDetailedSales(row?.employeeCode ?? "")}
-                  >
-                    Detailed Sales
-                    <IconRenderer icon="MdKeyboardDoubleArrowRight" size={16} />
-                  </button>
-                );
+              renderCustomCell={(column, employee, subCategory) => {
+                if (column.key === "manager") {
+                  return (
+                    <div>
+                      <p className="text-13 text-darkgray">
+                        {employee.managerName || "—"}
+                      </p>
+                      {employee.managerCode && (
+                        <p className="text-11 text-gray">
+                          {employee.managerCode}
+                        </p>
+                      )}
+                    </div>
+                  );
+                }
+                if (column.key === "effectiveDate") {
+                  return subCategory.actual ?? 0;
+                }
+                if (column.key === "action") {
+                  return (
+                    <button
+                      type="button"
+                      className="text-secondary text-13 font-normal flex items-center gap-4"
+                      onClick={() =>
+                        handleDetailedSales(
+                          employee.employeeId || employee.employeeCode || "",
+                        )
+                      }
+                    >
+                      Detailed Sales
+                      <IconRenderer
+                        icon="MdKeyboardDoubleArrowRight"
+                        size={16}
+                      />
+                    </button>
+                  );
+                }
+                return undefined;
               }}
             />
           </div>
@@ -495,7 +666,11 @@ export default function ActualSalesList() {
         employeeTemplate={actualSalesTemplate}
         onUserSelect={handleUserSelect}
         searchDataSourceName="GetEmployeeDetailsForSalesEntryDetails"
-        downloadFileName="ActualSalesTemplate.xlsx"
+        downloadFileName="ApprovedSalesTemplate.xlsx"
+      />
+      <LoaderModal
+        isOpen={isLoadingApprovedSales}
+        message="Loading actual sales..."
       />
     </div>
   );

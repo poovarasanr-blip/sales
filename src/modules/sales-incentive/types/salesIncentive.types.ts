@@ -193,6 +193,7 @@ export interface SubCategoryGroup {
 }
 export interface CategoryGroup {
   employeeCode?: string;
+  employeeId?: string;
   employeeName?: string;
   category: string;
   effectiveDate?: string;
@@ -200,6 +201,7 @@ export interface CategoryGroup {
   eligibleIncentive: string | number;
   subCategories: SubCategoryGroup[];
   managerName?: string;
+  managerCode?: string;
   managerCode?: string;
   storeName?: string;
   submittedDate?: string;
@@ -332,6 +334,8 @@ export interface IncentiveRatesUploadRow {
 }
 export interface ActualSalesUploadRow {
   SalesEntryId?: number | string;
+  EmployeeId?: number | string;
+  ManagerCode?: string;
   "Employee Code": number | string;
   "Employee Name": string;
   "Dealer Name": string;
@@ -339,7 +343,7 @@ export interface ActualSalesUploadRow {
   IncentiveSubCategory: string;
   IncentiveProduct: string;
   SubmittedOn?: string;
-  "Original Quantity": number;
+  "Original Quantity"?: number;
   "Actual Quantity": number;
   [key: string]: string | number | undefined;
 }
@@ -372,12 +376,14 @@ export interface ActualSalesDetailCategory {
   products: ActualSalesDetailProduct[];
 }
 export interface ActualSalesEmployeeDetail {
+  employeeId?: string;
   employeeCode: string;
   employeeName: string;
   role?: string;
   company: string;
   location: string;
   managerName: string;
+  managerCode?: string;
   month: string;
   categories: ActualSalesDetailCategory[];
   groups: CategoryGroup[];

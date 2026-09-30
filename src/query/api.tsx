@@ -310,7 +310,7 @@ export async function handleGetSalesIncentiveTargetConfigurationDetails(
     `&year=${encryptValue(year)}` +
     `&clientId=${encryptValue(clientId)}` +
     `&clientContractId=${encryptValue(clientContractId)}` +
-    `&managerId=${encryptValue(managerId)}`;
+    `&ManagerId=${encryptValue(managerId)}`;
   const { url, httpMethod } = getApiUrl(
     { queryProps },
     "GetSalesIncentiveTargetConfigurationDetails",
@@ -349,6 +349,65 @@ export async function handleGetSalesIncentiveTargetConfigurationDetails(
       : null;
   if (parsedRecord?.Status !== true || !Array.isArray(parsedRecord.Result)) {
     throw new Error("Invalid employee sales target response.");
+  }
+  return parsedRecord.Result as Record<string, unknown>[];
+}
+
+export async function handleGetApprovedSalesDetails(
+  month: number,
+  year: number,
+  clientId: number,
+  clientContractId: number,
+  managerId: number,
+  key: string,
+  vector: string,
+  token: string,
+): Promise<Record<string, unknown>[]> {
+  const encryptValue = (value: number) =>
+    encrypt(JSON.stringify(value), key, vector).replace(/=/gi, "%3D");
+  const queryProps =
+    `month=${encryptValue(month)}` +
+    `&year=${encryptValue(year)}` +
+    `&clientId=${encryptValue(clientId)}` +
+    `&clientContractId=${encryptValue(clientContractId)}` +
+    `&ManagerId=${encryptValue(managerId)}`;
+  const { url, httpMethod } = getApiUrl(
+    { queryProps },
+    "GetApprovedSalesDetails",
+  );
+  const response = await apiRequest(url, null, httpMethod, token);
+  const responseRecord =
+    response && typeof response === "object"
+      ? (response as Record<string, unknown>)
+      : {};
+  if (
+    typeof responseRecord.status !== "number" ||
+    responseRecord.status < 200 ||
+    responseRecord.status >= 300
+  ) {
+    throw new Error("Failed to load approved sales details.");
+  }
+
+  let payload: unknown = responseRecord.data;
+  if (typeof payload === "string") {
+    try {
+      payload = JSON.parse(payload);
+    } catch {
+      const decrypted = decrypt(payload, key, vector);
+      try {
+        payload = JSON.parse(decrypted);
+      } catch {
+        throw new Error("Invalid approved sales details response.");
+      }
+    }
+  }
+  const parsed = parseNestedJson(payload);
+  const parsedRecord =
+    parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? (parsed as Record<string, unknown>)
+      : null;
+  if (parsedRecord?.Status !== true || !Array.isArray(parsedRecord.Result)) {
+    throw new Error("Invalid approved sales details response.");
   }
   return parsedRecord.Result as Record<string, unknown>[];
 }

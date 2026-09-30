@@ -6,7 +6,7 @@ import CustomButton from "../../../../../shared/components/ui/Button/CustomButto
 import IconRenderer from "../../../../../shared/components/ui/IconRender/IconRenderer";
 import GroupedIncentiveTable from "../../../../../shared/components/ui/DataTable/CustomTable";
 import {
-  ACTUAL_SALES_TABLE_COLUMNS,
+  ACTUAL_SALES_BULK_UPLOAD_PREVIEW_COLUMNS,
   ACTUAL_SALES_UPLOAD_COLUMNS,
   groupActualSalesRows,
 } from "../../../config/ActualSalesBulkUpload";
@@ -242,7 +242,7 @@ export default function ActualSalesBulkUpload() {
         <div className="flex-1 min-h-0 overflow-y-auto px-[25px] pb-[25px] pt-[15px]">
           {activeTab === "valid" && (
             <GroupedIncentiveTable
-              columns={ACTUAL_SALES_TABLE_COLUMNS.filter(
+              columns={ACTUAL_SALES_BULK_UPLOAD_PREVIEW_COLUMNS.filter(
                 (c) => c.key !== "action",
               )}
               data={validGroups}
