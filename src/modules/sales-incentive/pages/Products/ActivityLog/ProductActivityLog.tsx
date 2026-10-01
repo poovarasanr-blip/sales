@@ -66,8 +66,8 @@ export default function ProductActivityLog({
                   <div className="border border-strokegray rounded-6 py-12">
                     <p className="text-12 text-darkgray flex items-center gap-[6px] mx-16">
                       <span className="font-medium text-14">{entry.date}</span>
-                      <span className="w-[4px] h-[4px] rounded-full bg-litegray inline-block" />
-                      <span className="text-gray">{entry.time}</span>
+                      {/* <span className="w-[4px] h-[4px] rounded-full bg-litegray inline-block" />
+                      <span className="text-gray">{entry.time}</span> */}
                     </p>
                     <p className="text-13 text-gray mt-4 mx-16">
                       {entry.updatedBy}

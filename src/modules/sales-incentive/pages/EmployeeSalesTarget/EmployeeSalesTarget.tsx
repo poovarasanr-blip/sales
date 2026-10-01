@@ -14,6 +14,7 @@ import GroupedIncentiveTable from "../../../../shared/components/ui/DataTable/Cu
 import { showToast } from "../../../../shared/components/ui/CustomToast/UseToast";
 import { generateSampleFile } from "../../../../shared/utils/BulkuploadUtils";
 import { useBulkUpload } from "../../hooks/Usebulkupload";
+import { useImportSalesIncentiveTarget } from "../../hooks/UseImportSalesIncentiveTarget";
 import {
   EMPLOYEE_TARGET_UPLOAD_COLUMNS,
   EMPLOYEE_TARGET_TABLE_COLUMNS,
@@ -58,6 +59,7 @@ export default function EmployeeSalesTarget() {
   const [showSampleModal, setShowSampleModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<Record<string, any>[]>([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [detailsData, setDetailsData] = useState<Record<string, any>[]>([]);
   const currentDate = new Date();
   const [apiMonth, setApiMonth] = useState(currentDate.getMonth() + 1);
   const [apiYear, setApiYear] = useState(currentDate.getFullYear());
@@ -261,6 +263,7 @@ export default function EmployeeSalesTarget() {
 
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
+      if (Number(row.Status) === 0) return false;
       if (searchTerm.trim()) {
         const q = searchTerm.trim().toLowerCase();
         const haystack =
@@ -295,6 +298,40 @@ export default function EmployeeSalesTarget() {
     setAppliedManager,
     setAppliedMonth,
   ]);
+
+  const handleEmployeeTargetsImported = useCallback(() => {
+    setEditModalOpen(false);
+    fetchTargets(apiMonth, apiYear, Number(appliedManager) || 0);
+  }, [apiMonth, apiYear, appliedManager, fetchTargets]);
+  const { importTargets, isPending: isSaving } = useImportSalesIncentiveTarget({
+    onImported: handleEmployeeTargetsImported,
+  });
+
+  const handleSaveEmployeeTargets = useCallback(
+    (updatedRecords: Record<string, any>[]) => {
+      if (!sessionData?.Key || !sessionData.Vector || !sessionData.Token) {
+        showToast({
+          type: "error",
+          title: "Session Error",
+          message: "Session data not available. Please log in again.",
+          duration: 3000,
+        });
+        return;
+      }
+
+      const payload = encrypt(
+        JSON.stringify(updatedRecords),
+        sessionData.Key,
+        sessionData.Vector,
+      );
+      importTargets({
+        payload,
+        token: sessionData.Token,
+        recordCount: updatedRecords.length,
+      });
+    },
+    [importTargets, sessionData],
+  );
 
   const handleClearFilters = useCallback(() => {
     const current = new Date();
@@ -368,7 +405,18 @@ export default function EmployeeSalesTarget() {
             <button
               className="text-[#8E8EA9] hover:text-primary transition-colors"
               aria-label="Edit"
-              onClick={() => setEditModalOpen(true)}
+              onClick={() => {
+                setDetailsData(
+                  rows.filter(
+                    (row) =>
+                      String(row.EmployeeId ?? "") ===
+                        String(category.employeeId ?? "") ||
+                      String(row.EmployeeCode ?? "") ===
+                        String(category.employeeCode ?? ""),
+                  ),
+                );
+                setEditModalOpen(true);
+              }}
             >
               <IconRenderer icon="FiEdit2" size={15} />
             </button>
@@ -377,7 +425,7 @@ export default function EmployeeSalesTarget() {
       }
       return undefined;
     },
-    [],
+    [rows],
   );
 
   const searchFields: SearchField[] = useMemo(
@@ -448,7 +496,7 @@ export default function EmployeeSalesTarget() {
     input.click();
   }, [handleFilesReceived]);
 
-  const hasData = rows.length == 0;
+  const hasData = rows.length > 0;
 
   return (
     <div className="px-h pt-12 overflow-scroll scrollbar-hide bg-bgcolor flex flex-col h-[100%] relative">
@@ -697,8 +745,20 @@ export default function EmployeeSalesTarget() {
       />
 
       <EmployeeSalesTargetUpdateModal
+        key={
+          editModalOpen
+            ? String(
+                detailsData[0]?.EmployeeId ??
+                  detailsData[0]?.EmployeeCode ??
+                  "employee",
+              )
+            : "closed"
+        }
+        detailsData={detailsData}
         isOpen={editModalOpen}
+        isSubmitting={isSaving}
         onClose={() => setEditModalOpen(false)}
+        onSave={handleSaveEmployeeTargets}
       />
       <LoaderModal
         isOpen={isPending}

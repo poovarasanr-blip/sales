@@ -126,6 +126,11 @@ export const apiConfig: Record<string, ApiConfig> = {
     urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/DeleteSalesIncentiveTargetConfiguration`,
     httpMethod: "POST",
   },
+  GetIncentiveProductMappingHistory: {
+    name: "GetIncentiveProductMappingHistory",
+    urlEndPoint: `${Config?.baseUrlRoute}/api/SaleIncentive/GetIncentiveProductMappingHistory?`,
+    httpMethod: "GET",
+  },
 };
 
 export const getApiUrl = (

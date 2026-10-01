@@ -40,21 +40,21 @@
     "RoleId": 8,
     "IsMobile": false
   },
-  "Key": "0xAA801C4E20304B",
-  "Vector": "0x93C4C609960298",
-  "Token": "0xFDE948E85731DDD192D1BD2B8A1960CE8BCA5605AF17A4F219D6C9EFE0B23A6AE05B62705E945606FCE727CED4B1F0668975",
+  "Key": "0x094107A1B824FA",
+  "Vector": "0x25F4FAC3DA1FE7",
+  "Token": "0xEF10114C33C02D3955F36F4DFD04CFA7DE2D65915741B5D282FA4FCAE45E91FC5F53DDA7F9F44A9E9DA0960C1283BD0CADA4",
   "UserSession": {
     "browserDetails": {
       "Id": 0,
       "Name": "",
       "Version": ""
     },
-    "Token": "0xFDE948E85731DDD192D1BD2B8A1960CE8BCA5605AF17A4F219D6C9EFE0B23A6AE05B62705E945606FCE727CED4B1F0668975",
+    "Token": "0xEF10114C33C02D3955F36F4DFD04CFA7DE2D65915741B5D282FA4FCAE45E91FC5F53DDA7F9F44A9E9DA0960C1283BD0CADA4",
     "UserId": 226,
     "PersonId": 78,
     "PersonName": "HfactoR User",
-    "CreatedOn": "2026-09-29T11:05:02.253",
-    "LastCheckedOn": "2026-09-29T11:05:02.253",
+    "CreatedOn": "2026-10-01T01:55:03.607",
+    "LastCheckedOn": "2026-10-01T01:55:03.607",
     "IPAddress": "",
     "RouterPublicIP": "",
     "RouterPrivateIP": "",
@@ -21891,6 +21891,17 @@
             {
               "MenuName": "Courses",
               "Route": "/app-onboarding/common/ui/capcourse",
+              "Icon": "pi pi-file-edit",
+              "DisplayOrder": 18,
+              "Type": 0,
+              "TargetType": 0,
+              "IsVisible": true,
+              "ModuleCode": "APPI",
+              "ChildMenuItems": []
+            },
+            {
+              "MenuName": "University Plans",
+              "Route": "/app-onboarding/common/ui/universityplan",
               "Icon": "pi pi-file-edit",
               "DisplayOrder": 18,
               "Type": 0,
@@ -114316,6 +114327,17 @@
             {
               "MenuName": "Courses",
               "Route": "/app-onboarding/common/ui/capcourse",
+              "Icon": "pi pi-file-edit",
+              "DisplayOrder": 18,
+              "Type": 0,
+              "TargetType": 0,
+              "IsVisible": true,
+              "ModuleCode": "APPI",
+              "ChildMenuItems": []
+            },
+            {
+              "MenuName": "University Plans",
+              "Route": "/app-onboarding/common/ui/universityplan",
               "Icon": "pi pi-file-edit",
               "DisplayOrder": 18,
               "Type": 0,

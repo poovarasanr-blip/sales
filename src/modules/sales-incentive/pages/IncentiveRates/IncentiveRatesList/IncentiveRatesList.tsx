@@ -20,6 +20,7 @@ import {
   handleGetExcelTemplate,
   handleUpsertIncentiveRates,
   handleGetIncentiveRates,
+  handleGetIncentiveProductMappingHistory,
 } from "../../../../../query/api";
 import encrypt from "../../../../../utils/security/encrypt";
 import decrypt from "../../../../../utils/security/decrypt";
@@ -30,7 +31,7 @@ import {
   INCENTIVE_RATES_COLUMNS,
   INCENTIVE_RATES_MOCK_DATA,
   INCENTIVE_RATES_UPLOAD_COLUMNS,
-  getIncentiveRateActivityLog,
+  formatDateForDisplay,
   toIncentiveRatesTableData,
 } from "../../../config/IncentiveRatesConfig";
 import type { IncentiveRateCategory } from "../../../config/IncentiveRatesConfig";
@@ -92,6 +93,17 @@ const TOMORROW_ISO = (() => {
   d.setDate(d.getDate() + 1);
   return d.toISOString().split("T")[0];
 })();
+
+function formatHistoryTime(raw: unknown): string {
+  const value = String(raw ?? "");
+  if (!/[T ]\d{1,2}:\d{2}/.test(value)) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  const hours = date.getHours();
+  const hour = hours % 12 || 12;
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hour}:${minutes}${hours >= 12 ? "pm" : "am"}`;
+}
 
 /* ---- Location state from bulk upload ---- */
 
@@ -305,6 +317,106 @@ export default function IncentiveRatesList() {
     title: string;
     entries: ProductActivityLogEntry[];
   } | null>(null);
+  const { mutate: fetchMappingHistory, isPending: isHistoryLoading } =
+    useMutation({
+      mutationFn: (variables: {
+        mappingId: number;
+        subCategory: string;
+        key: string;
+        vector: string;
+        token: string;
+      }) => {
+        const encryptedId = encrypt(
+          JSON.stringify(variables.mappingId),
+          variables.key,
+          variables.vector,
+        ).replace(/=/gi, "%3D");
+        return handleGetIncentiveProductMappingHistory(
+          {
+            queryProps: `IncentiveProductMappingId=${encryptedId}`,
+          },
+          variables.token,
+        );
+      },
+      onSuccess: (response: any, variables) => {
+        if (response?.status !== 200) {
+          showToast({
+            type: "error",
+            title: "Unable to load history",
+            message:
+              response?.data?.message ??
+              "Something went wrong. Please try again.",
+            duration: 3000,
+          });
+          return;
+        }
+
+        try {
+          const decryptedData = decrypt(
+            response?.data,
+            variables.key,
+            variables.vector,
+          );
+          const parsedData = parseNestedJson(JSON.parse(decryptedData));
+          if (!parsedData?.Status || !Array.isArray(parsedData?.Result)) {
+            showToast({
+              type: "error",
+              title: "Unable to load history",
+              message:
+                parsedData?.Message ??
+                "Something went wrong. Please try again.",
+              duration: 3000,
+            });
+            return;
+          }
+
+          const entries: ProductActivityLogEntry[] = parsedData.Result.map(
+            (item: Record<string, unknown>) => {
+              const createdOn = String(item.CreatedOn ?? "");
+              const createdDate = createdOn.split(/[T ]/)[0];
+              return {
+                date: formatDateForDisplay(createdDate) ?? createdDate,
+                time: formatHistoryTime(createdOn),
+                updatedBy: String(
+                  item.UserName ? "Updated By " + item.UserName : "",
+                ),
+                fields: [
+                  {
+                    label: "Eligible Incentive(₹)",
+                    value: String(item.EligibleIncentiveAmount ?? ""),
+                  },
+                  {
+                    label: "Effective Date",
+                    value:
+                      formatDateForDisplay(item.EffectiveFrom) ??
+                      String(item.EffectiveFrom ?? ""),
+                  },
+                ],
+              };
+            },
+          );
+          setActivityLog({ title: variables.subCategory, entries });
+        } catch {
+          showToast({
+            type: "error",
+            title: "Unable to load history",
+            message: "Failed to process server response. Please try again.",
+            duration: 3000,
+          });
+        }
+      },
+      onError: (error) => {
+        showToast({
+          type: "error",
+          title: "Unable to load history",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Something went wrong. Please try again.",
+          duration: 3000,
+        });
+      },
+    });
 
   /* ---- Bulk upload success handling ---- */
 
@@ -407,10 +519,32 @@ export default function IncentiveRatesList() {
 
   /* ---- Activity log ---- */
 
-  function openLog(subCategory: string) {
-    setActivityLog({
-      title: subCategory,
-      entries: getIncentiveRateActivityLog(subCategory),
+  function openLog(subCategory: string, mappingId: number) {
+    if (!sessionData?.Key || !sessionData.Vector || !sessionData.Token) {
+      showToast({
+        type: "error",
+        title: "Session Error",
+        message: "Session data not available. Please log in again.",
+        duration: 3000,
+      });
+      return;
+    }
+    if (!mappingId) {
+      showToast({
+        type: "error",
+        title: "Unable to load history",
+        message: "Mapping ID is not available.",
+        duration: 3000,
+      });
+      return;
+    }
+    setActivityLog(null);
+    fetchMappingHistory({
+      mappingId,
+      key: sessionData.Key,
+      vector: sessionData.Vector,
+      token: sessionData.Token,
+      subCategory,
     });
   }
 
@@ -587,6 +721,7 @@ export default function IncentiveRatesList() {
   }, [handleFilesReceived]);
 
   const hasData = categories.length > 0;
+  console.log(activityLog?.entries, "activityLog?.entries");
   return (
     <div
       className={`px-h pt-12 bg-bgcolor flex flex-col ${hasData ? "h-full overflow-hidden" : "min-h-[100%] overflow-scroll scrollbar-hide"}`}
@@ -777,7 +912,15 @@ export default function IncentiveRatesList() {
                         <button
                           aria-label="History"
                           className="cursor-pointer"
-                          onClick={() => openLog(subCategory.subCategory)}
+                          onClick={() => {
+                            const mapping = subCategory as SubCategoryGroup & {
+                              item?: { Id?: number | string };
+                            };
+                            openLog(
+                              subCategory.subCategory,
+                              Number(mapping.item?.Id),
+                            );
+                          }}
                         >
                           <IconRenderer
                             icon={layout?.HistoryIcon ?? "GoHistory"}
@@ -864,6 +1007,10 @@ export default function IncentiveRatesList() {
       <LoaderModal
         isOpen={isListingLoading}
         message="Loading incentive rates..."
+      />
+      <LoaderModal
+        isOpen={isHistoryLoading}
+        message="Loading incentive history..."
       />
     </div>
   );

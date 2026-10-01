@@ -447,3 +447,13 @@ export const handleDeleteSalesIncentiveTargetConfiguration = async (
   );
   return await apiRequest(url, { data: payload }, httpMethod, token);
 };
+export const handleGetIncentiveProductMappingHistory = async (
+  payload: any,
+  token: string,
+) => {
+  const { url, httpMethod } = getApiUrl(
+    payload,
+    "GetIncentiveProductMappingHistory",
+  );
+  return await apiRequest(url, null, httpMethod, token);
+};

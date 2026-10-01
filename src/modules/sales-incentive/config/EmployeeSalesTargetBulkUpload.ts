@@ -30,7 +30,7 @@ export const EMPLOYEE_TARGET_TABLE_COLUMNS: GroupedTableColumn[] = [
     icon: "FiSearch",
     fontWeight: 500,
     color: "#31314D",
-    width: "22%",
+    width: "25%",
   },
   {
     key: "manager",
@@ -48,7 +48,7 @@ export const EMPLOYEE_TARGET_TABLE_COLUMNS: GroupedTableColumn[] = [
   },
   { key: "locations", label: "Sales Target (nos)", width: "12%" },
   { key: "incentive", label: "Incentive (₹)", width: "11%" },
-  { key: "eligibility", label: "Incentive Eligibility", width: "14%" },
+  // { key: "eligibility", label: "Incentive Eligibility", width: "14%" },
   {
     key: "action",
     label: "Action",
@@ -68,7 +68,6 @@ export function groupEmployeeTargetRows(
 
   rows.forEach((row) => {
     const key = String(row.EmployeeCode ?? "");
-
     if (!employees.has(key)) {
       employees.set(key, {
         category: String(row.EmployeeName ?? ""),
@@ -96,6 +95,7 @@ export function groupEmployeeTargetRows(
       configCode: String(row.SalesIncentiveConfigurationCode ?? ""),
       incentive: Number(row.Incentive) || 0,
       eligibility: String(row.IncentiveEligibility ?? ""),
+      item: row,
     });
   });
 

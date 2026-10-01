@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
 import Config from "../../../../../assets/json/Config.json";
 import type {
   RowValidationResult,
@@ -14,10 +13,8 @@ import InvalidRecordsTable, {
 } from "../../../../../shared/components/ui/DataTable/InvalidRecordsTable";
 import LoaderModal from "../../../../../shared/components/ui/LoaderModal/LoaderModal";
 import { useAuthStore } from "../../../../../app/store/useAuthStore";
-import { handleImportSalesIncentiveTarget } from "../../../../../query/api";
 import encrypt from "../../../../../utils/security/encrypt";
-import decrypt from "../../../../../utils/security/decrypt";
-import { parseNestedJson } from "../../../../../utils/security/ParseData";
+import { useImportSalesIncentiveTarget } from "../../../hooks/UseImportSalesIncentiveTarget";
 
 /* ---- Column config from Config.json ---- */
 
@@ -135,6 +132,7 @@ export default function EmployeeSalesTargetBulkUpload() {
   const location = useLocation();
   const state = location.state as BulkUploadLocationState | undefined;
   const sessionData = useAuthStore((s) => s.sessionData);
+  const SubCategories = useAuthStore((s) => s.IncentiveProductSubCategories);
 
   const [validRows, setValidRows] = useState(() =>
     (state?.validRows ?? []).map((r, i) => ({ ...r, __id: `val-${i}` })),
@@ -151,86 +149,15 @@ export default function EmployeeSalesTargetBulkUpload() {
   const [activeTab, setActiveTab] = useState<TabKey>(
     validRows.length > 0 || invalidRows.length === 0 ? "valid" : "invalid",
   );
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { mutate: importTargets } = useMutation({
-    mutationFn: (variables: { payload: string; token: string }) =>
-      handleImportSalesIncentiveTarget(variables.payload, variables.token),
-    onSuccess: (response: any) => {
-      setIsSubmitting(false);
-      if (response?.status >= 200 && response?.status < 300) {
-        try {
-          const decryptedData = decrypt(
-            response?.data,
-            sessionData?.Key ?? "",
-            sessionData?.Vector ?? "",
-          );
-          const parsedData = parseNestedJson(JSON.parse(decryptedData));
-          if (parsedData?.Status) {
-            const results: any[] = parsedData?.Result ?? [];
-            const failed = results.filter(
-              (r: any) => r.Status === "Failed" && r.ErrorMessage,
-            );
-            if (failed.length > 0) {
-              const successCount = results.length - failed.length;
-              showToast({
-                type: "error",
-                title: "Partial Import",
-                message: `${successCount} record(s) imported. ${failed.length} record(s) failed: ${failed.map((f: any) => f.ErrorMessage).join("; ")}`,
-                duration: 5000,
-              });
-            } else {
-              showToast({
-                type: "success",
-                title: "Success!",
-                message:
-                  parsedData?.Message ??
-                  `${validRows.length} employee sales target records added`,
-                duration: 3000,
-              });
-              navigate("/employeeSales", {
-                state: {
-                  bulkUploadSuccessCount: validRows.length,
-                },
-              });
-            }
-          } else {
-            showToast({
-              type: "error",
-              title: "Error!",
-              message: parsedData?.Message,
-              duration: 3000,
-            });
-          }
-        } catch {
-          showToast({
-            type: "error",
-            title: "Error",
-            message: "Failed to process server response. Please try again.",
-            duration: 3000,
-          });
-        }
-      } else {
-        showToast({
-          type: "error",
-          title: "Error",
-          message:
-            response?.data?.message ??
-            "Failed to add employee sales targets. Please try again.",
-          duration: 3000,
-        });
-      }
-    },
-    onError: () => {
-      setIsSubmitting(false);
-      showToast({
-        type: "error",
-        title: "Error",
-        message: "Failed to add employee sales targets. Please try again.",
-        duration: 3000,
-      });
-    },
-  });
+  const onImported = useCallback(
+    (recordCount: number) =>
+      navigate("/employeeSales", {
+        state: { bulkUploadSuccessCount: recordCount },
+      }),
+    [navigate],
+  );
+  const { importTargets, isPending: isSubmitting } =
+    useImportSalesIncentiveTarget({ onImported });
 
   const [invalidSelectedCount, setInvalidSelectedCount] = useState(0);
   const invalidActionsRef = useRef<{
@@ -286,7 +213,10 @@ export default function EmployeeSalesTargetBulkUpload() {
 
     if (validRows.length === 0) return;
 
-    setIsSubmitting(true);
+    const filterSubId = (name: any) => {
+      const filter = SubCategories?.find((item) => item?.Name === name);
+      return filter?.Id ?? "";
+    };
 
     const payload = validRows.map((r) => ({
       ...r?.data,
@@ -303,14 +233,19 @@ export default function EmployeeSalesTargetBulkUpload() {
       Incentive: Number(r.data.Incentive) || 0,
       IncentiveApplicableEligibilityPercentage:
         r.data.IncentiveEligibility ?? "",
+      IncentiveProductSubCategoryId: filterSubId(r.data.IncentiveSubCategory),
+      CompanyId: 5,
     }));
-
     const encPayload = encrypt(
       JSON.stringify(payload),
       sessionData.Key,
       sessionData.Vector,
     );
-    importTargets({ payload: encPayload, token: sessionData.Token });
+    importTargets({
+      payload: encPayload,
+      token: sessionData.Token,
+      recordCount: validRows.length,
+    });
   };
 
   if (!state) {
